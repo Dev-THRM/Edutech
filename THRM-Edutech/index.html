@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THRMEduTech | Digital Marketing & Tech Education</title>
+  <meta name="description" content="THRM EduTech makes learning Digital Marketing, Web Development, SEO, and Social Strategy fun, simple, and practical." />
+  <meta name="keywords" content="Digital Marketing, SEO, Social Media Marketing, Web Development, Tech Education, THRM EduTech, Online Courses, Digital Skills" />
+  <meta name="author" content="THRM EduTech" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=17" />
+</head>
+<body>
+
+  <!-- Ambient Mesh Background -->
+  <div class="bg-mesh">
+    <canvas id="particles-canvas"></canvas>
+    <div id="cursor-glow" class="cursor-glow-spot"></div>
+    <div class="mesh-glow mesh-1"></div>
+    <div class="mesh-glow mesh-2"></div>
+    <div class="mesh-glow mesh-3"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-brand-pill">
+        <img src="logo.webp" alt="THRM EduTech Mascot" class="brand-mascot-img" />
+        <div class="brand-text">
+          <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="nav-menu" id="navMenu">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about-us" class="nav-link">About Us</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#courses" class="nav-link">Courses</a>
+        <a href="#team" class="nav-link">Team</a>
+      </div>
+
+      <!-- Nav Action Button -->
+      <div class="nav-actions">
+        <a href="#contact-us" class="btn btn-nav">
+          <span>Get in Touch</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <div class="nav-brand-pill">
+        <img src="logo.webp" alt="THRM EduTech Mascot" class="brand-mascot-img" />
+        <div class="brand-text">
+          <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+        </div>
+      </div>
+      <button class="drawer-close" id="drawerClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="drawer-links">
+      <a href="#home" class="drawer-link">Home</a>
+      <a href="#about-us" class="drawer-link">About Us</a>
+      <a href="#services" class="drawer-link">Services</a>
+      <a href="#courses" class="drawer-link">Courses</a>
+      <a href="#team" class="drawer-link">Team</a>
+      <a href="#contact-us" class="btn btn-primary w-100 text-center mt-3">Get in Touch 🚀</a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-container">
+      <div class="hero-grid">
+        
+        <!-- Left Content -->
+        <div class="hero-content reveal-left">
+          <h1 class="hero-heading">
+            Master Digital <br />
+            <span class="text-gradient">Marketing & Tech</span>
+          </h1>
+
+          <p class="hero-description">
+            Built for ambitious creators, coders, and future leaders. Learn how to build real websites, grow social media accounts, run high-converting ad campaigns, and master SEO—no boring lectures, just practical projects.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="hero-buttons">
+            <a href="#courses" class="btn btn-primary">
+              <span>Explore Courses</span>
+              <i class="fa-solid fa-graduation-cap"></i>
+            </a>
+            <a href="#about-us" class="btn btn-secondary">
+              <span>See How It Works</span>
+              <i class="fa-solid fa-arrow-down"></i>
+            </a>
+          </div>
+
+          <!-- Real Social Indicators -->
+          <div class="hero-stats">
+            <div class="stat-box">
+              <span class="stat-number" data-target="500">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">Students Mentored</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-box">
+              <span class="stat-number" data-target="4">0</span>
+              <span class="stat-label">Power Courses</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-box">
+              <span class="stat-number" data-target="100">0</span><span class="stat-plus">%</span>
+              <span class="stat-label">Practical Projects</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Visual Card -->
+        <div class="hero-visual reveal-right">
+          <div class="main-visual-card">
+            <div class="card-tag">🚀 FOR FUTURE CREATORS & BUILDERS</div>
+            <div class="image-frame">
+              <img src="hero_light.jpg" alt="THRM EduTech Student Learning" class="visual-img" />
+              <div class="visual-overlay"></div>
+            </div>
+
+            <!-- Floating Micro Badges -->
+            <div class="float-badge badge-top-left">
+              <div class="badge-icon icon-purple"><i class="fa-solid fa-laptop-code"></i></div>
+              <div>
+                <strong>SEO & Web Dev</strong>
+                <small>Build & Rank Sites</small>
+              </div>
+            </div>
+
+            <div class="float-badge badge-bottom-right">
+              <div class="badge-icon icon-cyan"><i class="fa-solid fa-bullseye"></i></div>
+              <div>
+                <strong>Performance Ads</strong>
+                <small>Grow Real Brands</small>
+              </div>
+            </div>
+
+            <div class="float-badge badge-bottom-left">
+              <div class="badge-icon icon-green"><i class="fa-solid fa-palette"></i></div>
+              <div>
+                <strong>Social & Design</strong>
+                <small>Viral Content & Strategy</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT US SECTION -->
+  <section class="section about-section d-flex-center" id="about-us">
+    <div class="section-container">
+      <div class="section-header text-center reveal-up reveal-element">
+        <div class="section-pill">WHO WE ARE</div>
+        <h2 class="section-title">Bridging Theory & <span class="text-gradient">Real Digital Skills</span></h2>
+      </div>
+
+      <!-- Bento Layout for Story & Mission -->
+      <div class="bento-grid">
+        <!-- Story Card (Large) -->
+        <div class="bento-card bento-lg reveal-up reveal-element reveal-delay-1">
+          <div class="bento-icon icon-purple"><i class="fa-solid fa-rocket"></i></div>
+          <h3>Our Story</h3>
+          <p>THRMEduTech is a forward-thinking digital agency and skill hub built to bridge the gap between classroom theory and real digital hustle. We combine creativity, marketing data, and modern tech to help passionate learners build impressive real-world skills.</p>
+          <p class="mt-2">Instead of memorize-and-forget exams, our team of young industry experts teaches you how to run actual campaigns, build live websites, create viral social graphics, and analyze real growth metrics.</p>
+          
+          <div class="bento-tags mt-3">
+            <span class="b-tag">Founded 2025</span>
+            <span class="b-tag">Project-First Learning</span>
+            <span class="b-tag">Youth Mentorship</span>
+          </div>
+        </div>
+
+        <!-- Image Card -->
+        <div class="bento-card bento-img-card reveal-up reveal-element reveal-delay-2">
+          <img src="about_team.jpg" alt="Team Collaboration" class="bento-full-img" />
+        </div>
+
+        <!-- Mission Card -->
+        <div class="bento-card reveal-up reveal-element reveal-delay-1">
+          <div class="bento-icon icon-cyan"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>Our Mission</h3>
+          <p>To make top-quality digital education simple, affordable, and practical so every passionate student can unlock their full potential and launch their career.</p>
+        </div>
+
+        <!-- Vision Card -->
+        <div class="bento-card reveal-up reveal-element reveal-delay-2">
+          <div class="bento-icon icon-green"><i class="fa-solid fa-eye"></i></div>
+          <h3>Our Vision</h3>
+          <p>To create a global community where learning is hands-on, interactive, and accessible to anyone with a smartphone, laptop, and curiosity.</p>
+        </div>
+
+        <!-- Approach Card -->
+        <div class="bento-card reveal-up reveal-element reveal-delay-3">
+          <div class="bento-icon icon-pink"><i class="fa-solid fa-bullseye"></i></div>
+          <h3>Our Approach</h3>
+          <p>Combining industry tools, step-by-step practical modules, and 1-on-1 mentor guidance so you build a portfolio that truly stands out.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE VALUES SECTION -->
+  <section class="section values-section d-flex-center" id="core-values">
+    <div class="section-container">
+      <div class="core-values-wrapper">
+        <div class="section-header text-center mb-4 reveal-up reveal-element">
+          <div class="section-pill">OUR GUIDING PRINCIPLES</div>
+          <h2 class="section-title">What We <span class="text-gradient">Stand For</span></h2>
+        </div>
+
+        <div class="values-grid-4">
+          <!-- Value 1: Excellence -->
+          <div class="bento-card value-card reveal-up reveal-element reveal-delay-1">
+            <div class="bento-icon icon-pink"><i class="fa-solid fa-award"></i></div>
+            <h3>Excellence</h3>
+            <p>We deliver top-tier, up-to-date lessons using tools used by actual industry professionals today.</p>
+          </div>
+
+          <!-- Value 2: Accessibility -->
+          <div class="bento-card value-card reveal-up reveal-element reveal-delay-2">
+            <div class="bento-icon icon-purple"><i class="fa-solid fa-user-gear"></i></div>
+            <h3>Accessibility</h3>
+            <p>Making quality tech and marketing skills simple to understand regardless of your starting level.</p>
+          </div>
+
+          <!-- Value 3: Innovation -->
+          <div class="bento-card value-card reveal-up reveal-element reveal-delay-3">
+            <div class="bento-icon icon-cyan"><i class="fa-solid fa-bolt"></i></div>
+            <h3>Innovation</h3>
+            <p>Embracing modern tech tools, AI workflows, and creative strategies to solve real-world problems.</p>
+          </div>
+
+          <!-- Value 4: Collaboration -->
+          <div class="bento-card value-card reveal-up reveal-element reveal-delay-4">
+            <div class="bento-icon icon-green"><i class="fa-solid fa-users"></i></div>
+            <h3>Collaboration</h3>
+            <p>Growing together alongside encouraging mentors and peers who share your passions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="section services-section" id="services">
+    <div class="section-container">
+      
+      <!-- Header: Title -->
+      <div class="services-header-split mb-5 reveal-up reveal-element">
+        <div class="header-left w-100">
+          <div class="pill-badge mb-2">AGENCY SERVICES</div>
+          <h2 class="section-title">Everything You Need to <span class="text-gradient">Scale Your Brand</span></h2>
+        </div>
+      </div>
+
+      <!-- Colorful Reference Card Grid (3-3 Layout: 6 Core Services) -->
+      <div class="ref-cards-grid">
+        
+        <div class="ref-card card-orange reveal-up reveal-element reveal-delay-1">
+          <div class="ref-card-content">
+            <h3 class="ref-card-title">Social Media Marketing</h3>
+            <p class="ref-card-desc">Build a strong social presence, create engaging posts, and grow active followers across Instagram, YouTube & LinkedIn.</p>
+          </div>
+          <div class="ref-card-img-wrap">
+            <img src="service_social.jpg" alt="Social Media Marketing" class="ref-card-img" />
+          </div>
+        </div>
+
+        <div class="ref-card card-lime reveal-up reveal-element reveal-delay-2">
+          <div class="ref-card-img-wrap">
+            <img src="service_seo.jpg" alt="SEO Optimization" class="ref-card-img" />
+          </div>
+          <div class="ref-card-content">
+            <h3 class="ref-card-title">SEO Optimization</h3>
+            <p class="ref-card-desc">Rank #1 on Google search results and drive free organic traffic to websites with data-driven keyword strategies.</p>
+          </div>
+        </div>
+
+        <div class="ref-card card-purple reveal-up reveal-element reveal-delay-3">
+          <div class="ref-card-img-wrap">
+            <img src="genz_hero.jpg" alt="Web Development" class="ref-card-img" />
+          </div>
+          <div class="ref-card-content">
+            <h3 class="ref-card-title">Web Development</h3>
+            <p class="ref-card-desc">Create custom, fast, and responsive websites that convert visitors into loyal customers.</p>
+          </div>
+        </div>
+
+        <div class="ref-card card-pink reveal-up reveal-element reveal-delay-1">
+          <div class="ref-card-img-wrap">
+            <img src="service_branding.jpg" alt="Branding" class="ref-card-img" />
+          </div>
+          <div class="ref-card-content">
+            <h3 class="ref-card-title">Branding & Design</h3>
+            <p class="ref-card-desc">Craft memorable logos, color palettes, and visual identity guidelines that make your brand instantly recognizable.</p>
+          </div>
+        </div>
+
+        <div class="ref-card card-lime text-top reveal-up reveal-element reveal-delay-2">
+          <div class="ref-card-content">
+            <h3 class="ref-card-title">Content Marketing</h3>
+            <p class="ref-card-desc">Write compelling copy, articles, and video scripts that build trust and convert casual readers into loyal buyers.</p>
+          </div>
+          <div class="ref-card-img-wrap">
+            <img src="service_content.jpg" alt="Content Marketing" class="ref-card-img" />
+          </div>
+        </div>
+
+        <div class="ref-card card-orange reveal-up reveal-element reveal-delay-3">
+          <div class="ref-card-img-wrap">
+            <img src="service_influencer.jpg" alt="Influencer Marketing" class="ref-card-img" />
+          </div>
+          <div class="ref-card-content">
+            <h3 class="ref-card-title">Influencer Marketing</h3>
+            <p class="ref-card-desc">Partner with popular online creators to spread your brand message and reach targeted audiences authentically.</p>
+          </div>
+        </div>
+
+      </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS SECTION -->
+  <section class="section process-section d-flex-center" id="process">
+    <div class="section-container">
+      <!-- Process Workflow: Define (01), Design (02), Build (03), Deliver (04) -->
+      <div class="process-workflow-wrapper">
+        <div class="section-header text-center mb-4 reveal-up reveal-element">
+          <div class="section-pill">HOW WE EXECUTE</div>
+          <h2 class="section-title">How We <span class="text-gradient">Bring Ideas to Life</span></h2>
+        </div>
+
+        <div class="process-steps-grid">
+          <div class="process-step-card reveal-up reveal-element reveal-delay-1">
+            <span class="process-step-badge">01</span>
+            <div class="bento-icon icon-purple"><i class="fa-solid fa-lightbulb"></i></div>
+            <h4>1. Define</h4>
+            <p>We analyze your goals, audience, and market position to outline a clear step-by-step gameplan.</p>
+          </div>
+
+          <div class="process-step-card reveal-up reveal-element reveal-delay-2">
+            <span class="process-step-badge">02</span>
+            <div class="bento-icon icon-cyan"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <h4>2. Design</h4>
+            <p>Our creative team crafts eye-catching graphics, layouts, and user experiences that capture attention.</p>
+          </div>
+
+          <div class="process-step-card reveal-up reveal-element reveal-delay-3">
+            <span class="process-step-badge">03</span>
+            <div class="bento-icon icon-green"><i class="fa-solid fa-wrench"></i></div>
+            <h4>3. Build</h4>
+            <p>We develop high-performance web pages, set up ad funnels, and test everything for perfection.</p>
+          </div>
+
+          <div class="process-step-card reveal-up reveal-element reveal-delay-4">
+            <span class="process-step-badge">04</span>
+            <div class="bento-icon icon-pink"><i class="fa-solid fa-paper-plane"></i></div>
+            <h4>4. Deliver</h4>
+            <p>We launch your project smoothly, track live analytics, and optimize continuously for maximum results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES SECTION -->
+  <section class="section courses-section d-flex-center" id="courses">
+    <div class="section-container">
+      <div class="section-header text-center reveal-up reveal-element">
+        <div class="section-pill">SKILL TRACKS</div>
+        <h2 class="section-title">Explore Our <span class="text-gradient">Learning Programs</span></h2>
+      </div>
+
+      <!-- Courses Grid -->
+      <div class="tracks-grid">
+
+        <!-- Course 1 -->
+        <div class="track-card reveal-up reveal-element reveal-delay-1">
+          <div class="track-banner bg-gradient-purple">
+            <span class="track-level">COURSE 01</span>
+            <i class="fa-solid fa-hashtag track-bg-icon"></i>
+          </div>
+          <div class="track-body">
+            <h3 class="track-title">Social Media & Creative Designs</h3>
+            <p class="track-desc">Learn to create engaging content and boost your online presence.</p>
+            
+            <ul class="course-feature-list">
+              <li><i class="fa-solid fa-check text-purple"></i> Branding & Graphic Design</li>
+              <li><i class="fa-solid fa-check text-purple"></i> Canva & Photoshop Essentials</li>
+              <li><i class="fa-solid fa-check text-purple"></i> Content Strategy & Trends</li>
+            </ul>
+
+            <div class="course-price-wrap">
+              <span class="price-original">₹29,999</span>
+              <span class="price-amount">₹19,999</span>
+              <span class="price-period">/ month</span>
+            </div>
+
+            <div class="track-footer">
+              <a href="#contact-us" class="btn btn-track-details">
+                <span>Enquire Course</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="track-card reveal-up reveal-element reveal-delay-2">
+          <div class="track-banner bg-gradient-cyan">
+            <span class="track-level">COURSE 02</span>
+            <i class="fa-solid fa-code track-bg-icon"></i>
+          </div>
+          <div class="track-body">
+            <h3 class="track-title">SEO + Web Development</h3>
+            <p class="track-desc">Master SEO techniques along with professional web development skills.</p>
+            
+            <ul class="course-feature-list">
+              <li><i class="fa-solid fa-check text-cyan"></i> On-page & Off-page SEO</li>
+              <li><i class="fa-solid fa-check text-cyan"></i> HTML, CSS & JavaScript</li>
+              <li><i class="fa-solid fa-check text-cyan"></i> WordPress + Custom Sites</li>
+            </ul>
+
+            <div class="course-price-wrap">
+              <span class="price-original">₹34,999</span>
+              <span class="price-amount">₹24,999</span>
+              <span class="price-period">/ month</span>
+            </div>
+
+            <div class="track-footer">
+              <a href="#contact-us" class="btn btn-track-details">
+                <span>Enquire Course</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="track-card reveal-up reveal-element reveal-delay-3">
+          <div class="track-banner bg-gradient-green">
+            <span class="track-level">COURSE 03</span>
+            <i class="fa-solid fa-chart-line track-bg-icon"></i>
+          </div>
+          <div class="track-body">
+            <h3 class="track-title">Performance Marketing Strategies</h3>
+            <p class="track-desc">Advanced strategies to scale your business with data-driven marketing.</p>
+            
+            <ul class="course-feature-list">
+              <li><i class="fa-solid fa-check text-green"></i> Google & Facebook Ads</li>
+              <li><i class="fa-solid fa-check text-green"></i> Analytics & Tracking</li>
+              <li><i class="fa-solid fa-check text-green"></i> Conversion Optimization</li>
+            </ul>
+
+            <div class="course-price-wrap">
+              <span class="price-original">₹34,999</span>
+              <span class="price-amount">₹24,999</span>
+              <span class="price-period">/ month</span>
+            </div>
+
+            <div class="track-footer">
+              <a href="#contact-us" class="btn btn-track-details">
+                <span>Enquire Course</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 4 -->
+        <div class="track-card reveal-up reveal-element reveal-delay-4">
+          <div class="track-banner bg-gradient-pink">
+            <span class="track-level">COURSE 04 • BEST VALUE</span>
+            <i class="fa-solid fa-layer-group track-bg-icon"></i>
+          </div>
+          <div class="track-body">
+            <h3 class="track-title">Ultimate Combo Course</h3>
+            <p class="track-desc">The complete 360° marketing and tech mastery bundle.</p>
+            
+            <ul class="course-feature-list">
+              <li><i class="fa-solid fa-check text-pink"></i> All 3 Core Modules Included</li>
+              <li><i class="fa-solid fa-check text-pink"></i> 1-on-1 Mentor Guidance</li>
+              <li><i class="fa-solid fa-check text-pink"></i> Live Real-World Projects</li>
+            </ul>
+
+            <div class="course-price-wrap">
+              <span class="price-original">₹59,999</span>
+              <span class="price-amount">₹39,999</span>
+              <span class="price-period">/ month</span>
+            </div>
+
+            <div class="track-footer">
+              <a href="#contact-us" class="btn btn-track-details">
+                <span>Enquire Course</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM SECTION -->
+  <section class="section team-section d-flex-center" id="team">
+    <div class="section-container">
+      <div class="section-header text-center reveal-up reveal-element">
+        <div class="section-pill">MEET OUR TRAINERS</div>
+        <h2 class="section-title">The Passionate Experts Behind <span class="text-gradient">Your Transformation</span></h2>
+      </div>
+
+      <div class="tracks-grid">
+        <div class="track-card reveal-up reveal-element reveal-delay-1">
+          <div class="track-body text-center">
+            <div class="msg-avatar av-purple mx-auto mb-3" style="width:60px; height:60px; font-size:1.4rem;">G</div>
+            <h3 class="track-title">Gunjan Shidame</h3>
+            <span class="pill-badge mb-3">CMO & Founder</span>
+            <p class="track-desc">Learn marketing strategies and brand leadership directly from our CMO & Founder with real-world experience and hands-on guidance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT US SECTION -->
+  <section class="section contact-section d-flex-center" id="contact-us">
+    <div class="section-container">
+      <div class="connect-grid">
+
+        <div class="connect-info reveal-left reveal-element">
+          <div class="section-pill">GET IN TOUCH</div>
+          <h2 class="section-title">Ready to Start Your <br /><span class="text-gradient">Skill Journey?</span></h2>
+          <p class="section-subtitle">Reach out to our team via call, email, or WhatsApp. We are happy to answer all your questions!</p>
+
+          <div class="contact-card-list">
+            <a href="tel:+919004500657" class="c-info-card">
+              <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <strong>Call Now</strong>
+                <p>+91 90045 00657</p>
+              </div>
+            </a>
+
+            <a href="mailto:hr@thrmdigitalmarketing.in" class="c-info-card">
+              <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div>
+                <strong>Email Us</strong>
+                <p>hr@thrmdigitalmarketing.in</p>
+              </div>
+            </a>
+
+            <a href="https://wa.me/919004500657" target="_blank" class="c-info-card card-whatsapp">
+              <div class="c-icon"><i class="fa-brands fa-whatsapp"></i></div>
+              <div>
+                <strong>WhatsApp</strong>
+                <p>Chat with us</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form Card -->
+        <div class="connect-form-card reveal-right reveal-element">
+          <h3>Send a Message</h3>
+          <p class="text-muted mb-4">Select your course interest and submit your details below.</p>
+
+          <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+            <input type="hidden" name="access_key" value="3d408239-7bd4-4377-b4de-a1ab1f3ed9d3" />
+
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required placeholder="Enter your email address" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label for="course">Course Interest *</label>
+              <select id="course" name="course" class="form-input" required>
+                <option value="">Select a Course</option>
+                <option value="social-media">Social Media & Creative Designs</option>
+                <option value="seo-web">SEO + Web Development</option>
+                <option value="performance">Performance Marketing Strategies</option>
+                <option value="combo">Ultimate Combo Course</option>
+                <option value="consultation">Free Consultation</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message (Optional)</label>
+              <textarea id="message" name="message" rows="3" placeholder="Tell us about your goals and how we can help you..." class="form-input"></textarea>
+            </div>
+
+            <div class="form-group form-checkbox">
+              <input type="checkbox" id="consent" name="consent" required />
+              <label for="consent">I agree to receive communications from THRM EduTech about courses and updates.</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-2" id="submitBtn">
+              <span>Send Message</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+
+          <div id="formFeedback" class="form-feedback" style="display: none;">
+            <i class="fa-solid fa-circle-check text-green text-3xl"></i>
+            <h4>Message Sent Successfully!</h4>
+            <p>Thank you for reaching out to THRM EduTech.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="brand-text">
+            <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+          </div>
+          <p class="footer-tagline mt-2">
+            Empowering ambitious creators, coders, and marketers with practical digital skills.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#contact-us">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Our Courses</h4>
+          <ul>
+            <li><a href="#courses">Social Media & Creative Designs</a></li>
+            <li><a href="#courses">SEO + Web Development</a></li>
+            <li><a href="#courses">Performance Marketing Strategies</a></li>
+            <li><a href="#courses">Ultimate Combo Course</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 THRM EduTech. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Progress Circle -->
+  <div id="scroll-progress-wrap" class="scroll-progress-btn">
+    <svg class="progress-circle" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
+    <i class="fa-solid fa-arrow-up arrow-icon"></i>
+  </div>
+
+  <!-- Custom Script -->
+  <script src="script.js?v=17"></script>
+</body>
+</html>
