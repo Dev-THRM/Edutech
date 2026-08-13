@@ -271,11 +271,12 @@ document.addEventListener('DOMContentLoaded', () => {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
+        this.size = Math.random() * 2.5 + 0.5;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = Math.random() > 0.5 ? '#ff6b35' : '#fbbf24'; // Mascot orange or yellow
-        this.alpha = Math.random() * 0.2 + 0.05; // Soft stars for light mode readability
+        const palette = ['#a855f7', '#22d3ee', '#f472b6', '#4ade80', '#818cf8'];
+        this.color = palette[Math.floor(Math.random() * palette.length)];
+        this.alpha = Math.random() * 0.35 + 0.1; // More visible on dark bg
       }
       update() {
         this.x += this.speedX;
@@ -315,9 +316,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 120) {
-            const alpha = (1 - (distance / 120)) * 0.05; // Soft, delicate lines for light backdrop
-            ctx.strokeStyle = `rgba(255, 107, 53, ${alpha})`; 
-            ctx.lineWidth = 0.5;
+            const alpha = (1 - (distance / 120)) * 0.12; // More visible neon lines on dark
+            ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`; 
+            ctx.lineWidth = 0.6;
             ctx.beginPath();
             ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
             ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
