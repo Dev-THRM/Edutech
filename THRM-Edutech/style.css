@@ -2994,7 +2994,7 @@ html {
 }
 
 .navbar.scrolled .brand-name {
-  color: #1c1917 !important;
+  color: #ffffff !important;
 }
 
 /* Nav Button adaptation */
@@ -3336,4 +3336,31 @@ h1, h2, h3, h4, h5, h6 { color: #f1f0ff !important; }
 .process-workflow-wrapper, .core-values-wrapper { border-top: 1px solid rgba(255, 255, 255, 0.06) !important; }
 .section, .hero { margin-bottom: 8vh !important; }
 
+/* ===== FOOTER SOCIALS ===== */
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
 
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 50% !important;
+  color: #c4c0e8 !important;
+  font-size: 1.1rem !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+}
+.social-icon:hover {
+  background: var(--purple-primary) !important;
+  border-color: var(--purple-primary) !important;
+  color: #ffffff !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4) !important;
+}
