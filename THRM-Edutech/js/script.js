@@ -58,21 +58,19 @@ class TextScramble {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ===== LOADED TRIGGER & INITIAL REVEALS =====
+  // ===== LOADED TRIGGER =====
   document.body.classList.add('loaded');
-  document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up').forEach(el => el.classList.add('active'));
 
   // ===== PRODUCTION-GRADE LENIS INERTIAL SCROLL ENGINE =====
   let lenis = null;
   if (typeof Lenis !== 'undefined') {
     lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Luxurious exponential ease
+      lerp: 0.08, // Buttery inertial dampening for premium feel
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.2,
       infinite: false,
     });
 
@@ -82,6 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(raf);
   }
+
+  // Initial reveal for above-fold hero content only
+  const heroSection = document.getElementById('home');
+  if (heroSection) {
+    heroSection.querySelectorAll('.reveal-left, .reveal-right, .reveal-up').forEach(el => el.classList.add('active'));
+  }
+  document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 30) {
+      el.classList.add('active');
+    }
+  });
 
   const scrambleElements = document.querySelectorAll('.scramble-text');
   scrambleElements.forEach((el, index) => {
@@ -95,24 +105,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== CRAZY TOP PROGRESS BAR & CLICK SHOCKWAVE SYSTEM =====
+  // ===== SLEEK TOP PROGRESS BAR =====
   const crazyBar = document.getElementById('crazy-loader-bar');
+  let crazyTimer = null;
 
-  function launchCrazyLoader() {
+  function launchCrazyLoader(durationMs = 1200) {
     if (!crazyBar) return;
+    if (crazyTimer) clearTimeout(crazyTimer);
+    crazyBar.style.transition = 'none';
     crazyBar.style.width = '0%';
     crazyBar.classList.add('loading');
-    
-    setTimeout(() => {
-      crazyBar.style.width = '75%';
-      setTimeout(() => {
-        crazyBar.style.width = '100%';
-        setTimeout(() => {
-          crazyBar.classList.remove('loading');
-          crazyBar.style.width = '0%';
-        }, 220);
-      }, 150);
-    }, 20);
+    void crazyBar.offsetWidth; // Force layout
+    crazyBar.style.transition = `width ${Math.round(durationMs * 0.8)}ms cubic-bezier(0.16, 1, 0.3, 1)`;
+    crazyBar.style.width = '85%';
+  }
+
+  function finishCrazyLoader() {
+    if (!crazyBar) return;
+    crazyBar.style.transition = 'width 0.25s ease-out';
+    crazyBar.style.width = '100%';
+    crazyTimer = setTimeout(() => {
+      crazyBar.classList.remove('loading');
+      crazyBar.style.width = '0%';
+    }, 280);
   }
 
   function spawnShockwave(x, y) {
@@ -146,6 +161,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===== LUXURIOUS SMOOTH NAVIGATION TRAVERSAL =====
+  const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  function revealSectionContents(targetElement) {
+    if (!targetElement) return;
+    const items = targetElement.querySelectorAll('.reveal-left, .reveal-right, .reveal-up');
+    items.forEach((el, index) => {
+      setTimeout(() => {
+        el.classList.add('active');
+      }, index * 75);
+    });
+  }
+
   const allNavLinks = document.querySelectorAll('a[href^="#"], .nav-link, .drawer-link, .btn-nav, .footer-links a, .back-to-top-btn');
   allNavLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -154,33 +181,61 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetElement = (href === '#' || href === '#home') ? document.body : document.querySelector(href);
         if (targetElement) {
           e.preventDefault();
-          launchCrazyLoader();
+
+          // Calculate travel distance & dynamic cinematic duration
+          const currentY = window.pageYOffset || document.documentElement.scrollTop;
+          const elementRect = targetElement.getBoundingClientRect();
+          const targetY = (targetElement === document.body) ? 0 : Math.max(0, elementRect.top + currentY - 85);
+          const distance = Math.abs(targetY - currentY);
+
+          // Dynamic luxury duration: min 0.75s, max 1.35s
+          const duration = Math.min(1.35, Math.max(0.75, 0.6 + Math.sqrt(distance) * 0.0075));
+          const durationMs = duration * 1000;
+
+          // Instant active pill feedback
+          if (href.startsWith('#') && href.length > 1) {
+            mainNavLinks.forEach(l => {
+              if (l.getAttribute('href') === href) {
+                l.classList.add('active');
+              } else {
+                l.classList.remove('active');
+              }
+            });
+          }
+
+          launchCrazyLoader(durationMs);
+
+          if (mobileDrawer && mobileDrawer.classList.contains('active')) {
+            mobileDrawer.classList.remove('active');
+          }
 
           if (lenis) {
-            lenis.scrollTo(targetElement, {
-              offset: -75,
-              duration: 1.25,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            lenis.scrollTo(targetElement === document.body ? 0 : targetElement, {
+              offset: -85,
+              duration: duration,
+              easing: easeInOutCubic,
+              onComplete: () => {
+                finishCrazyLoader();
+                revealSectionContents(targetElement);
+                if (targetElement !== document.body) {
+                  targetElement.classList.add('section-traversal-highlight');
+                  setTimeout(() => targetElement.classList.remove('section-traversal-highlight'), 1400);
+                }
+              }
             });
           } else {
-            const navHeight = 75;
-            const elementRect = targetElement.getBoundingClientRect();
-            const targetY = (targetElement === document.body) ? 0 : (elementRect.top + window.pageYOffset - navHeight);
             window.scrollTo({
               top: targetY,
               behavior: 'smooth'
             });
-          }
-
-          // Ensure target section is visible without layout shifting
-          if (targetElement !== document.body) {
-            targetElement.querySelectorAll('.reveal-left, .reveal-right, .reveal-up').forEach(el => {
-              el.classList.add('active');
-            });
-          }
-
-          if (mobileDrawer && mobileDrawer.classList.contains('active')) {
-            mobileDrawer.classList.remove('active');
+            setTimeout(() => {
+              finishCrazyLoader();
+              revealSectionContents(targetElement);
+              if (targetElement !== document.body) {
+                targetElement.classList.add('section-traversal-highlight');
+                setTimeout(() => targetElement.classList.remove('section-traversal-highlight'), 1400);
+              }
+            }, durationMs);
           }
         }
       }
