@@ -1,713 +1,1584 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>THRM EduTech | Digital Marketing & Tech Education</title>
-  <meta name="description" content="THRM EduTech makes learning Digital Marketing, Web Development, SEO, and Social Strategy practical and career-ready. Real projects. Real skills." />
-  <meta name="keywords" content="Digital Marketing, SEO, Social Media Marketing, Web Development, Tech Education, THRM EduTech, Online Courses, Digital Skills" />
-  <meta name="author" content="THRM EduTech" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THRM EduTech | Digital Marketing & Tech Education</title>
+    <meta name="description"
+        content="THRM EduTech makes learning Digital Marketing, Web Development, SEO, and Social Strategy practical and career-ready. Real projects. Real skills." />
+    <meta name="keywords"
+        content="Digital Marketing, SEO, Social Media Marketing, Web Development, Tech Education, THRM EduTech, Online Courses, Digital Skills" />
+    <meta name="author" content="THRM EduTech" />
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet" />
+    <!-- Google Fonts: Lexend (Primary EduTech Font) + Plus Jakarta Sans + Outfit + Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet" />
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=18" />
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=609" />
 </head>
+
 <body>
+    <!-- CRAZY TOP PROGRESS BAR LOADER -->
+    <div id="crazy-loader-bar"></div>
 
-  <!-- Ambient Mesh Background -->
-  <div class="bg-mesh">
-    <canvas id="particles-canvas"></canvas>
-    <div id="cursor-glow" class="cursor-glow-spot"></div>
-    <div class="mesh-glow mesh-1"></div>
-    <div class="mesh-glow mesh-2"></div>
-    <div class="mesh-glow mesh-3"></div>
-  </div>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <a href="#home" class="nav-brand-pill">
-        <img src="logo.png" alt="THRM EduTech Mascot" class="brand-mascot-img" />
-        <div class="brand-text">
-          <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
-        </div>
-      </a>
-
-      <!-- Desktop Nav Links -->
-      <div class="nav-menu" id="navMenu">
-        <a href="#home" class="nav-link active">Home</a>
-        <a href="#about-us" class="nav-link">About Us</a>
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#courses" class="nav-link">Courses</a>
-        <a href="#team" class="nav-link">Team</a>
-      </div>
-
-      <!-- Nav Action Button -->
-      <div class="nav-actions">
-        <a href="#contact-us" class="btn btn-nav">
-          <span>Let's Go</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
-          <i class="fa-solid fa-bars-staggered"></i>
-        </button>
-      </div>
+    <!-- Ambient Mesh Background -->
+    <div class="bg-mesh">
+        <canvas id="particles-canvas"></canvas>
+        <div id="cursor-follower"></div>
+        <div id="cursor-dot"></div>
+        <div id="cursor-glow" class="cursor-glow-spot"></div>
+        <div class="mesh-glow mesh-1"></div>
+        <div class="mesh-glow mesh-2"></div>
+        <div class="mesh-glow mesh-3"></div>
     </div>
-  </nav>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-drawer" id="mobileDrawer">
-    <div class="drawer-header">
-      <div class="nav-brand-pill">
-        <img src="logo.png" alt="THRM EduTech Logo" class="brand-mascot-img" />
-        <div class="brand-text">
-          <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
-        </div>
-      </div>
-      <button class="drawer-close" id="drawerClose"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="drawer-links">
-      <a href="#home" class="drawer-link">Home</a>
-      <a href="#about-us" class="drawer-link">About Us</a>
-      <a href="#services" class="drawer-link">Services</a>
-      <a href="#courses" class="drawer-link">Courses</a>
-      <a href="#team" class="drawer-link">Team</a>
-      <a href="#contact-us" class="btn btn-primary w-100 text-center mt-3">Get in Touch</a>
-    </div>
-  </div>
-
-  <!-- HERO SECTION -->
-  <section class="hero" id="home">
-    <div class="hero-container">
-      <div class="hero-grid">
-        
-        <!-- Left Content -->
-        <div class="hero-content reveal-left">
-          <div class="hero-eyebrow">Built for the Next Generation of Creators</div>
-          <h1 class="hero-heading">
-            Master Digital<br />
-            <span class="text-gradient">Marketing &amp; Tech</span>
-          </h1>
-
-          <p class="hero-description">
-            Built for ambitious creators, coders, and future leaders. Learn how to build real websites, grow social media accounts, run high-converting ad campaigns, and master SEO — no boring lectures, just practical projects.
-          </p>
-
-          <!-- Action Buttons -->
-          <div class="hero-buttons">
-            <a href="#courses" class="btn btn-primary">
-              <span>Explore Courses</span>
-              <i class="fa-solid fa-bolt"></i>
-            </a>
-            <a href="#about-us" class="btn btn-secondary">
-              <span>See How It Works</span>
-              <i class="fa-solid fa-arrow-down"></i>
-            </a>
-          </div>
-
-          <!-- Real Social Indicators -->
-          <div class="hero-stats">
-            <div class="stat-box">
-              <span class="stat-number" data-target="500">0</span><span class="stat-plus">+</span>
-              <span class="stat-label">Students Mentored</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-box">
-              <span class="stat-number" data-target="4">0</span>
-              <span class="stat-label">Power Courses</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-box">
-              <span class="stat-number" data-target="100">0</span><span class="stat-plus">%</span>
-              <span class="stat-label">Practical Projects</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Visual Card -->
-        <div class="hero-visual reveal-right">
-          <div class="main-visual-card">
-            <div class="card-tag">&#9889; FOR FUTURE CREATORS &amp; BUILDERS</div>
-            <div class="image-frame">
-              <img src="hero_light.jpg" alt="THRM EduTech Student Learning" class="visual-img" />
-              <div class="visual-overlay"></div>
-            </div>
-
-            <!-- Floating Micro Badges -->
-            <div class="float-badge badge-top-left">
-              <div class="badge-icon icon-purple"><i class="fa-solid fa-laptop-code"></i></div>
-              <div>
-                <strong>SEO &amp; Web Dev</strong>
-                <small>Build &amp; Rank Sites</small>
-              </div>
-            </div>
-
-            <div class="float-badge badge-bottom-right">
-              <div class="badge-icon icon-cyan"><i class="fa-solid fa-bullseye"></i></div>
-              <div>
-                <strong>Performance Ads</strong>
-                <small>Grow Real Brands</small>
-              </div>
-            </div>
-
-            <div class="float-badge badge-bottom-left">
-              <div class="badge-icon icon-green"><i class="fa-solid fa-palette"></i></div>
-              <div>
-                <strong>Social &amp; Design</strong>
-                <small>Viral Content Strategy</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ABOUT US SECTION -->
-  <section class="section about-section d-flex-center" id="about-us">
-    <div class="section-container">
-      <div class="section-header text-center reveal-up reveal-element">
-        <div class="section-pill">WHO WE ARE</div>
-        <h2 class="section-title">Bridging Theory &amp; <span class="text-gradient">Real Digital Skills</span></h2>
-      </div>
-
-      <!-- Bento Layout for Story & Mission -->
-      <div class="bento-grid">
-        <!-- Story Card (Large) -->
-        <div class="bento-card bento-lg reveal-up reveal-element reveal-delay-1">
-          <div class="bento-icon icon-purple"><i class="fa-solid fa-rocket"></i></div>
-          <h3>Our Story</h3>
-          <p>THRMEduTech is a forward-thinking digital agency and skill hub built to bridge the gap between classroom theory and real digital practice. We combine creativity, marketing data, and modern tech to help passionate learners build impressive real-world skills.</p>
-          <p class="mt-2">Instead of memorise-and-forget exams, our team of young industry experts teaches you how to run actual campaigns, build live websites, create viral social graphics, and analyse real growth metrics.</p>
-          
-          <div class="bento-tags mt-3">
-            <span class="b-tag">Founded 2025</span>
-            <span class="b-tag">Project-First Learning</span>
-            <span class="b-tag">Youth Mentorship</span>
-          </div>
-        </div>
-
-        <!-- Image Card -->
-        <div class="bento-card bento-img-card reveal-up reveal-element reveal-delay-2">
-          <img src="about_team.jpg" alt="Team Collaboration" class="bento-full-img" />
-        </div>
-
-        <!-- Mission Card -->
-        <div class="bento-card reveal-up reveal-element reveal-delay-1">
-          <div class="bento-icon icon-cyan"><i class="fa-solid fa-shield-halved"></i></div>
-          <h3>Our Mission</h3>
-          <p>To make top-quality digital education simple, affordable, and practical so every passionate student can unlock their full potential and launch their career.</p>
-        </div>
-
-        <!-- Vision Card -->
-        <div class="bento-card reveal-up reveal-element reveal-delay-2">
-          <div class="bento-icon icon-green"><i class="fa-solid fa-eye"></i></div>
-          <h3>Our Vision</h3>
-          <p>To create a global community where learning is hands-on, interactive, and accessible to anyone with a smartphone, laptop, and the drive to succeed.</p>
-        </div>
-
-        <!-- Approach Card -->
-        <div class="bento-card reveal-up reveal-element reveal-delay-3">
-          <div class="bento-icon icon-pink"><i class="fa-solid fa-bullseye"></i></div>
-          <h3>Our Approach</h3>
-          <p>Combining industry tools, step-by-step practical modules, and 1-on-1 mentor guidance so you build a portfolio that truly stands out.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CORE VALUES SECTION -->
-  <section class="section values-section d-flex-center" id="core-values">
-    <div class="section-container">
-      <div class="core-values-wrapper">
-        <div class="section-header text-center mb-4 reveal-up reveal-element">
-          <div class="section-pill">OUR GUIDING PRINCIPLES</div>
-          <h2 class="section-title">What We <span class="text-gradient">Stand For</span></h2>
-        </div>
-
-        <div class="values-grid-4">
-          <!-- Value 1: Excellence -->
-          <div class="bento-card value-card reveal-up reveal-element reveal-delay-1">
-            <div class="bento-icon icon-pink"><i class="fa-solid fa-award"></i></div>
-            <h3>Excellence</h3>
-            <p>We deliver top-tier, up-to-date lessons using tools used by actual industry professionals today.</p>
-          </div>
-
-          <!-- Value 2: Accessibility -->
-          <div class="bento-card value-card reveal-up reveal-element reveal-delay-2">
-            <div class="bento-icon icon-purple"><i class="fa-solid fa-user-gear"></i></div>
-            <h3>Accessibility</h3>
-            <p>Making quality tech and marketing skills simple to understand, regardless of your starting level.</p>
-          </div>
-
-          <!-- Value 3: Innovation -->
-          <div class="bento-card value-card reveal-up reveal-element reveal-delay-3">
-            <div class="bento-icon icon-cyan"><i class="fa-solid fa-bolt"></i></div>
-            <h3>Innovation</h3>
-            <p>Embracing modern tech tools, AI workflows, and creative strategies to solve real-world problems.</p>
-          </div>
-
-          <!-- Value 4: Collaboration -->
-          <div class="bento-card value-card reveal-up reveal-element reveal-delay-4">
-            <div class="bento-icon icon-green"><i class="fa-solid fa-users"></i></div>
-            <h3>Collaboration</h3>
-            <p>Growing together alongside encouraging mentors and peers who share your passions and ambitions.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES SECTION -->
-  <section class="section services-section" id="services">
-    <div class="section-container">
-      
-      <!-- Header: Title -->
-      <div class="services-header-split mb-5 reveal-up reveal-element">
-        <div class="header-left w-100">
-          <div class="pill-badge mb-2">AGENCY SERVICES</div>
-          <h2 class="section-title">Everything You Need to <span class="text-gradient">Scale Your Brand</span></h2>
-        </div>
-      </div>
-
-      <!-- Colorful Reference Card Grid (3-3 Layout: 6 Core Services) -->
-      <div class="ref-cards-grid">
-        
-        <div class="ref-card card-orange reveal-up reveal-element reveal-delay-1">
-          <div class="ref-card-content">
-            <h3 class="ref-card-title">Social Media Marketing</h3>
-            <p class="ref-card-desc">Build a strong social presence, create engaging posts, and grow active followers across Instagram, YouTube &amp; LinkedIn.</p>
-          </div>
-          <div class="ref-card-img-wrap">
-            <img src="service_social.jpg" alt="Social Media Marketing" class="ref-card-img" />
-          </div>
-        </div>
-
-        <div class="ref-card card-lime reveal-up reveal-element reveal-delay-2">
-          <div class="ref-card-img-wrap">
-            <img src="service_seo.jpg" alt="SEO Optimization" class="ref-card-img" />
-          </div>
-          <div class="ref-card-content">
-            <h3 class="ref-card-title">SEO Optimization</h3>
-            <p class="ref-card-desc">Rank #1 on Google search results and drive free organic traffic to websites with data-driven keyword strategies.</p>
-          </div>
-        </div>
-
-        <div class="ref-card card-purple reveal-up reveal-element reveal-delay-3">
-          <div class="ref-card-img-wrap">
-            <img src="genz_hero.jpg" alt="Web Development" class="ref-card-img" />
-          </div>
-          <div class="ref-card-content">
-            <h3 class="ref-card-title">Web Development</h3>
-            <p class="ref-card-desc">Create custom, fast, and responsive websites that convert visitors into loyal customers.</p>
-          </div>
-        </div>
-
-        <div class="ref-card card-pink reveal-up reveal-element reveal-delay-1">
-          <div class="ref-card-img-wrap">
-            <img src="service_branding.jpg" alt="Branding" class="ref-card-img" />
-          </div>
-          <div class="ref-card-content">
-            <h3 class="ref-card-title">Branding &amp; Design</h3>
-            <p class="ref-card-desc">Craft memorable logos, colour palettes, and visual identity guidelines that make your brand instantly recognisable.</p>
-          </div>
-        </div>
-
-        <div class="ref-card card-lime text-top reveal-up reveal-element reveal-delay-2">
-          <div class="ref-card-content">
-            <h3 class="ref-card-title">Content Marketing</h3>
-            <p class="ref-card-desc">Write compelling copy, articles, and video scripts that build trust and convert casual readers into loyal buyers.</p>
-          </div>
-          <div class="ref-card-img-wrap">
-            <img src="service_content.jpg" alt="Content Marketing" class="ref-card-img" />
-          </div>
-        </div>
-
-        <div class="ref-card card-orange reveal-up reveal-element reveal-delay-3">
-          <div class="ref-card-img-wrap">
-            <img src="service_influencer.jpg" alt="Influencer Marketing" class="ref-card-img" />
-          </div>
-          <div class="ref-card-content">
-            <h3 class="ref-card-title">Influencer Marketing</h3>
-            <p class="ref-card-desc">Partner with popular online creators to spread your brand message and reach targeted audiences authentically.</p>
-          </div>
-        </div>
-
-      </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PROCESS SECTION -->
-  <section class="section process-section d-flex-center" id="process">
-    <div class="section-container">
-      <!-- Process Workflow: Define (01), Design (02), Build (03), Deliver (04) -->
-      <div class="process-workflow-wrapper">
-        <div class="section-header text-center mb-4 reveal-up reveal-element">
-          <div class="section-pill">HOW WE EXECUTE</div>
-          <h2 class="section-title">How We <span class="text-gradient">Bring Ideas to Life</span></h2>
-        </div>
-
-        <div class="process-steps-grid">
-          <div class="process-step-card reveal-up reveal-element reveal-delay-1">
-            <span class="process-step-badge">01</span>
-            <div class="bento-icon icon-purple"><i class="fa-solid fa-lightbulb"></i></div>
-            <h4>1. Define</h4>
-            <p>We analyse your goals, audience, and market position to outline a clear step-by-step strategy.</p>
-          </div>
-
-          <div class="process-step-card reveal-up reveal-element reveal-delay-2">
-            <span class="process-step-badge">02</span>
-            <div class="bento-icon icon-cyan"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-            <h4>2. Design</h4>
-            <p>Our creative team crafts eye-catching graphics, layouts, and user experiences that capture attention.</p>
-          </div>
-
-          <div class="process-step-card reveal-up reveal-element reveal-delay-3">
-            <span class="process-step-badge">03</span>
-            <div class="bento-icon icon-green"><i class="fa-solid fa-wrench"></i></div>
-            <h4>3. Build</h4>
-            <p>We develop high-performance web pages, set up ad funnels, and test everything for perfection.</p>
-          </div>
-
-          <div class="process-step-card reveal-up reveal-element reveal-delay-4">
-            <span class="process-step-badge">04</span>
-            <div class="bento-icon icon-pink"><i class="fa-solid fa-paper-plane"></i></div>
-            <h4>4. Deliver</h4>
-            <p>We launch your project smoothly, track live analytics, and optimise continuously for maximum results.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COURSES SECTION -->
-  <section class="section courses-section d-flex-center" id="courses">
-    <div class="section-container">
-      <div class="section-header text-center reveal-up reveal-element">
-        <div class="section-pill">SKILL TRACKS</div>
-        <h2 class="section-title">Explore Our <span class="text-gradient">Learning Programs</span></h2>
-      </div>
-
-      <!-- Courses Grid -->
-      <div class="tracks-grid">
-
-        <!-- Course 1 -->
-        <div class="track-card reveal-up reveal-element reveal-delay-1">
-          <div class="track-banner bg-gradient-purple">
-            <span class="track-level">COURSE 01</span>
-            <i class="fa-solid fa-hashtag track-bg-icon"></i>
-          </div>
-          <div class="track-body">
-            <h3 class="track-title">Social Media &amp; Creative Designs</h3>
-            <p class="track-desc">Learn to create engaging content and build a powerful online presence.</p>
-            
-            <ul class="course-feature-list">
-              <li><i class="fa-solid fa-check text-purple"></i> Branding &amp; Graphic Design</li>
-              <li><i class="fa-solid fa-check text-purple"></i> Canva &amp; Photoshop Essentials</li>
-              <li><i class="fa-solid fa-check text-purple"></i> Content Strategy &amp; Trends</li>
-            </ul>
-
-            <div class="course-price-wrap">
-              <span class="price-original">&#8377;29,999</span>
-              <span class="price-amount">&#8377;19,999</span>
-              <span class="price-period">/ month</span>
-            </div>
-
-            <div class="track-footer">
-              <a href="#contact-us" class="btn btn-track-details">
-                <span>Enquire Now</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course 2 -->
-        <div class="track-card reveal-up reveal-element reveal-delay-2">
-          <div class="track-banner bg-gradient-cyan">
-            <span class="track-level">COURSE 02</span>
-            <i class="fa-solid fa-code track-bg-icon"></i>
-          </div>
-          <div class="track-body">
-            <h3 class="track-title">SEO + Web Development</h3>
-            <p class="track-desc">Master SEO techniques along with professional web development skills.</p>
-            
-            <ul class="course-feature-list">
-              <li><i class="fa-solid fa-check text-cyan"></i> On-page &amp; Off-page SEO</li>
-              <li><i class="fa-solid fa-check text-cyan"></i> HTML, CSS &amp; JavaScript</li>
-              <li><i class="fa-solid fa-check text-cyan"></i> WordPress + Custom Sites</li>
-            </ul>
-
-            <div class="course-price-wrap">
-              <span class="price-original">&#8377;34,999</span>
-              <span class="price-amount">&#8377;24,999</span>
-              <span class="price-period">/ month</span>
-            </div>
-
-            <div class="track-footer">
-              <a href="#contact-us" class="btn btn-track-details">
-                <span>Enquire Now</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course 3 -->
-        <div class="track-card reveal-up reveal-element reveal-delay-3">
-          <div class="track-banner bg-gradient-green">
-            <span class="track-level">COURSE 03</span>
-            <i class="fa-solid fa-chart-line track-bg-icon"></i>
-          </div>
-          <div class="track-body">
-            <h3 class="track-title">Performance Marketing Strategies</h3>
-            <p class="track-desc">Advanced strategies to scale your brand with data-driven marketing.</p>
-            
-            <ul class="course-feature-list">
-              <li><i class="fa-solid fa-check text-green"></i> Google &amp; Facebook Ads</li>
-              <li><i class="fa-solid fa-check text-green"></i> Analytics &amp; Tracking</li>
-              <li><i class="fa-solid fa-check text-green"></i> Conversion Optimisation</li>
-            </ul>
-
-            <div class="course-price-wrap">
-              <span class="price-original">&#8377;34,999</span>
-              <span class="price-amount">&#8377;24,999</span>
-              <span class="price-period">/ month</span>
-            </div>
-
-            <div class="track-footer">
-              <a href="#contact-us" class="btn btn-track-details">
-                <span>Enquire Now</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course 4 -->
-        <div class="track-card reveal-up reveal-element reveal-delay-4">
-          <div class="track-banner bg-gradient-pink">
-            <span class="track-level">COURSE 04 &bull; BEST VALUE</span>
-            <i class="fa-solid fa-layer-group track-bg-icon"></i>
-          </div>
-          <div class="track-body">
-            <h3 class="track-title">Ultimate Combo Course</h3>
-            <p class="track-desc">The complete 360&deg; marketing and tech mastery bundle.</p>
-            
-            <ul class="course-feature-list">
-              <li><i class="fa-solid fa-check text-pink"></i> All 3 Core Modules Included</li>
-              <li><i class="fa-solid fa-check text-pink"></i> 1-on-1 Mentor Guidance</li>
-              <li><i class="fa-solid fa-check text-pink"></i> Live Real-World Projects</li>
-            </ul>
-
-            <div class="course-price-wrap">
-              <span class="price-original">&#8377;59,999</span>
-              <span class="price-amount">&#8377;39,999</span>
-              <span class="price-period">/ month</span>
-            </div>
-
-            <div class="track-footer">
-              <a href="#contact-us" class="btn btn-track-details">
-                <span>Enquire Now</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- TEAM SECTION -->
-  <section class="section team-section d-flex-center" id="team">
-    <div class="section-container">
-      <div class="section-header text-center reveal-up reveal-element">
-        <div class="section-pill">MEET OUR TRAINERS</div>
-        <h2 class="section-title">The Passionate Experts Behind <span class="text-gradient">Your Transformation</span></h2>
-      </div>
-
-      <div class="tracks-grid">
-        <div class="track-card reveal-up reveal-element reveal-delay-1">
-          <div class="track-body text-center">
-            <div class="msg-avatar av-purple mx-auto mb-3" style="width:60px; height:60px; font-size:1.4rem;">G</div>
-            <h3 class="track-title">Gunjan Shidame</h3>
-            <span class="pill-badge mb-3">CMO &amp; Founder</span>
-            <p class="track-desc">Learn marketing strategies and brand leadership directly from our CMO &amp; Founder with real-world experience and hands-on guidance.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT US SECTION -->
-  <section class="section contact-section d-flex-center" id="contact-us">
-    <div class="section-container">
-      <div class="connect-grid">
-
-        <div class="connect-info reveal-left reveal-element">
-          <div class="section-pill">GET IN TOUCH</div>
-          <h2 class="section-title">Ready to Start Your <br /><span class="text-gradient">Skill Journey?</span></h2>
-          <p class="section-subtitle">Reach out to our team via call, email, or WhatsApp. We are happy to answer all your questions!</p>
-
-          <div class="contact-card-list">
-            <a href="tel:+919004500657" class="c-info-card">
-              <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
-              <div>
-                <strong>Call Now</strong>
-                <p>+91 90045 00657</p>
-              </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-brand-pill">
+                <img src="assets/images/logo.png" alt="THRM EduTech Mascot" class="brand-mascot-img" />
+                <div class="brand-text">
+                    <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+                </div>
             </a>
 
-            <a href="mailto:hr@thrmdigitalmarketing.in" class="c-info-card">
-              <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
-              <div>
-                <strong>Email Us</strong>
-                <p>hr@thrmdigitalmarketing.in</p>
-              </div>
-            </a>
+            <!-- Desktop Nav Links -->
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about-us" class="nav-link">About Us</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#courses" class="nav-link">Courses</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#testimonials" class="nav-link">Testimonials</a>
+            </div>
 
-            <a href="https://wa.me/919004500657" target="_blank" class="c-info-card card-whatsapp">
-              <div class="c-icon"><i class="fa-brands fa-whatsapp"></i></div>
-              <div>
-                <strong>WhatsApp</strong>
-                <p>Chat with us</p>
-              </div>
-            </a>
-          </div>
+            <!-- Nav Action Button -->
+            <div class="nav-actions">
+                <a href="#contact-us" class="btn btn-nav magnetic-btn">
+                    <span>Let's Go</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
         </div>
+    </nav>
 
-        <!-- Contact Form Card -->
-        <div class="connect-form-card reveal-right reveal-element">
-          <h3>Send a Message</h3>
-          <p class="text-muted mb-4">Select your course interest and submit your details below.</p>
-
-          <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
-            <input type="hidden" name="access_key" value="3d408239-7bd4-4377-b4de-a1ab1f3ed9d3" />
-
-            <div class="form-group">
-              <label for="fullName">Full Name *</label>
-              <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" class="form-input" />
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <div class="nav-brand-pill">
+                <img src="assets/images/logo.png" alt="THRM EduTech Logo" class="brand-mascot-img" />
+                <div class="brand-text">
+                    <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+                </div>
             </div>
-
-            <div class="form-group">
-              <label for="email">Email Address *</label>
-              <input type="email" id="email" name="email" required placeholder="Enter your email address" class="form-input" />
-            </div>
-
-            <div class="form-group">
-              <label for="phone">Phone Number *</label>
-              <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" class="form-input" />
-            </div>
-
-            <div class="form-group">
-              <label for="course">Course Interest *</label>
-              <select id="course" name="course" class="form-input" required>
-                <option value="">Select a Course</option>
-                <option value="social-media">Social Media & Creative Designs</option>
-                <option value="seo-web">SEO + Web Development</option>
-                <option value="performance">Performance Marketing Strategies</option>
-                <option value="combo">Ultimate Combo Course</option>
-                <option value="consultation">Free Consultation</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="message">Message (Optional)</label>
-              <textarea id="message" name="message" rows="3" placeholder="Tell us about your goals and how we can help you..." class="form-input"></textarea>
-            </div>
-
-            <div class="form-group form-checkbox">
-              <input type="checkbox" id="consent" name="consent" required />
-              <label for="consent">I agree to receive communications from THRM EduTech about courses and updates.</label>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100 mt-2" id="submitBtn">
-              <span>Send Message</span>
-              <i class="fa-solid fa-paper-plane"></i>
-            </button>
-          </form>
-
-          <div id="formFeedback" class="form-feedback" style="display: none;">
-            <i class="fa-solid fa-circle-check text-green text-3xl"></i>
-            <h4>Message Sent Successfully!</h4>
-            <p>Thank you for reaching out to THRM EduTech. We will get back to you shortly.</p>
-          </div>
+            <button class="drawer-close" id="drawerClose"><i class="fa-solid fa-xmark"></i></button>
         </div>
-
-      </div>
+        <div class="drawer-links">
+            <a href="#home" class="drawer-link">Home</a>
+            <a href="#about-us" class="drawer-link">About Us</a>
+            <a href="#services" class="drawer-link">Services</a>
+            <a href="#courses" class="drawer-link">Courses</a>
+            <a href="#team" class="drawer-link">Team</a>
+            <a href="#contact-us" class="btn btn-primary w-100 text-center mt-3">Get in Touch</a>
+        </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-grid">
-        <div class="footer-brand-col">
-          <div class="brand-text">
-            <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
-          </div>
-          <p class="footer-tagline mt-2">
-            Empowering ambitious creators, coders, and marketers with practical digital skills.
-          </p>
-          <div class="footer-socials mt-3">
-            <a href="https://www.instagram.com/thrm_edutech?igsh=MXhxNHRhODhvMTl1Yw==&igsi=MXhxNHRhODhvMTl1Yw==" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-            <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="#" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          </div>
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-grid">
+
+                <!-- Left Content -->
+                <div class="hero-content reveal-left">
+                    <h1 class="hero-heading">
+                        <span>MASTER DIGITAL</span><br />
+                        <span class="text-gradient">MARKETING &amp; TECH</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Built for ambitious creators, coders, and future bosses. Learn how to build real web apps, go
+                        viral on social media, run high-ROAS ads, and master SEO — 100% practical agency projects.
+                    </p>
+
+                    <!-- Action Buttons -->
+                    <div class="hero-buttons">
+                        <a href="#courses" class="btn btn-primary magnetic-btn">
+                            <span>Explore Courses</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#about-us" class="btn btn-secondary magnetic-btn">
+                            <span>See How It Works</span>
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+
+                    <!-- Real Social Indicators -->
+                    <div class="hero-stats">
+                        <div class="stat-box">
+                            <span class="stat-number" data-target="500">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Students Mentored</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-box">
+                            <span class="stat-number" data-target="4">0</span>
+                            <span class="stat-label">Power Courses</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-box">
+                            <span class="stat-number" data-target="100">0</span><span class="stat-plus">%</span>
+                            <span class="stat-label">Practical Projects</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual Card -->
+                <div class="hero-visual reveal-right">
+                    <div class="main-visual-card">
+                        <div class="card-tag"><i class="fa-solid fa-bolt text-yellow me-1"></i> FOR FUTURE CREATORS
+                            &amp; BUILDERS</div>
+                        <div class="image-frame">
+                            <img src="assets/images/genz_hero_aesthetic.jpg?v=500" alt="THRM EduTech Student Learning"
+                                class="visual-img" />
+                            <div class="visual-overlay"></div>
+                        </div>
+
+                        <!-- Floating Micro Badges -->
+                        <div class="float-badge badge-top-left">
+                            <div class="badge-icon icon-purple"><i class="fa-solid fa-laptop-code"></i></div>
+                            <div>
+                                <strong> SEO &amp; Web Dev</strong>
+                                <small>Build &amp; Rank #1</small>
+                            </div>
+                        </div>
+
+                        <div class="float-badge badge-bottom-right">
+                            <div class="badge-icon icon-cyan"><i class="fa-solid fa-bullseye"></i></div>
+                            <div>
+                                <strong> Performance Ads</strong>
+                                <small>High ROAS Growth</small>
+                            </div>
+                        </div>
+
+                        <div class="float-badge badge-bottom-left">
+                            <div class="badge-icon icon-green"><i class="fa-solid fa-palette"></i></div>
+                            <div>
+                                <strong> Social &amp; Design</strong>
+                                <small>Build Viral Brands</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
+    </section>
 
-        <div class="footer-col">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about-us">About Us</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#courses">Courses</a></li>
-            <li><a href="#team">Team</a></li>
-            <li><a href="#contact-us">Contact Us</a></li>
-          </ul>
+
+
+    <!-- MARQUEE SECTION DIVIDER -->
+    <div class="marquee-divider-wrap">
+        <div class="marquee-strip strip-top">
+            <div class="marquee-track left">
+                <span><i class="fa-solid fa-bolt"></i> CREATIVE EXCELLENCE</span>
+                <span><i class="fa-solid fa-rocket"></i> FUTURE-READY TECH</span>
+                <span><i class="fa-solid fa-gem"></i> INDUSTRY EXCELLENCE</span>
+                <span><i class="fa-solid fa-fire"></i> HANDS-ON LEARNING</span>
+                <span><i class="fa-solid fa-wand-magic-sparkles"></i> CREATIVE EXCELLENCE</span>
+                <span><i class="fa-solid fa-bullseye"></i> FUTURE-READY TECH</span>
+                <span><i class="fa-solid fa-crown"></i> INDUSTRY EXCELLENCE</span>
+                <span><i class="fa-solid fa-globe"></i> HANDS-ON LEARNING</span>
+            </div>
         </div>
-
-        <div class="footer-col">
-          <h4>Our Courses</h4>
-          <ul>
-            <li><a href="#courses">Social Media & Creative Designs</a></li>
-            <li><a href="#courses">SEO + Web Development</a></li>
-            <li><a href="#courses">Performance Marketing Strategies</a></li>
-            <li><a href="#courses">Ultimate Combo Course</a></li>
-          </ul>
+        <div class="marquee-strip strip-bottom">
+            <div class="marquee-track right">
+                <span><i class="fa-solid fa-rocket"></i> REAL-WORLD PROJECTS</span>
+                <span><i class="fa-solid fa-bolt"></i> HIGH-IMPACT SKILLS</span>
+                <span><i class="fa-solid fa-fire"></i> YOUTH MENTORSHIP</span>
+                <span><i class="fa-solid fa-wand-magic-sparkles"></i> BUILD VIRAL BRAND</span>
+                <span><i class="fa-solid fa-gem"></i> REAL-WORLD PROJECTS</span>
+                <span><i class="fa-solid fa-bullseye"></i> HIGH-IMPACT SKILLS</span>
+                <span><i class="fa-solid fa-crown"></i> YOUTH MENTORSHIP</span>
+                <span><i class="fa-solid fa-globe"></i> BUILD VIRAL BRAND</span>
+            </div>
         </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2025 THRM EduTech. All rights reserved.</p>
-      </div>
     </div>
-  </footer>
 
-  <!-- Scroll to Top Progress Circle -->
-  <div id="scroll-progress-wrap" class="scroll-progress-btn">
-    <svg class="progress-circle" width="100%" height="100%" viewBox="-1 -1 102 102">
-      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-    </svg>
-    <i class="fa-solid fa-arrow-up arrow-icon"></i>
-  </div>
 
-  <!-- Custom Script -->
-  <script src="script.js?v=17"></script>
+    <!-- ABOUT US SECTION -->
+    <section class="section about-section d-flex-center" id="about-us">
+        <div class="section-container">
+            <div class="section-header text-center reveal-left">
+                <div class="section-pill">THE UNFILTERED TRUTH</div>
+                <h2 class="section-title">Bridging Theory &amp; <span class="text-gradient">Real Digital Skills</span>
+                </h2>
+            </div>
+
+            <!-- Bento Layout for Story & Mission -->
+            <div class="bento-top-row mb-4">
+                <!-- Story Card (60% Width) -->
+                <div class="bento-card bento-story-card reveal-up reveal-element reveal-delay-1">
+                    <div class="bento-icon icon-purple"><i class="fa-solid fa-rocket"></i></div>
+                    <h3>Our Story</h3>
+                    <p>THRMEduTech is a forward-thinking digital marketing agency and educational hub that blends
+                        creativity, data, and strategy to empower ambitious learners and businesses in today’s digital
+                        world. Our mission is to help brands stand out with meaningful campaigns and equip students with
+                        career-ready skills that drive real results.</p>
+                    <p class="mt-2">With a team of passionate industry experts, we specialize in practical training that
+                        combines SEO, web development, creative design, social media engagement, and performance
+                        marketing analytics.</p>
+                    <p class="mt-2">Instead of memorise-and-forget exams, our mentors teach you how to run actual
+                        campaigns, build live web applications, create viral social graphics, and analyse real growth
+                        metrics.</p>
+
+                    <div class="bento-tags mt-3">
+                        <span class="b-tag">Founded 2025</span>
+                        <span class="b-tag">Project-First Learning</span>
+                        <span class="b-tag">Youth Mentorship</span>
+                    </div>
+                </div>
+
+                <!-- Image Card (40% Width) -->
+                <div class="bento-card bento-img-card reveal-right reveal-element reveal-delay-2">
+                    <img src="assets/images/about_team.jpg" alt="Team Collaboration" class="bento-full-img" />
+                    <div class="bento-img-overlay">
+                        <span class="bento-img-badge"><i class="fa-solid fa-users"></i> Creative Hub</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-grid">
+                <!-- Mission Card -->
+                <div class="bento-card reveal-left reveal-element reveal-delay-1">
+                    <div class="bento-icon icon-cyan"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Our Mission</h3>
+                    <p>To make top-quality digital education simple, affordable, and practical so every passionate
+                        student can unlock their full potential and launch their career.</p>
+                </div>
+
+                <!-- Vision Card -->
+                <div class="bento-card reveal-up reveal-element reveal-delay-2">
+                    <div class="bento-icon icon-green"><i class="fa-solid fa-eye"></i></div>
+                    <h3>Our Vision</h3>
+                    <p>To create a global community where learning is hands-on, interactive, and accessible to anyone
+                        with a smartphone, laptop, and the drive to succeed.</p>
+                </div>
+
+                <!-- Approach Card -->
+                <div class="bento-card reveal-up reveal-element reveal-delay-3">
+                    <div class="bento-icon icon-pink"><i class="fa-solid fa-bullseye"></i></div>
+                    <h3>Our Approach</h3>
+                    <p>Combining industry tools, step-by-step practical modules, and 1-on-1 mentor guidance so you build
+                        a portfolio that truly stands out.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE VALUES SECTION (Cinematic Orbital Moving Theme) -->
+    <section class="section values-section d-flex-center" id="core-values">
+        <div class="section-container">
+            <div class="cinematic-orbital-showcase">
+                <!-- Left Content Column -->
+                <div class="orbital-content-col">
+                    <div class="cosmic-pill-badge">
+                        <i class="fa-solid fa-sparkles text-cyan"></i>
+                        <span>Our Guiding Principles</span>
+                    </div>
+
+                    <h2 class="orbital-hero-title">
+                        <span class="text-specular-glow" data-text="What We">What We</span>
+                        <span class="text-pure-white">Stand For.</span>
+                    </h2>
+
+                    <p class="orbital-lead-desc">
+                        We blend agency-grade execution with hands-on youth mentorship. No outdated theory or generic
+                        tests — just real-world workflows, live digital campaigns, and the core values that power
+                        everything we build.
+                    </p>
+                </div>
+
+                <!-- Right Visual Column: Concentric Orbiting Radar System -->
+                <div class="orbital-visual-col">
+                    <div class="orbital-radar-stage">
+                        <div class="radar-ambient-glow"></div>
+
+                        <!-- Central Brand Hub Core -->
+                        <div class="orbit-hub-center" title="THRM Core Hub">
+                            <div class="hub-pulse-ring"></div>
+                            <i class="fa-solid fa-layer-group text-cyan"></i>
+                        </div>
+
+                        <!-- Orbit Ring 1 (Inner) -->
+                        <div class="orbit-ring orbit-ring-1">
+                            <div class="orbit-satellite-node pos-top" style="--node-glow: rgba(236, 72, 153, 0.6);"
+                                title="Excellence">
+                                <i class="fa-solid fa-award text-pink"></i>
+                                <span class="node-tooltip">Excellence</span>
+                            </div>
+                        </div>
+
+                        <!-- Orbit Ring 2 (Middle) -->
+                        <div class="orbit-ring orbit-ring-2">
+                            <div class="orbit-satellite-node pos-left" style="--node-glow: rgba(6, 182, 212, 0.6);"
+                                title="Innovation">
+                                <i class="fa-solid fa-bolt text-cyan"></i>
+                                <span class="node-tooltip">Innovation</span>
+                            </div>
+                            <div class="orbit-satellite-node pos-right" style="--node-glow: rgba(124, 58, 237, 0.6);"
+                                title="Accessibility">
+                                <i class="fa-solid fa-user-gear text-purple"></i>
+                                <span class="node-tooltip">Accessibility</span>
+                            </div>
+                        </div>
+
+                        <!-- Orbit Ring 3 (Outer) -->
+                        <div class="orbit-ring orbit-ring-3">
+                            <div class="orbit-satellite-node pos-top" style="--node-glow: rgba(34, 197, 94, 0.6);"
+                                title="Collaboration">
+                                <i class="fa-solid fa-users text-green"></i>
+                                <span class="node-tooltip">Collaboration</span>
+                            </div>
+                            <div class="orbit-satellite-node pos-bottom" style="--node-glow: rgba(37, 99, 235, 0.6);"
+                                title="Career Ready">
+                                <i class="fa-solid fa-graduation-cap text-cyan"></i>
+                                <span class="node-tooltip">Career Ready</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="section services-section" id="services">
+        <div class="section-container">
+
+            <!-- Header: Title -->
+            <div class="services-header-split mb-4 reveal-left">
+                <div class="header-left w-100">
+                    <div class="pill-badge mb-3">AGENCY-GRADE SKILLS</div>
+                    <h2 class="section-title">Everything You Need to <span class="text-gradient">Scale Your Brand</span>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Colorful Reference Card Grid (3-3 Layout: 6 Core Services) -->
+            <div class="ref-cards-grid">
+
+                <div class="ref-card card-orange reveal-left reveal-delay-1">
+                    <div class="ref-card-content">
+                        <h3 class="ref-card-title">Social Media Marketing</h3>
+                        <p class="ref-card-desc">Build a strong social presence, create engaging posts, and grow active
+                            followers across Instagram, YouTube &amp; LinkedIn.</p>
+                    </div>
+                    <div class="ref-card-img-wrap">
+                        <img src="assets/images/service_social.jpg" alt="Social Media Marketing" class="ref-card-img" />
+                    </div>
+                </div>
+
+                <div class="ref-card card-lime reveal-right reveal-delay-2">
+                    <div class="ref-card-img-wrap">
+                        <img src="assets/images/service_seo.jpg" alt="SEO Optimization" class="ref-card-img" />
+                    </div>
+                    <div class="ref-card-content">
+                        <h3 class="ref-card-title">SEO Optimization</h3>
+                        <p class="ref-card-desc">Rank #1 on Google search results and drive free organic traffic to
+                            websites with data-driven keyword strategies.</p>
+                    </div>
+                </div>
+
+                <div class="ref-card card-purple reveal-left reveal-delay-3">
+                    <div class="ref-card-img-wrap">
+                        <img src="assets/images/genz_hero.jpg" alt="Web Development" class="ref-card-img" />
+                    </div>
+                    <div class="ref-card-content">
+                        <h3 class="ref-card-title">Web Development</h3>
+                        <p class="ref-card-desc">Create custom, fast, and responsive websites that convert visitors into
+                            loyal customers.</p>
+                    </div>
+                </div>
+
+                <div class="ref-card card-pink reveal-right reveal-delay-1">
+                    <div class="ref-card-img-wrap">
+                        <img src="assets/images/service_branding.jpg" alt="Branding" class="ref-card-img" />
+                    </div>
+                    <div class="ref-card-content">
+                        <h3 class="ref-card-title">Branding &amp; Design</h3>
+                        <p class="ref-card-desc">Craft memorable logos, colour palettes, and visual identity guidelines
+                            that make your brand instantly recognisable.</p>
+                    </div>
+                </div>
+
+                <div class="ref-card card-lime text-top reveal-left reveal-delay-2">
+                    <div class="ref-card-content">
+                        <h3 class="ref-card-title">Content Marketing</h3>
+                        <p class="ref-card-desc">Write compelling copy, articles, and video scripts that build trust and
+                            convert casual readers into loyal buyers.</p>
+                    </div>
+                    <div class="ref-card-img-wrap">
+                        <img src="assets/images/service_content.jpg" alt="Content Marketing" class="ref-card-img" />
+                    </div>
+                </div>
+
+                <div class="ref-card card-orange reveal-up reveal-element reveal-delay-3">
+                    <div class="ref-card-img-wrap">
+                        <img src="assets/images/service_influencer.jpg" alt="Influencer Marketing"
+                            class="ref-card-img" />
+                    </div>
+                    <div class="ref-card-content">
+                        <h3 class="ref-card-title">Influencer Marketing</h3>
+                        <p class="ref-card-desc">Partner with popular online creators to spread your brand message and
+                            reach targeted audiences authentically.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION (Cinematic Orbital Moving Theme) -->
+    <section class="section process-section d-flex-center" id="process">
+        <div class="section-container">
+            <div class="cinematic-orbital-showcase">
+                <!-- Left Content Column -->
+                <div class="orbital-content-col">
+                    <div class="cosmic-pill-badge">
+                        <i class="fa-solid fa-bolt text-gold"></i>
+                        <span>The Game Plan</span>
+                    </div>
+
+                    <h2 class="orbital-hero-title">
+                        <span class="text-specular-glow" data-text="How We Bring">How We Bring</span>
+                        <span class="text-pure-white">Ideas to Life.</span>
+                    </h2>
+
+                    <p class="orbital-lead-desc">
+                        From raw concept to scalable live deployment. We orchestrate strategy, creative aesthetics,
+                        modern code, and data tracking into a cohesive, high-velocity execution engine.
+                    </p>
+                </div>
+
+                <!-- Right Visual Column: Concentric Orbiting Process Radar -->
+                <div class="orbital-visual-col">
+                    <div class="orbital-radar-stage">
+                        <div class="radar-ambient-glow"></div>
+
+                        <!-- Central Launchpad Hub Core -->
+                        <div class="orbit-hub-center" title="Launch Engine">
+                            <div class="hub-pulse-ring"></div>
+                            <i class="fa-solid fa-rocket text-pink"></i>
+                        </div>
+
+                        <!-- Orbit Ring 1 (Inner): Step 01 Define -->
+                        <div class="orbit-ring orbit-ring-1">
+                            <div class="orbit-satellite-node pos-top" style="--node-glow: rgba(124, 58, 237, 0.6);"
+                                title="01. Define">
+                                <i class="fa-solid fa-lightbulb text-purple"></i>
+                                <span class="node-tooltip">01. Define</span>
+                            </div>
+                        </div>
+
+                        <!-- Orbit Ring 2 (Middle): Step 02 Design -->
+                        <div class="orbit-ring orbit-ring-2">
+                            <div class="orbit-satellite-node pos-left" style="--node-glow: rgba(6, 182, 212, 0.6);"
+                                title="02. Design">
+                                <i class="fa-solid fa-wand-magic-sparkles text-cyan"></i>
+                                <span class="node-tooltip">02. Design</span>
+                            </div>
+                            <div class="orbit-satellite-node pos-right" style="--node-glow: rgba(37, 99, 235, 0.5);"
+                                title="Strategy">
+                                <i class="fa-solid fa-compass text-cyan"></i>
+                                <span class="node-tooltip">Strategy</span>
+                            </div>
+                        </div>
+
+                        <!-- Orbit Ring 3 (Outer): Step 03 Build & 04 Deliver -->
+                        <div class="orbit-ring orbit-ring-3">
+                            <div class="orbit-satellite-node pos-bottom" style="--node-glow: rgba(34, 197, 94, 0.6);"
+                                title="03. Build">
+                                <i class="fa-solid fa-wrench text-green"></i>
+                                <span class="node-tooltip">03. Build</span>
+                            </div>
+                            <div class="orbit-satellite-node pos-top" style="--node-glow: rgba(236, 72, 153, 0.6);"
+                                title="04. Deliver">
+                                <i class="fa-solid fa-paper-plane text-pink"></i>
+                                <span class="node-tooltip">04. Deliver</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COURSES SECTION -->
+    <section class="section courses-section d-flex-center" id="courses">
+        <div class="section-container">
+            <div class="section-header text-center reveal-left">
+                <div class="section-pill">CHOOSE YOUR PLAN</div>
+                <h2 class="section-title">Master Digital Skills with <span class="text-gradient">Our Expert
+                        Courses</span></h2>
+            </div>
+
+            <!-- Courses Grid (Single Row 4-Column Layout with 3D Flip Cards) -->
+            <div class="tracks-grid mt-4">
+
+                <!-- Course 1: Social Media & Creative Designs -->
+                <div class="track-card-flip-wrap reveal-left reveal-element reveal-delay-1">
+                    <div class="track-card-inner">
+                        <!-- FRONT FACE -->
+                        <div class="track-card card-face-front">
+                            <div class="track-banner bg-gradient-purple">
+                                <span class="track-level">COURSE 01</span>
+                                <i class="fa-solid fa-hashtag track-bg-icon"></i>
+                            </div>
+                            <div class="track-body">
+                                <h3 class="track-title">Social Media &amp; Creative Designs</h3>
+                                <p class="track-desc">Learn to create engaging content and boost your online presence.
+                                </p>
+
+                                <ul class="course-feature-list">
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Branding &amp; Graphic Design
+                                    </li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Canva &amp; Photoshop
+                                        Essentials</li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Content Strategy &amp; Trends
+                                    </li>
+                                </ul>
+
+                                <div class="course-price-wrap">
+                                    <span class="price-original">&#8377;29,999</span>
+                                    <span class="price-amount">&#8377;19,999</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE -->
+                        <div class="track-card card-face-back">
+                            <div class="track-banner bg-gradient-purple">
+                                <span class="track-level">SYLLABUS &amp; OUTCOMES</span>
+                                <i class="fa-solid fa-graduation-cap track-bg-icon"></i>
+                            </div>
+                            <div class="track-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <h3 class="track-title">What You'll Master</h3>
+                                    <ul class="course-syllabus-list">
+                                        <li>Instagram &amp; LinkedIn Growth Funnels</li>
+                                        <li>Photoshop &amp; Canva Design Mastery</li>
+                                        <li>Viral Short-Form Content Strategy</li>
+                                        <li>Portfolio Creation &amp; Client Onboarding</li>
+                                    </ul>
+                                </div>
+                                <div class="track-footer mt-3">
+                                    <a href="#contact-us"
+                                        class="btn btn-primary magnetic-btn w-100 text-center btn-enroll-course"
+                                        data-course="Social Media &amp; Creative Designs">
+                                        <span>Start Learning</span>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2: SEO + Web Development -->
+                <div class="track-card-flip-wrap reveal-right reveal-element reveal-delay-2">
+                    <div class="track-card-inner">
+                        <!-- FRONT FACE -->
+                        <div class="track-card card-face-front">
+                            <div class="track-banner bg-gradient-cyan">
+                                <span class="track-level">COURSE 02</span>
+                                <i class="fa-solid fa-code track-bg-icon"></i>
+                            </div>
+                            <div class="track-body">
+                                <h3 class="track-title">SEO + Web Development</h3>
+                                <p class="track-desc">Master SEO techniques along with professional web development
+                                    skills.</p>
+
+                                <ul class="course-feature-list">
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> On-page &amp; Off-page SEO</li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> HTML, CSS &amp; JavaScript</li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> WordPress + Custom Sites</li>
+                                </ul>
+
+                                <div class="course-price-wrap">
+                                    <span class="price-original">&#8377;34,999</span>
+                                    <span class="price-amount">&#8377;24,999</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE -->
+                        <div class="track-card card-face-back">
+                            <div class="track-banner bg-gradient-cyan">
+                                <span class="track-level">SYLLABUS &amp; OUTCOMES</span>
+                                <i class="fa-solid fa-code-branch track-bg-icon"></i>
+                            </div>
+                            <div class="track-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <h3 class="track-title">What You'll Master</h3>
+                                    <ul class="course-syllabus-list">
+                                        <li>Google #1 Keyword Ranking Strategies</li>
+                                        <li>Building Fast &amp; Responsive Web Apps</li>
+                                        <li>Technical SEO Audit &amp; Page Speed</li>
+                                        <li>Domain Setup &amp; Web Hosting</li>
+                                    </ul>
+                                </div>
+                                <div class="track-footer mt-3">
+                                    <a href="#contact-us"
+                                        class="btn btn-primary magnetic-btn w-100 text-center btn-enroll-course"
+                                        data-course="SEO + Web Development">
+                                        <span>Start Learning</span>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3: Performance Marketing Strategies -->
+                <div class="track-card-flip-wrap reveal-left reveal-element reveal-delay-3">
+                    <div class="track-card-inner">
+                        <!-- FRONT FACE -->
+                        <div class="track-card card-face-front">
+                            <div class="track-banner bg-gradient-green">
+                                <span class="track-level">COURSE 03</span>
+                                <i class="fa-solid fa-chart-line track-bg-icon"></i>
+                            </div>
+                            <div class="track-body">
+                                <h3 class="track-title">Performance Marketing Strategies</h3>
+                                <p class="track-desc">Advanced strategies to scale your business with data-driven
+                                    marketing.</p>
+
+                                <ul class="course-feature-list">
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Google &amp; Facebook Ads</li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Analytics &amp; Tracking</li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Conversion Optimization</li>
+                                </ul>
+
+                                <div class="course-price-wrap">
+                                    <span class="price-original">&#8377;34,999</span>
+                                    <span class="price-amount">&#8377;24,999</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE -->
+                        <div class="track-card card-face-back">
+                            <div class="track-banner bg-gradient-green">
+                                <span class="track-level">SYLLABUS &amp; OUTCOMES</span>
+                                <i class="fa-solid fa-chart-pie track-bg-icon"></i>
+                            </div>
+                            <div class="track-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <h3 class="track-title">What You'll Master</h3>
+                                    <ul class="course-syllabus-list">
+                                        <li>High-ROAS Meta &amp; Google Ads</li>
+                                        <li>Advanced Audience &amp; Retargeting</li>
+                                        <li>GA4, Pixel &amp; Event Tracking</li>
+                                        <li>Scaling Ad Budgets Profitably</li>
+                                    </ul>
+                                </div>
+                                <div class="track-footer mt-3">
+                                    <a href="#contact-us"
+                                        class="btn btn-primary magnetic-btn w-100 text-center btn-enroll-course"
+                                        data-course="Performance Marketing Strategies">
+                                        <span>Start Learning</span>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 4: Ultimate Combo Course -->
+                <div class="track-card-flip-wrap reveal-right reveal-element reveal-delay-4">
+                    <div class="track-card-inner">
+                        <!-- FRONT FACE -->
+                        <div class="track-card card-face-front">
+                            <div class="track-banner bg-gradient-pink">
+                                <span class="track-level">COURSE 04 &bull; BEST VALUE</span>
+                                <i class="fa-solid fa-crown track-bg-icon"></i>
+                            </div>
+                            <div class="track-body">
+                                <h3 class="track-title">Ultimate Combo Course</h3>
+                                <p class="track-desc">Social Media &amp; Creative Designs + SEO &amp; Web Dev +
+                                    Performance Marketing.</p>
+
+                                <ul class="course-feature-list">
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Includes All 3 Core Modules
+                                    </li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Hands-on Projects &amp; Case
+                                        Studies</li>
+                                    <li><i class="fa-solid fa-check text-vermilion"></i> Certification &amp; Career
+                                        Boost</li>
+                                </ul>
+
+                                <div class="course-price-wrap">
+                                    <span class="price-original">&#8377;59,999</span>
+                                    <span class="price-amount">&#8377;39,999</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BACK FACE -->
+                        <div class="track-card card-face-back">
+                            <div class="track-banner bg-gradient-pink">
+                                <span class="track-level">FULL MASTERY BUNDLE</span>
+                                <i class="fa-solid fa-layer-group track-bg-icon"></i>
+                            </div>
+                            <div class="track-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <h3 class="track-title">Everything Included</h3>
+                                    <ul class="course-syllabus-list">
+                                        <li>360&deg; Design, Code &amp; Ad Mastery</li>
+                                        <li>1-on-1 Mentorship &amp; Live Reviews</li>
+                                        <li>Real Agency Internship Experience</li>
+                                        <li>Industry Recognized Certification</li>
+                                    </ul>
+                                </div>
+                                <div class="track-footer mt-3">
+                                    <a href="#contact-us"
+                                        class="btn btn-primary magnetic-btn w-100 text-center btn-enroll-course"
+                                        data-course="Ultimate Combo Course">
+                                        <span>Get Combo Now</span>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="section team-section d-flex-center" id="team">
+        <div class="section-container">
+            <div class="section-header text-center reveal-left">
+                <div class="section-pill">MEET OUR TRAINERS</div>
+                <h2 class="section-title">The Passionate Experts Behind <span class="text-gradient">Your
+                        Transformation</span></h2>
+            </div>
+
+            <div class="team-grid mt-4">
+                <!-- Founder Card: Gunjan Shidame -->
+                <div class="founder-card reveal-up reveal-element text-center">
+                    <div class="founder-img-wrapper mx-auto mb-4">
+                        <img src="assets/images/founder.png" alt="Ms. Gunjan Shidame - Co-Founder &amp; CMO"
+                            class="founder-img" />
+                        <div class="founder-badge-glow">
+                            <i class="fa-solid fa-crown text-gold me-1"></i> Co-Founder &amp; CMO
+                        </div>
+                    </div>
+                    <div class="founder-info">
+                        <h3 class="founder-name">Ms. Gunjan Shidame</h3>
+                        <div class="mb-3">
+                            <span class="founder-role-pill">Co-Founder &amp; CMO</span>
+                        </div>
+                        <p class="founder-bio">
+                            Youngest leader and Chief Marketing Officer of THRM Digital Marketing Agency. Gunjan brings high-energy innovation and creative strategy to the forefront—empowering businesses through social media marketing, website development, and impactful ad campaigns.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Co-Founder Card: Sunny Sharma -->
+                <div class="founder-card reveal-up reveal-element text-center">
+                    <div class="founder-img-wrapper mx-auto mb-4">
+                        <img src="assets/images/cofounder.png" alt="Mr. Sunny Sharma - Co-Founder &amp; CEO" class="founder-img" />
+                        <div class="founder-badge-glow">
+                            <i class="fa-solid fa-gem text-gold me-1"></i> Co-Founder &amp; CEO
+                        </div>
+                    </div>
+                    <div class="founder-info">
+                        <h3 class="founder-name">Mr. Sunny Sharma</h3>
+                        <div class="mb-3">
+                            <span class="founder-role-pill">Co-Founder &amp; CEO</span>
+                        </div>
+                        <p class="founder-bio">
+                            Visionary leader and Co-Founder of THRM Digital Marketing Agency. Sunny spearheads operations, performance marketing, and creative growth strategies—shaping THRM into a 360° digital powerhouse dedicated to delivering measurable client success.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="section testimonials-section d-flex-center" id="testimonials">
+        <div class="section-container">
+            <div class="section-header text-center reveal-left">
+                <div class="section-pill">PROVEN RESULTS</div>
+                <h2 class="section-title">Success Stories From <span class="text-gradient">Our Alumni</span></h2>
+            </div>
+        </div>
+
+        <!-- Marquee Testimonials Wrapper (Moving in Left Direction) -->
+        <div class="testimonials-marquee-wrapper">
+            <!-- Row 1: Leftward Infinite Marquee -->
+            <div class="testimonials-marquee-row" id="testimonials-row-1">
+                <div class="testimonials-marquee-track">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-purple"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-blue">PS</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Priya Sharma</h4>
+                                    <p class="client-role">Digital Marketing Specialist</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                The SEO and Web Development course completely transformed my understanding of digital
+                                marketing. Within 3 months, I landed my dream job with a <mark
+                                    class="stat-highlight">+60% Salary Hike</mark>. The practical approach and live
+                                projects made all the difference.
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-code text-cyan me-1"></i> SEO + Web
+                                Development</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-cyan"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-purple">RK</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Rajesh Kumar</h4>
+                                    <p class="client-role">Creative Director</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                THRM EduTech's Social Media &amp; Creative Design course opened my eyes to modern brand
+                                building. Hands-on training with <mark class="stat-highlight">Photoshop &amp;
+                                    Canva</mark> helped me build a portfolio that landed top client retainers.
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-hashtag text-purple me-1"></i> Social
+                                Media &amp; Creative Designs</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-green"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-green">NP</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Neha Patel</h4>
+                                    <p class="client-role">Marketing Manager</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                The Performance Marketing course was exactly what I needed. Learning Meta Ads, Google
+                                Ads, and GA4 tracking made me indispensable. We saw a <mark class="stat-highlight">150%
+                                    ROAS Increase</mark> in our live campaigns!
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-chart-line text-green me-1"></i>
+                                Performance Marketing Strategies</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-pink"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-pink">AS</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Amit Singh</h4>
+                                    <p class="client-role">Agency Founder</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                Taking the Ultimate Combo Course was the best investment ever. Comprehensive curriculum
+                                covering design, coding, and ad strategies made me a complete professional. <mark
+                                    class="stat-highlight">Now I run my own digital agency!</mark>
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-crown text-pink me-1"></i> Ultimate
+                                Combo Course</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-cyan"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-cyan">RM</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Raj Mishra</h4>
+                                    <p class="client-role">Content Strategist</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                The 1-on-1 mentorship and real-world client projects made this program exceptional. I
+                                learned <mark class="stat-highlight">high-converting viral strategies</mark> that I
+                                apply daily for major brands.
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-hashtag text-purple me-1"></i> Social
+                                Media &amp; Creative Designs</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 6 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-purple"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-blue">SD</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Shivam Dubey</h4>
+                                    <p class="client-role">E-commerce Manager</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                Outstanding practical academy! The technical SEO strategies I mastered helped increase
+                                our e-commerce traffic by <mark class="stat-highlight">+300% Growth in 4 Months</mark>.
+                                Highly recommended!
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-code text-cyan me-1"></i> SEO + Web
+                                Development</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duplicate track for seamless infinite marquee loop -->
+                <div class="testimonials-marquee-track" aria-hidden="true">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-purple"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-blue">PS</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Priya Sharma</h4>
+                                    <p class="client-role">Digital Marketing Specialist</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                The SEO and Web Development course completely transformed my understanding of digital
+                                marketing. Within 3 months, I landed my dream job with a <mark
+                                    class="stat-highlight">+60% Salary Hike</mark>. The practical approach and live
+                                projects made all the difference.
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-code text-cyan me-1"></i> SEO + Web
+                                Development</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-cyan"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-purple">RK</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Rajesh Kumar</h4>
+                                    <p class="client-role">Creative Director</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                THRM EduTech's Social Media &amp; Creative Design course opened my eyes to modern brand
+                                building. Hands-on training with <mark class="stat-highlight">Photoshop &amp;
+                                    Canva</mark> helped me build a portfolio that landed top client retainers.
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-hashtag text-purple me-1"></i> Social
+                                Media &amp; Creative Designs</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-green"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-green">NP</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Neha Patel</h4>
+                                    <p class="client-role">Marketing Manager</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                The Performance Marketing course was exactly what I needed. Learning Meta Ads, Google
+                                Ads, and GA4 tracking made me indispensable. We saw a <mark class="stat-highlight">150%
+                                    ROAS Increase</mark> in our live campaigns!
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-chart-line text-green me-1"></i>
+                                Performance Marketing Strategies</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-pink"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-pink">AS</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Amit Singh</h4>
+                                    <p class="client-role">Agency Founder</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                Taking the Ultimate Combo Course was the best investment ever. Comprehensive curriculum
+                                covering design, coding, and ad strategies made me a complete professional. <mark
+                                    class="stat-highlight">Now I run my own digital agency!</mark>
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-crown text-pink me-1"></i> Ultimate
+                                Combo Course</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-cyan"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-cyan">RM</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Raj Mishra</h4>
+                                    <p class="client-role">Content Strategist</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                The 1-on-1 mentorship and real-world client projects made this program exceptional. I
+                                learned <mark class="stat-highlight">high-converting viral strategies</mark> that I
+                                apply daily for major brands.
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-hashtag text-purple me-1"></i> Social
+                                Media &amp; Creative Designs</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 6 -->
+                    <div class="testimonial-card">
+                        <div class="card-top-accent bg-grad-purple"></div>
+                        <div class="testimonial-header">
+                            <div class="client-profile">
+                                <div class="client-avatar av-blue">SD</div>
+                                <div class="client-details">
+                                    <h4 class="client-name">Shivam Dubey</h4>
+                                    <p class="client-role">E-commerce Manager</p>
+                                </div>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Alumni</span>
+                            </div>
+                        </div>
+                        <div class="star-rating mt-3 mb-2">
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <i class="fa-solid fa-star text-gold"></i>
+                            <span class="rating-score">5.0</span>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fa-solid fa-quote-left quote-watermark"></i>
+                            <p class="testimonial-text">
+                                Outstanding practical academy! The technical SEO strategies I mastered helped increase
+                                our e-commerce traffic by <mark class="stat-highlight">+300% Growth in 4 Months</mark>.
+                                Highly recommended!
+                            </p>
+                        </div>
+                        <div class="testimonial-footer mt-4">
+                            <span class="course-tag-pill"><i class="fa-solid fa-code text-cyan me-1"></i> SEO + Web
+                                Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT US SECTION -->
+    <section class="section contact-section d-flex-center" id="contact-us">
+        <div class="section-container">
+            <div class="section-header text-center reveal-left mb-4">
+                <div class="section-pill">SLIDE INTO OUR DMS</div>
+                <h2 class="section-title">Ready to Start Your <span class="text-gradient">Skill Journey?</span></h2>
+            </div>
+
+            <!-- 2-Column Main Contact Layout (Left: Info + Map Stacked, Right: Full Height Form) -->
+            <div class="contact-two-col-grid">
+
+                <!-- Left Column: Stacked Contact Info & Map Cards -->
+                <div class="contact-left-col reveal-left reveal-element">
+
+                    <!-- Contact Information Card -->
+                    <div class="c-box-card c-info-box">
+                        <h3 class="c-box-title">Contact Information</h3>
+
+                        <div class="info-item-list">
+                            <div class="info-item-row">
+                                <div class="info-icon-circle">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div class="info-item-content">
+                                    <h4 class="info-label">Address</h4>
+                                    <p class="info-val">1st Floor Office No-02 Seasons Harmony<br>Nr. Ayush Nx Kalyan
+                                        West, Kalyan West, Maharashtra 421301</p>
+                                </div>
+                            </div>
+
+                            <div class="info-item-row">
+                                <div class="info-icon-circle">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div class="info-item-content">
+                                    <h4 class="info-label">Phone</h4>
+                                    <p class="info-val"><a href="tel:+919004500657">+91 90045 00657</a></p>
+                                </div>
+                            </div>
+
+                            <div class="info-item-row">
+                                <div class="info-icon-circle">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div class="info-item-content">
+                                    <h4 class="info-label">Email</h4>
+                                    <p class="info-val"><a
+                                            href="mailto:hr@thrmdigitalmarketing.in">hr@thrmdigitalmarketing.in</a></p>
+                                </div>
+                            </div>
+
+                            <div class="info-item-row">
+                                <div class="info-icon-circle">
+                                    <i class="fa-solid fa-clock"></i>
+                                </div>
+                                <div class="info-item-content">
+                                    <h4 class="info-label">Office Hours</h4>
+                                    <p class="info-val"><strong>Monday - Saturday:</strong> 10:30 AM - 7:00
+                                        PM<br><strong>Sunday:</strong> Closed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Find Us Here Map Card -->
+                    <div class="c-box-card c-map-box">
+                        <h3 class="c-box-title">Find Us Here</h3>
+                        <div class="map-iframe-wrapper">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.6816898594097!2d73.13448319999999!3d19.2526995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be797a7e3047633%3A0x1b0a703b3bdd2d4f!2sTHRM%20EduTech!5e0!3m2!1sen!2sin!4v1757072162012!5m2!1sen!2sin"
+                                width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Full Height Send Us a Message Form Card -->
+                <div class="contact-right-col reveal-right reveal-element">
+                    <div class="c-box-card c-form-box">
+                        <h3 class="c-box-title">Send us a Message</h3>
+
+                        <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+                            <input type="hidden" name="access_key" value="3d408239-7bd4-4377-b4de-a1ab1f3ed9d3" />
+
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" required
+                                    placeholder="Enter your full name" class="form-input" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required
+                                    placeholder="Enter your email address" class="form-input" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number"
+                                    class="form-input" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="course">Course Interest *</label>
+                                <select id="course" name="course" class="form-input" required>
+                                    <option value="">Select a Program / Course...</option>
+                                    <option value="Social Media &amp; Creative Designs">Social Media &amp; Creative
+                                        Designs</option>
+                                    <option value="SEO + Web Development">SEO + Web Development</option>
+                                    <option value="Performance Marketing Strategies">Performance Marketing Strategies
+                                    </option>
+                                    <option value="Ultimate Combo Course">Ultimate Combo Course</option>
+                                    <option value="Free Consultation">Free Consultation</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message (Optional)</label>
+                                <textarea id="message" name="message" rows="4"
+                                    placeholder="Tell us about your goals and how we can help you..."
+                                    class="form-input"></textarea>
+                            </div>
+
+                            <div class="form-group form-checkbox">
+                                <input type="checkbox" id="consent" name="consent" required />
+                                <label for="consent">I agree to receive communications from THRM EduTech about courses
+                                    and updates.</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mt-3" id="submitBtn">
+                                <span>Send Message</span>
+                                <i class="fa-solid fa-paper-plane ms-2"></i>
+                            </button>
+                        </form>
+
+                        <div id="formFeedback" class="form-feedback" style="display: none;">
+                            <i class="fa-solid fa-circle-check text-green text-3xl"></i>
+                            <h4>Message Sent Successfully!</h4>
+                            <p>Thank you for reaching out to THRM EduTech. We will get back to you shortly.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer">
+        <div class="footer-container">
+
+            <!-- Top Newsletter Join Banner -->
+            <div class="footer-newsletter-card reveal-up">
+                <div class="newsletter-content">
+                    <span class="pill-badge-sm mb-2"><i class="fa-solid fa-bolt text-yellow me-1"></i> JOIN THE
+                        COMMUNITY</span>
+                    <h3>Stay Ahead of the Skill Curve</h3>
+                    <p>Get weekly practical marketing guides, code snippets, and course announcements.</p>
+                </div>
+                <form class="newsletter-form"
+                    onsubmit="event.preventDefault(); alert('Thank you for subscribing to THRM EduTech updates!');">
+                    <input type="email" placeholder="Enter your email address" required class="newsletter-input" />
+                    <button type="submit" class="btn btn-primary magnetic-btn">
+                        <span>Subscribe</span>
+                        <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Footer Main 4-Column Grid -->
+            <div class="footer-grid mt-5">
+
+                <!-- Col 1: Brand Info -->
+                <div class="footer-brand-col">
+                    <a href="#home" class="footer-brand-link">
+                        <img src="assets/images/logo.png" alt="THRM EduTech Mascot" class="footer-mascot-img" />
+                        <div class="brand-text">
+                            <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+                        </div>
+                    </a>
+                    <p class="footer-tagline mt-3">
+                        Empowering ambitious creators, coders, and marketers with practical, career-ready digital
+                        skills.
+                    </p>
+                    <div class="footer-socials mt-4">
+                        <a href="https://www.instagram.com/thrm_edutech?igsh=MXhxNHRhODhvMTl1Yw==&igsi=MXhxNHRhODhvMTl1Yw=="
+                            target="_blank" class="social-icon icon-ig" aria-label="Instagram"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/919004500657" target="_blank" class="social-icon icon-wa"
+                            aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="tel:+919004500657" class="social-icon icon-phone" aria-label="Call"><i
+                                class="fa-solid fa-phone"></i></a>
+                        <a href="mailto:hr@thrmdigitalmarketing.in" class="social-icon icon-mail" aria-label="Email"><i
+                                class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation Links -->
+                <div class="footer-col">
+                    <h4>Quick Navigation</h4>
+                    <ul>
+                        <li><a href="#home"><i class="fa-solid fa-angle-right footer-icon-space text-blue"></i>Home</a>
+                        </li>
+                        <li><a href="#about-us"><i class="fa-solid fa-angle-right footer-icon-space text-blue"></i>About
+                                Us</a></li>
+                        <li><a href="#services"><i
+                                    class="fa-solid fa-angle-right footer-icon-space text-blue"></i>Services</a></li>
+                        <li><a href="#courses"><i
+                                    class="fa-solid fa-angle-right footer-icon-space text-blue"></i>Courses</a></li>
+                        <li><a href="#team"><i class="fa-solid fa-angle-right footer-icon-space text-blue"></i>Our
+                                Team</a></li>
+                        <li><a href="#testimonials"><i
+                                    class="fa-solid fa-angle-right footer-icon-space text-blue"></i>Testimonials</a>
+                        </li>
+                        <li><a href="#contact-us"><i
+                                    class="fa-solid fa-angle-right footer-icon-space text-blue"></i>Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Programs -->
+                <div class="footer-col">
+                    <h4>Popular Tracks</h4>
+                    <ul>
+                        <li><a href="#courses"><i class="fa-solid fa-code footer-icon-space text-cyan"></i>SEO + Web
+                                Development</a></li>
+                        <li><a href="#courses"><i class="fa-solid fa-hashtag footer-icon-space text-purple"></i>Social
+                                Media &amp; Creative Designs</a></li>
+                        <li><a href="#courses"><i
+                                    class="fa-solid fa-chart-line footer-icon-space text-green"></i>Performance
+                                Marketing</a></li>
+                        <li><a href="#courses"><i class="fa-solid fa-crown footer-icon-space text-pink"></i>Ultimate
+                                Combo Course</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Campus & Contact -->
+                <div class="footer-col">
+                    <h4>Campus Info</h4>
+                    <div class="campus-info-list">
+                        <p><i class="fa-solid fa-location-dot footer-icon-space text-blue"></i>1st Floor Office No-02
+                            Seasons Harmony, Kalyan West, MH 421301</p>
+                        <p><i class="fa-solid fa-phone footer-icon-space text-blue"></i>+91 90045 00657</p>
+                        <p><i class="fa-solid fa-envelope footer-icon-space text-blue"></i>hr@thrmdigitalmarketing.in
+                        </p>
+                        <div class="mt-3">
+                            <span class="status-pill-active"><i class="fa-solid fa-circle text-green me-2"></i>
+                                Admissions Open 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Bottom Bar -->
+            <div class="footer-bottom mt-5">
+                <div class="footer-bottom-flex">
+                    <p>&copy; 2026 THRM EduTech. All rights reserved. Built for future digital leaders.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#home" class="back-to-top-btn"><i class="fa-solid fa-arrow-up me-2"></i> Back to
+                            Top</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Production-Grade Lenis Smooth Scroll -->
+    <script src="js/lenis.min.js"></script>
+
+    <!-- Custom Script -->
+    <script src="script.js?v=610"></script>
 </body>
+
 </html>
