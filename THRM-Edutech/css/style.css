@@ -5285,14 +5285,14 @@ body.drawer-open {
     line-height: 1.25 !important;
   }
 
-  /* --- Hero Section --- */
+  /* --- Hero Section Mobile --- */
   .hero {
-    padding: 85px 0 40px 0 !important;
+    padding: 75px 0 32px 0 !important;
   }
 
   .hero-grid {
     grid-template-columns: 1fr !important;
-    gap: 32px !important;
+    gap: 20px !important;
     text-align: center !important;
   }
 
@@ -5301,6 +5301,7 @@ body.drawer-open {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
+    width: 100% !important;
   }
 
   .hero-heading {
@@ -5358,29 +5359,9 @@ body.drawer-open {
     display: none !important;
   }
 
-  .hero-visual {
-    width: 100% !important;
-    max-width: 500px !important;
-    margin: 0 auto !important;
-  }
-
-  .main-visual-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 12px !important;
-    border-radius: 24px !important;
-    margin: 0 auto !important;
-  }
-
-  .image-frame {
-    width: 100% !important;
-    min-height: unset !important;
-    height: 240px !important;
-    max-height: 280px !important;
-    border-radius: 18px !important;
-  }
-
-  /* Prevent negative absolute badge offset horizontal scroll */
+  /* REMOVE FOR FUTURE CREATORS & BUILDERS WITH IMAGE ON MOBILE */
+  .hero-visual,
+  .main-visual-card,
   .float-badge {
     display: none !important;
   }
@@ -5389,36 +5370,63 @@ body.drawer-open {
   .marquee-divider-wrap {
     width: 100% !important;
     max-width: 100% !important;
-    margin: 32px 0 !important;
+    margin: 28px 0 !important;
     overflow: hidden !important;
   }
 
   .marquee-track span {
-    padding: 8px 20px !important;
-    font-size: 0.82rem !important;
+    padding: 8px 18px !important;
+    font-size: 0.8rem !important;
   }
 
-  /* --- About Us Bento --- */
+  /* --- About Us Bento (Remove Creative Hub image, 2-2 in a row for cards) --- */
   .bento-top-row {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-    margin-bottom: 20px !important;
+    display: block !important;
+    margin-bottom: 12px !important;
+  }
+
+  .bento-story-card {
+    width: 100% !important;
+    padding: 20px 16px !important;
+    border-radius: 18px !important;
+  }
+
+  /* REMOVE CREATIVE HUB WITH IMAGE ON MOBILE */
+  .bento-img-card {
+    display: none !important;
+  }
+
+  /* 2-2 in one row for cards like Our Mission */
+  .bento-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
   }
 
   .bento-card {
-    padding: 24px 20px !important;
-    border-radius: 20px !important;
+    padding: 16px 14px !important;
+    border-radius: 16px !important;
   }
 
-  .bento-img-card {
-    min-height: 220px !important;
-    height: 220px !important;
-    border-radius: 20px !important;
+  .bento-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 8px !important;
   }
 
-  .bento-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+  .bento-card h3 {
+    font-size: 1.05rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .bento-card p {
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .bento-grid .bento-card:nth-child(3) {
+    grid-column: span 2 !important;
   }
 
   /* --- Values & Process Orbitals --- */
@@ -5491,29 +5499,41 @@ body.drawer-open {
     padding: 2px 6px !important;
   }
 
-  /* --- Services Section --- */
+  /* --- Services Section (2-2 in one row) --- */
   .services-header-split {
-    margin-bottom: 22px !important;
+    margin-bottom: 20px !important;
     text-align: center !important;
   }
 
   .ref-cards-grid {
-    grid-template-columns: 1fr !important;
-    gap: 18px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
   }
 
   .ref-card {
-    padding: 20px 18px !important;
-    border-radius: 20px !important;
+    padding: 14px 12px !important;
+    border-radius: 16px !important;
   }
 
   .ref-card-img-wrap {
-    height: 170px !important;
-    border-radius: 14px !important;
-    margin-bottom: 14px !important;
+    height: 95px !important;
+    border-radius: 10px !important;
+    margin: 8px 0 !important;
   }
 
-  /* --- Courses Section --- */
+  .ref-card-title {
+    font-size: 0.95rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .ref-card-desc {
+    font-size: 0.72rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* --- Courses Section (2-2 in one row) --- */
   .courses-section .section-container {
     width: 100% !important;
     max-width: 100% !important;
@@ -5521,60 +5541,136 @@ body.drawer-open {
   }
 
   .courses-section .tracks-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
   }
 
   .track-card-flip-wrap {
-    min-height: 480px !important;
-    max-width: 440px !important;
-    margin: 0 auto !important;
+    min-height: 380px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
     width: 100% !important;
   }
 
   .card-face-front,
   .card-face-back {
-    border-radius: 20px !important;
+    border-radius: 16px !important;
   }
 
   .card-face-front .track-body,
   .card-face-back .track-body {
-    padding: 18px 16px !important;
+    padding: 12px 10px !important;
   }
 
-  /* --- Team Section --- */
+  .card-theme-header {
+    padding: 10px 10px 8px 10px !important;
+    min-height: 56px !important;
+  }
+
+  .track-badge {
+    font-size: 0.65rem !important;
+    padding: 2px 8px !important;
+  }
+
+  .track-title {
+    font-size: 0.92rem !important;
+    line-height: 1.25 !important;
+    margin: 4px 0 !important;
+  }
+
+  .track-desc {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .pill-tag {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
+  }
+
+  .track-footer {
+    padding: 8px 10px !important;
+  }
+
+  .track-price {
+    font-size: 0.92rem !important;
+  }
+
+  .flip-hint-badge {
+    font-size: 0.62rem !important;
+    padding: 3px 6px !important;
+    margin-top: 4px !important;
+  }
+
+  .course-syllabus-list li {
+    font-size: 0.7rem !important;
+    padding: 5px 8px !important;
+  }
+
+  .card-face-back .track-body {
+    padding: 10px 10px 48px 10px !important;
+  }
+
+  /* --- Team Section (2-2 in one row) --- */
   .team-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-    max-width: 420px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
     width: 100% !important;
   }
 
   .founder-card {
-    padding: 26px 18px 22px !important;
-    border-radius: 22px !important;
+    padding: 18px 10px 14px !important;
+    border-radius: 16px !important;
     width: 100% !important;
     text-align: center !important;
   }
 
   .founder-img-wrapper {
-    width: 110px !important;
-    height: 110px !important;
-    margin: 0 auto 18px !important;
+    width: 75px !important;
+    height: 75px !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .founder-badge-glow {
+    font-size: 0.6rem !important;
+    padding: 2px 8px !important;
+    bottom: -8px !important;
   }
 
   .founder-name {
-    font-size: 1.3rem !important;
+    font-size: 0.95rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .founder-role-pill {
+    font-size: 0.65rem !important;
+    padding: 2px 8px !important;
   }
 
   .founder-bio {
-    font-size: 0.86rem !important;
-    line-height: 1.6 !important;
-    max-width: 100% !important;
+    font-size: 0.72rem !important;
+    line-height: 1.4 !important;
+    margin-top: 8px !important;
   }
 
-  /* --- Testimonials Section --- */
+  .founder-socials-row {
+    gap: 8px !important;
+    margin-top: 8px !important;
+  }
+
+  .f-social-link {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* --- Testimonials Section (Small Compact Alumni Success Stories) --- */
   .testimonials-section .section-container {
     width: 100% !important;
     max-width: 100% !important;
@@ -5585,21 +5681,60 @@ body.drawer-open {
     width: 100% !important;
     max-width: 100% !important;
     overflow: hidden !important;
-    padding: 10px 0 18px !important;
-    gap: 14px !important;
+    padding: 8px 0 14px !important;
+    gap: 10px !important;
   }
 
+  .testimonials-marquee-row {
+    gap: 10px !important;
+  }
+
+  .testimonials-marquee-track {
+    gap: 10px !important;
+  }
+
+  /* Reduced Small Alumni Card */
   .testimonial-card {
-    width: min(290px, 82vw) !important;
-    min-width: min(290px, 82vw) !important;
-    flex: 0 0 min(290px, 82vw) !important;
-    padding: 18px 16px !important;
-    border-radius: 18px !important;
+    width: 215px !important;
+    min-width: 215px !important;
+    flex: 0 0 215px !important;
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
   }
 
   .t-quote {
-    font-size: 0.84rem !important;
-    line-height: 1.55 !important;
+    font-size: 0.74rem !important;
+    line-height: 1.42 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .t-stars {
+    font-size: 0.68rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .t-meta {
+    gap: 8px !important;
+    margin-top: 8px !important;
+  }
+
+  .t-avatar {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .t-author-name {
+    font-size: 0.82rem !important;
+    margin-bottom: 1px !important;
+  }
+
+  .t-role {
+    font-size: 0.68rem !important;
+  }
+
+  .t-course-tag {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
   }
 
   /* --- Contact Section --- */
@@ -5792,6 +5927,83 @@ body.drawer-open {
     font-size: 1.45rem !important;
   }
 
+  /* 2-2 card grid refinement for compact phones */
+  .ref-cards-grid,
+  .bento-grid,
+  .courses-section .tracks-grid,
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .ref-card {
+    padding: 10px 8px !important;
+  }
+
+  .ref-card-img-wrap {
+    height: 80px !important;
+  }
+
+  .ref-card-title {
+    font-size: 0.84rem !important;
+  }
+
+  .ref-card-desc {
+    font-size: 0.68rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .track-card-flip-wrap {
+    min-height: 350px !important;
+  }
+
+  .card-face-front .track-body,
+  .card-face-back .track-body {
+    padding: 10px 8px !important;
+  }
+
+  .track-title {
+    font-size: 0.84rem !important;
+  }
+
+  .track-desc {
+    font-size: 0.68rem !important;
+  }
+
+  .bento-card {
+    padding: 12px 10px !important;
+  }
+
+  .bento-card h3 {
+    font-size: 0.95rem !important;
+  }
+
+  .bento-card p {
+    font-size: 0.74rem !important;
+  }
+
+  .founder-card {
+    padding: 14px 8px 12px !important;
+  }
+
+  .founder-img-wrapper {
+    width: 65px !important;
+    height: 65px !important;
+  }
+
+  .founder-name {
+    font-size: 0.88rem !important;
+  }
+
+  .founder-role-pill {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
+  }
+
+  .founder-bio {
+    font-size: 0.68rem !important;
+  }
+
   .orbital-radar-stage {
     width: min(260px, 82vw) !important;
     height: min(260px, 82vw) !important;
@@ -5831,10 +6043,6 @@ body.drawer-open {
   .stat-label {
     font-size: 0.65rem !important;
   }
-
-  .image-frame {
-    height: 200px !important;
-  }
 }
 
 @media (max-width: 360px) {
@@ -5849,7 +6057,7 @@ body.drawer-open {
   .bento-card,
   .ref-card,
   .c-box-card {
-    padding: 18px 14px !important;
+    padding: 10px 8px !important;
   }
 
   .orbital-radar-stage {
