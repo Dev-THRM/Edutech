@@ -733,6 +733,33 @@ a {
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
+  padding: 44px 40px !important;
+  min-height: 420px !important;
+}
+
+.bento-story-card h3 {
+  font-size: 1.9rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 16px !important;
+}
+
+.bento-story-card p {
+  font-size: 1.02rem !important;
+  line-height: 1.72 !important;
+  color: #334155 !important;
+}
+
+.bento-story-card .bento-icon {
+  width: 56px !important;
+  height: 56px !important;
+  font-size: 1.45rem !important;
+  margin-bottom: 18px !important;
+}
+
+.bento-story-card .b-tag {
+  font-size: 0.85rem !important;
+  padding: 7px 16px !important;
+  font-weight: 700 !important;
 }
 
 .bento-img-card {
@@ -4181,44 +4208,44 @@ body {
 }
 
 .testimonial-card {
-  flex: 0 0 380px !important;
-  width: 380px !important;
-  min-width: 380px !important;
+  flex: 0 0 350px !important;
+  width: 350px !important;
+  min-width: 350px !important;
   background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%) !important;
   border: 1px solid rgba(37, 99, 235, 0.16) !important;
-  border-radius: 26px !important;
-  padding: 28px 26px 24px 26px !important;
+  border-radius: 20px !important;
+  padding: 18px 20px 16px 20px !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   position: relative !important;
   overflow: hidden !important;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(37, 99, 235, 0.04) !important;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(37, 99, 235, 0.04) !important;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s, border-color 0.4s !important;
   cursor: default !important;
 }
 
 .testimonial-card:hover {
-  transform: translateY(-8px) !important;
+  transform: translateY(-6px) !important;
   border-color: rgba(37, 99, 235, 0.4) !important;
-  box-shadow: 0 28px 60px rgba(37, 99, 235, 0.16), 0 0 25px rgba(6, 182, 212, 0.1) !important;
+  box-shadow: 0 20px 45px rgba(37, 99, 235, 0.14), 0 0 20px rgba(6, 182, 212, 0.08) !important;
   z-index: 5 !important;
 }
 
 @media (max-width: 768px) {
   .testimonials-marquee-wrapper {
-    gap: 16px !important;
-    padding: 12px 0 20px 0 !important;
+    gap: 14px !important;
+    padding: 10px 0 16px 0 !important;
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%) !important;
     mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%) !important;
   }
 
   .testimonials-marquee-row {
-    gap: 16px !important;
+    gap: 14px !important;
   }
 
   .testimonials-marquee-track {
-    gap: 16px !important;
+    gap: 14px !important;
     animation: marqueeMoveLeftMobile 30s linear infinite !important;
   }
 
@@ -4227,16 +4254,16 @@ body {
       transform: translate3d(0, 0, 0);
     }
     100% {
-      transform: translate3d(calc(-100% - 16px), 0, 0);
+      transform: translate3d(calc(-100% - 14px), 0, 0);
     }
   }
 
   .testimonial-card {
-    flex: 0 0 310px !important;
-    width: 310px !important;
-    min-width: 310px !important;
-    padding: 22px 20px 20px 20px !important;
-    border-radius: 20px !important;
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    padding: 12px 14px 10px 14px !important;
+    border-radius: 16px !important;
   }
 }
 
@@ -4251,7 +4278,7 @@ body {
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  height: 5px !important;
+  height: 4px !important;
 }
 
 .bg-grad-purple { background: linear-gradient(90deg, #2563EB, #7C3AED) !important; }
@@ -4268,21 +4295,21 @@ body {
 .client-profile {
   display: flex !important;
   align-items: center !important;
-  gap: 14px !important;
+  gap: 12px !important;
 }
 
 .client-avatar {
-  width: 48px !important;
-  height: 48px !important;
+  width: 40px !important;
+  height: 40px !important;
   border-radius: 50% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   font-family: 'Outfit', sans-serif !important;
   font-weight: 800 !important;
-  font-size: 1.05rem !important;
+  font-size: 0.92rem !important;
   color: #FFFFFF !important;
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25) !important;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.22) !important;
   flex-shrink: 0 !important;
 }
 
@@ -4294,15 +4321,15 @@ body {
 
 .client-name {
   font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
-  font-size: 1.12rem !important;
+  font-size: 1.02rem !important;
   font-weight: 800 !important;
   color: #0F172A !important;
-  line-height: 1.25 !important;
+  line-height: 1.2 !important;
   margin-bottom: 2px !important;
 }
 
 .client-role {
-  font-size: 0.82rem !important;
+  font-size: 0.76rem !important;
   color: #64748B !important;
   font-weight: 600 !important;
 }
@@ -4310,13 +4337,13 @@ body {
 .verified-badge {
   display: flex !important;
   align-items: center !important;
-  gap: 5px !important;
-  font-size: 0.72rem !important;
+  gap: 4px !important;
+  font-size: 0.68rem !important;
   font-weight: 700 !important;
   color: #2563EB !important;
   background: rgba(37, 99, 235, 0.08) !important;
   border: 1px solid rgba(37, 99, 235, 0.16) !important;
-  padding: 4px 10px !important;
+  padding: 3px 8px !important;
   border-radius: 9999px !important;
 }
 
@@ -4327,59 +4354,60 @@ body {
 .star-rating {
   display: flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  margin-top: 22px !important;
-  margin-bottom: 16px !important;
+  gap: 4px !important;
+  margin-top: 10px !important;
+  margin-bottom: 8px !important;
 }
 
 .text-gold {
   color: #F59E0B !important;
-  font-size: 0.88rem !important;
+  font-size: 0.82rem !important;
 }
 
 .rating-score {
-  font-size: 0.82rem !important;
+  font-size: 0.78rem !important;
   font-weight: 800 !important;
   color: #0F172A !important;
-  margin-left: 6px !important;
+  margin-left: 4px !important;
 }
 
 .testimonial-content {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: 12px !important;
+  margin-top: 4px !important;
   flex-grow: 1 !important;
 }
 
 .quote-watermark {
   position: absolute !important;
-  top: -12px !important;
-  left: -8px !important;
-  font-size: 3.5rem !important;
-  color: rgba(37, 99, 235, 0.07) !important;
+  top: -8px !important;
+  left: -6px !important;
+  font-size: 2.2rem !important;
+  color: rgba(37, 99, 235, 0.06) !important;
   pointer-events: none !important;
   z-index: -1 !important;
 }
 
 .testimonial-text {
   font-family: 'Lexend', sans-serif !important;
-  font-size: 0.9rem !important;
+  font-size: 0.85rem !important;
   color: #334155 !important;
-  line-height: 1.65 !important;
+  line-height: 1.48 !important;
 }
 
 .stat-highlight {
   background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(6, 182, 212, 0.12)) !important;
   color: #2563EB !important;
   font-weight: 800 !important;
-  padding: 2px 8px !important;
-  border-radius: 6px !important;
+  padding: 1px 6px !important;
+  border-radius: 5px !important;
   border: 1px solid rgba(37, 99, 235, 0.2) !important;
 }
 
 .testimonial-footer {
   border-top: 1px dashed rgba(37, 99, 235, 0.15) !important;
-  padding-top: 14px !important;
+  padding-top: 8px !important;
+  margin-top: 8px !important;
 }
 
 .course-tag-pill {
@@ -4387,8 +4415,8 @@ body {
   border: 1px solid rgba(37, 99, 235, 0.18) !important;
   color: #2563EB !important;
   font-weight: 700 !important;
-  font-size: 0.78rem !important;
-  padding: 6px 14px !important;
+  font-size: 0.72rem !important;
+  padding: 4px 10px !important;
   border-radius: 9999px !important;
   display: inline-block !important;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.05) !important;
@@ -5382,13 +5410,51 @@ body.drawer-open {
   /* --- About Us Bento (Remove Creative Hub image, 2-2 in a row for cards) --- */
   .bento-top-row {
     display: block !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 16px !important;
   }
 
+  /* INCREASE SIZE OF CARD OF OUR STORY */
   .bento-story-card {
     width: 100% !important;
-    padding: 20px 16px !important;
-    border-radius: 18px !important;
+    padding: 30px 22px !important;
+    border-radius: 22px !important;
+    min-height: 320px !important;
+    box-shadow: 0 14px 35px rgba(37, 99, 235, 0.08) !important;
+    margin-bottom: 16px !important;
+  }
+
+  .bento-story-card .bento-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.3rem !important;
+    margin-bottom: 14px !important;
+  }
+
+  .bento-story-card h3 {
+    font-size: 1.48rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 12px !important;
+    color: #0F172A !important;
+  }
+
+  .bento-story-card p {
+    font-size: 0.92rem !important;
+    line-height: 1.65 !important;
+    color: #334155 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .bento-story-card .bento-tags {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-top: 14px !important;
+  }
+
+  .bento-story-card .b-tag {
+    font-size: 0.8rem !important;
+    padding: 6px 14px !important;
+    font-weight: 700 !important;
   }
 
   /* REMOVE CREATIVE HUB WITH IMAGE ON MOBILE */
@@ -5696,50 +5762,87 @@ body.drawer-open {
     gap: 10px !important;
   }
 
-  /* Reduced Small Alumni Card */
+  /* Reduced Length / Compact Alumni Card */
   .testimonial-card {
-    width: 245px !important;
-    min-width: 245px !important;
-    flex: 0 0 245px !important;
-    padding: 14px 14px 12px 14px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    flex: 0 0 280px !important;
+    padding: 12px 14px 10px 14px !important;
     border-radius: 16px !important;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04) !important;
   }
 
-  .t-quote {
-    font-size: 0.78rem !important;
-    line-height: 1.48 !important;
-    margin-bottom: 10px !important;
+  .client-profile {
+    gap: 10px !important;
+  }
+
+  .client-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.75rem !important;
+  }
+
+  .client-name {
+    font-size: 0.84rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 1px !important;
+  }
+
+  .client-role {
+    font-size: 0.68rem !important;
+  }
+
+  .verified-badge {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
+    gap: 3px !important;
+  }
+
+  .star-rating {
+    margin-top: 5px !important;
+    margin-bottom: 4px !important;
+    gap: 3px !important;
+  }
+
+  .text-gold {
+    font-size: 0.68rem !important;
+  }
+
+  .rating-score {
+    font-size: 0.68rem !important;
+    margin-left: 3px !important;
+  }
+
+  .testimonial-content {
+    margin-top: 2px !important;
+  }
+
+  .quote-watermark {
+    font-size: 1.5rem !important;
+    top: -5px !important;
+    left: -4px !important;
+  }
+
+  .testimonial-text {
+    font-size: 0.75rem !important;
+    line-height: 1.35 !important;
     word-break: normal !important;
     overflow-wrap: break-word !important;
   }
 
-  .t-stars {
-    font-size: 0.68rem !important;
-    margin-bottom: 6px !important;
+  .stat-highlight {
+    padding: 1px 4px !important;
+    font-size: 0.72rem !important;
   }
 
-  .t-meta {
-    gap: 8px !important;
-    margin-top: 8px !important;
+  .testimonial-footer {
+    padding-top: 6px !important;
+    margin-top: 5px !important;
   }
 
-  .t-avatar {
-    width: 32px !important;
-    height: 32px !important;
-  }
-
-  .t-author-name {
-    font-size: 0.82rem !important;
-    margin-bottom: 1px !important;
-  }
-
-  .t-role {
-    font-size: 0.68rem !important;
-  }
-
-  .t-course-tag {
-    font-size: 0.62rem !important;
-    padding: 2px 6px !important;
+  .course-tag-pill {
+    font-size: 0.66rem !important;
+    padding: 2px 8px !important;
   }
 
   /* --- Contact Section --- */
@@ -5982,16 +6085,40 @@ body.drawer-open {
     font-size: 0.78rem !important;
   }
 
-  .bento-card {
+  .bento-grid .bento-card {
     padding: 12px 10px !important;
   }
 
-  .bento-card h3 {
+  .bento-grid .bento-card h3 {
     font-size: 0.95rem !important;
   }
 
-  .bento-card p {
+  .bento-grid .bento-card p {
     font-size: 0.74rem !important;
+  }
+
+  /* INCREASE SIZE OF CARD OF OUR STORY */
+  .bento-story-card {
+    padding: 26px 20px !important;
+    min-height: 310px !important;
+    border-radius: 20px !important;
+  }
+
+  .bento-story-card .bento-icon {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 1.25rem !important;
+  }
+
+  .bento-story-card h3 {
+    font-size: 1.42rem !important;
+    font-weight: 800 !important;
+  }
+
+  .bento-story-card p {
+    font-size: 0.9rem !important;
+    line-height: 1.62 !important;
+    color: #334155 !important;
   }
 
   .founder-card {
@@ -6068,7 +6195,7 @@ body.drawer-open {
     font-size: 1.35rem !important;
   }
 
-  .bento-card,
+  .bento-grid .bento-card,
   .ref-card,
   .c-box-card {
     padding: 10px 8px !important;
