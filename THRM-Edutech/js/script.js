@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileDrawer) {
       mobileDrawer.classList.add('active');
       mobileDrawer.classList.add('open');
+      mobileDrawer.setAttribute('aria-hidden', 'false');
     }
     if (drawerBackdrop) {
       drawerBackdrop.classList.add('active');
@@ -166,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileDrawer) {
       mobileDrawer.classList.remove('active');
       mobileDrawer.classList.remove('open');
+      mobileDrawer.setAttribute('aria-hidden', 'true');
     }
     if (drawerBackdrop) {
       drawerBackdrop.classList.remove('active');
