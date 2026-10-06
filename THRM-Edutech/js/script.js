@@ -148,16 +148,53 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggle = document.getElementById('mobileToggle');
   const drawerClose = document.getElementById('drawerClose');
   const mobileDrawer = document.getElementById('mobileDrawer');
-  const drawerLinks = document.querySelectorAll('.drawer-link');
+  const drawerBackdrop = document.getElementById('drawerBackdrop');
+  const drawerLinks = document.querySelectorAll('.drawer-link, .drawer-cta');
 
-  if (mobileToggle && mobileDrawer) {
-    mobileToggle.addEventListener('click', () => mobileDrawer.classList.add('active'));
+  function openDrawer() {
+    if (mobileDrawer) {
+      mobileDrawer.classList.add('active');
+      mobileDrawer.classList.add('open');
+    }
+    if (drawerBackdrop) {
+      drawerBackdrop.classList.add('active');
+    }
+    document.body.classList.add('drawer-open');
   }
-  if (drawerClose && mobileDrawer) {
-    drawerClose.addEventListener('click', () => mobileDrawer.classList.remove('active'));
+
+  function closeDrawer() {
+    if (mobileDrawer) {
+      mobileDrawer.classList.remove('active');
+      mobileDrawer.classList.remove('open');
+    }
+    if (drawerBackdrop) {
+      drawerBackdrop.classList.remove('active');
+    }
+    document.body.classList.remove('drawer-open');
+  }
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openDrawer();
+    });
+  }
+  if (drawerClose) {
+    drawerClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeDrawer();
+    });
+  }
+  if (drawerBackdrop) {
+    drawerBackdrop.addEventListener('click', closeDrawer);
   }
   drawerLinks.forEach(link => {
-    link.addEventListener('click', () => mobileDrawer && mobileDrawer.classList.remove('active'));
+    link.addEventListener('click', () => {
+      closeDrawer();
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDrawer();
   });
 
   // ===== LUXURIOUS SMOOTH NAVIGATION TRAVERSAL =====
@@ -204,10 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           launchCrazyLoader(durationMs);
-
-          if (mobileDrawer && mobileDrawer.classList.contains('active')) {
-            mobileDrawer.classList.remove('active');
-          }
+          closeDrawer();
 
           if (lenis) {
             lenis.scrollTo(targetElement === document.body ? 0 : targetElement, {
