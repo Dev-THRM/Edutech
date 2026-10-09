@@ -150,12 +150,14 @@ async function initDatabase() {
   const existingSahilProgress = await get(`SELECT id FROM user_progress WHERE user_email = ? AND course_slug = ?`, ['bijlanisahil511@gmail.com', 'social-media-marketing']);
   if (!existingSahilProgress) {
     await run(
-      `INSERT INTO user_progress (user_email, course_slug, completed_modules, exam_score, exam_passed, cert_id, cert_issue_date)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO user_progress (user_email, course_slug, completed_modules_json, active_module_id, exam_status, exam_score, exam_passed, cert_id, cert_issue_date)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         'bijlanisahil511@gmail.com',
         'social-media-marketing',
         JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+        12,
+        'passed',
         88,
         1,
         'THRM-CSMMP-2026-8841',
