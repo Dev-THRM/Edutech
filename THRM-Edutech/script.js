@@ -61,6 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== LOADED TRIGGER =====
   document.body.classList.add('loaded');
 
+  // ===== HASH-FREE URL HYGIENE (NEVER SHOW # IN URL) =====
+  function cleanUrlHash() {
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  }
+  cleanUrlHash();
+  window.addEventListener('hashchange', cleanUrlHash);
+
   // ===== PRODUCTION-GRADE LENIS INERTIAL SCROLL ENGINE =====
   let lenis = null;
   if (typeof Lenis !== 'undefined') {
