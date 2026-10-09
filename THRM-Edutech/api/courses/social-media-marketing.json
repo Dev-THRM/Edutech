@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "course": {
+    "id": 1,
+    "slug": "social-media-marketing",
+    "title": "Social Media Marketing Professional",
+    "subtitle": "Master audience growth, viral content architecture, and performance-driven Meta advertising.",
+    "category": "Marketing",
+    "duration": "Self-Paced (12 Modules)",
+    "level": "All Levels",
+    "description": "Comprehensive agency-grade curriculum spanning organic distribution, algorithms, paid campaigns, and performance tracking.",
+    "key_topics": "Algorithmic Reach & Instagram SEO, High-Converting Meta Ads & Funnels, Performance Analytics & Client Reporting",
+    "cert_title": "THRM Certified Social Media Marketing Professional (CSMMP)",
+    "cert_code": "THRM-CSMMP-2026",
+    "banner_color": "bg-gradient-blue",
+    "is_active": 1,
+    "created_at": "2026-10-09 07:22:03",
+    "modules": [
+      { "title": "1. Introduction to Social Media Marketing", "subtitle": "Core principles, digital brand ecosystems & consumer landscape" },
+      { "title": "2. Understanding Your Audience", "subtitle": "Demographics, intent signals & behavioral segmentation" },
+      { "title": "3. Social Media Platforms & Ecosystems", "subtitle": "Platform algorithms, format strengths & user demographics" },
+      { "title": "4. Content Strategy & Architecture", "subtitle": "Pillars, calendars, creative resonance & storytelling engines" },
+      { "title": "5. Instagram Marketing Mastery", "subtitle": "Reels distribution, visual branding, stories & algorithm triggers" },
+      { "title": "6. Creating Engaging Content", "subtitle": "Hooks, copywriting, visual aesthetics & psychology of shares" },
+      { "title": "7. Social Media SEO & Hashtag Architecture", "subtitle": "Search discovery, indexing, semantic keywords & tag tiers" },
+      { "title": "8. Growing a Social Media Account", "subtitle": "Community building, collaborations, organic velocity & retention" },
+      { "title": "9. Social Media Analytics & Reporting", "subtitle": "KPI tracking, CAC/ROAS benchmarks & executive client reporting" },
+      { "title": "10. Introduction to Paid Social Media (Meta Ads)", "subtitle": "Pixel tracking, lookalikes, retargeting & budget allocation" },
+      { "title": "11. Social Media Strategy for Businesses", "subtitle": "Full-funnel integration, crisis communications & omnichannel synergy" },
+      { "title": "12. Professional Social Media Marketing Practices", "subtitle": "Pitch decks, SLA governance, workflow automation & career mastery" }
+    ],
+    "questions": [
+      {
+        "question": "What is the primary foundation of data-driven social media marketing?",
+        "options": ["Maximizing superficial vanity impressions", "Iterative conversion & revenue improvement", "Posting at random hours", "Eliminating analytics entirely"],
+        "answer_index": 1
+      },
+      {
+        "question": "What minimum percentage is required to pass the THRM Certification Assessment?",
+        "options": ["50%", "60%", "70%", "90%"],
+        "answer_index": 2
+      }
+    ]
+  }
+}

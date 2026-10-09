@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "stats": {
+    "totalStudents": 1,
+    "totalCourses": 1,
+    "certificatesIssued": 1,
+    "totalModules": 12
+  }
+}

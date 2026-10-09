@@ -22,6 +22,13 @@ RewriteRule ^certifications/?$ certifications.html [L,QSA]
 RewriteRule ^course/?$ course.html [L,QSA]
 RewriteRule ^certifications/social-media-marketing/?$ certifications/social-media-marketing.html [L,QSA]
 
+# 3.5. API Endpoints routing to static JSON (Works on Apache/LiteSpeed even if Node daemon is not active)
+RewriteRule ^api/admin/courses/?$ api/admin/courses.json [L,T=application/json]
+RewriteRule ^api/admin/stats/?$ api/admin/stats.json [L,T=application/json]
+RewriteRule ^api/admin/students/?$ api/admin/students.json [L,T=application/json]
+RewriteRule ^api/courses/social-media-marketing/?$ api/courses/social-media-marketing.json [L,T=application/json]
+RewriteRule ^api/courses/?$ api/courses.json [L,T=application/json]
+
 # 4. General clean URL rewrite: if requested file exists as .html, serve it silently
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
