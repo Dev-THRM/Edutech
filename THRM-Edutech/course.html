@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="pageTitle">Course Certification Track | THRM EduTech</title>
+    <meta name="description"
+        content="Learn. Get Assessed. Get Certified. Complete modules, take the final assessment, score at least 70%, and earn your official verified certificate." />
+    <meta name="author" content="THRM EduTech" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Base Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=729" />
+    <link rel="stylesheet" href="css/certifications.css?v=3" />
+
+    <style>
+        .loading-skeleton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            gap: 12px;
+        }
+        .badge-locked {
+            background: rgba(239, 68, 68, 0.12) !important;
+            color: #EF4444 !important;
+        }
+        .badge-unlocked {
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: #10B981 !important;
+        }
+        .cert-locked-state-card {
+            background: #ffffff;
+            border: 2px dashed #CBD5E1;
+            border-radius: 20px;
+            padding: 60px 30px;
+            text-align: center;
+            max-width: 640px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+        .cert-locked-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+        .cert-locked-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0F172A;
+            margin-bottom: 10px;
+        }
+        .cert-locked-desc {
+            color: #64748B;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Ambient Background -->
+    <div class="bg-mesh">
+        <div class="mesh-glow mesh-1"></div>
+        <div class="mesh-glow mesh-2"></div>
+        <div class="mesh-glow mesh-3"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-pill">
+                <img src="assets/images/logo.png" alt="THRM EduTech Logo" class="brand-mascot-img" />
+                <div class="brand-text">
+                    <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about-us" class="nav-link">About Us</a>
+                <a href="index.html#services" class="nav-link">Learnings</a>
+                <a href="certifications.html" class="nav-link">Courses</a>
+                <a href="index.html#team" class="nav-link">Team</a>
+                <a href="index.html#testimonials" class="nav-link">Testimonials</a>
+            </div>
+
+            <!-- Nav Action Button -->
+            <div class="nav-actions">
+                <a href="certifications.html" class="btn btn-nav magnetic-btn">
+                    <span>All Courses</span>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN COURSE SHOWCASE -->
+    <section class="cert-hero-container" id="featured-track" style="padding-top: 36px; padding-bottom: 60px;">
+        <div class="track-showcase">
+            <!-- Header Bar -->
+            <div class="track-header-bar">
+                <div class="track-main-info">
+                    <div style="margin-bottom: 6px;">
+                        <a href="certifications.html" style="color: #64748B; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                            <i class="fa-solid fa-arrow-left"></i> Back to Certification Catalog
+                        </a>
+                    </div>
+                    <h2 id="courseHeaderTitle">Loading Course...</h2>
+                    <p id="courseHeaderSubtitle" style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px; margin-bottom: 0;">
+                        Curriculum Modules &bull; 70% Pass Assessment &bull; Verified Credential
+                    </p>
+                </div>
+
+                <div class="track-progress-wrap">
+                    <div class="track-progress-info">
+                        <strong id="trackProgressCount">0 Modules Done</strong>
+                        <span id="trackProgressPct">0% Complete</span>
+                    </div>
+                    <div class="track-progress-bar-container">
+                        <div class="track-progress-bar-fill" id="trackProgressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Standardized 3-Tab Nav: Curriculum -> Assessment -> Certificate (70% Pass Required) -->
+            <div class="track-tab-nav">
+                <button class="track-tab-btn active" data-tab="curriculum" onclick="switchCourseTab('curriculum')">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Curriculum &amp; Slide Decks</span>
+                    <span class="badge-count" id="tabModulesCountBadge">Modules</span>
+                </button>
+                <button class="track-tab-btn" data-tab="exam" onclick="switchCourseTab('exam')">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span>Final Assessment</span>
+                    <span class="badge-count" id="tabExamBadge">70% Pass Required</span>
+                </button>
+                <button class="track-tab-btn" data-tab="certificate" id="certTabBtn" onclick="switchCourseTab('certificate')">
+                    <i class="fa-solid fa-award"></i>
+                    <span>Official Certificate</span>
+                    <span class="badge-count badge-locked" id="certTabLockBadge"><i class="fa-solid fa-lock"></i> Locked</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: CURRICULUM MODULES & SLIDES -->
+            <div id="modulesSectionTab">
+                <div class="modules-accordion-grid" id="modulesContainer">
+                    <div class="loading-skeleton">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i> Loading curriculum modules...
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: FINAL ASSESSMENT (70% PASS BENCHMARK) -->
+            <div id="examSectionTab" style="display:none;">
+                <div class="assessment-container">
+                    <!-- Exam Introduction Card -->
+                    <div class="exam-intro-card" id="examIntroCard">
+                        <h2 style="font-size:2rem;font-weight:800;margin-bottom:10px;color:var(--text-main);" id="examCardTitle">
+                            Certification Assessment
+                        </h2>
+                        <p style="color:var(--text-muted);font-size:1.02rem;line-height:1.6;margin-bottom:0;" id="examCardDesc">
+                            Complete all curriculum modules, take this rigorous certification assessment, achieve a minimum score of <strong>70%</strong>, and unlock your official verifiable certificate.
+                        </p>
+
+                        <div class="exam-rules-grid">
+                            <div class="rule-metric-box">
+                                <span class="number" id="examTotalQuestionsNumber">--</span>
+                                <span class="label">Questions</span>
+                            </div>
+                            <div class="rule-metric-box">
+                                <span class="number" style="font-size:1.6rem;">Self-Paced</span>
+                                <span class="label">No Time Limit</span>
+                            </div>
+                            <div class="rule-metric-box">
+                                <span class="number">70%</span>
+                                <span class="label">Passing Score</span>
+                            </div>
+                        </div>
+
+                        <div class="exam-intro-actions">
+                            <button class="btn-start-assessment" onclick="startCourseExam()">
+                                <span>Start Assessment</span>
+                                <i class="fa-solid fa-arrow-right" style="font-size:0.85rem;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Exam Active Workspace -->
+                    <div class="exam-workspace" id="examWorkspace" style="display:none;">
+                        <!-- Main Question Panel -->
+                        <div class="exam-main-panel">
+                            <div class="exam-header-bar">
+                                <div>
+                                    <div class="exam-q-counter" id="examQCounter">Question 1 of 10</div>
+                                    <span class="exam-category-pill" id="examCategoryPill">General</span>
+                                </div>
+                            </div>
+
+                            <div class="exam-question-text" id="examQuestionText">
+                                Loading question...
+                            </div>
+
+                            <div class="exam-options-list" id="examOptionsList">
+                                <!-- Options rendered via JS -->
+                            </div>
+
+                            <div class="exam-actions-bar">
+                                <button class="btn-sm btn-secondary" id="examPrevBtn" onclick="prevExamQuestion()">
+                                    <i class="fa-solid fa-arrow-left"></i> Previous
+                                </button>
+                                <button class="btn-sm btn-secondary" id="examFlagBtn" onclick="toggleFlagCurrentQuestion()">
+                                    <i class="fa-solid fa-flag"></i> Flag for Review
+                                </button>
+                                <button class="btn-sm btn-primary" id="examNextBtn" onclick="nextExamQuestion()">
+                                    <span>Next Question</span> <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Question Palette -->
+                        <div class="exam-side-panel">
+                            <div class="exam-side-title">
+                                <span>Question Palette</span>
+                                <span style="font-size:0.8rem;color:var(--text-muted);" id="paletteAnsweredCount">0 / 0 Answered</span>
+                            </div>
+
+                            <div class="palette-status-legend">
+                                <div class="legend-item"><div class="legend-dot answered"></div> Answered</div>
+                                <div class="legend-item"><div class="legend-dot unanswered"></div> Unanswered</div>
+                                <div class="legend-item"><div class="legend-dot flagged"></div> Flagged</div>
+                            </div>
+
+                            <div class="palette-grid" id="examPaletteGrid">
+                                <!-- Palette buttons rendered via JS -->
+                            </div>
+
+                            <div class="palette-submit-wrap">
+                                <button class="btn-submit-assessment" onclick="confirmSubmitCourseExam()">
+                                    <i class="fa-solid fa-check-double"></i>
+                                    <span>Submit Assessment</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exam Result Card -->
+                    <div class="exam-result-card" id="examResultCard" style="display:none;">
+                        <div class="result-badge-icon pass" id="resultBadgeIcon">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h2 class="result-title" id="resultTitle">Assessment Results</h2>
+                        <div class="result-score-callout" id="resultScoreNumber">--%</div>
+                        <p class="result-score-sub" id="resultScoreSub">
+                            Passing threshold is 70%.
+                        </p>
+
+                        <div class="result-breakdown-row" id="resultBreakdownRow">
+                            <!-- Populated via JS -->
+                        </div>
+
+                        <div style="margin-top: 24px;">
+                            <button class="btn btn-primary" id="resultActionBtn" style="padding:14px 32px;" onclick="switchCourseTab('certificate')">
+                                <i class="fa-solid fa-award"></i> View &amp; Claim Verified Certificate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: OFFICIAL CERTIFICATE (70% PASS STRICT REQUIREMENT) -->
+            <div id="certSectionTab" style="display:none;">
+                <!-- If Locked -->
+                <div class="cert-locked-state-card" id="certLockedNotice">
+                    <div class="cert-locked-icon">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3 class="cert-locked-title">Certificate Is Locked</h3>
+                    <p class="cert-locked-desc">
+                        To earn your verified credential, you must complete the final assessment with a score of <strong>70% or higher</strong>.
+                    </p>
+                    <button class="btn btn-primary" onclick="switchCourseTab('exam')">
+                        <i class="fa-solid fa-pen-nib"></i> Go To Assessment
+                    </button>
+                </div>
+
+                <!-- If Unlocked -->
+                <div class="cert-preview-wrapper" id="certUnlockedArea" style="display:none;">
+                    <div class="cert-input-row">
+                        <label style="color:#0F172A;font-weight:700;display:flex;align-items:center;gap:8px;">
+                            <i class="fa-solid fa-user-pen text-blue"></i> Recipient Full Name:
+                        </label>
+                        <input type="text" class="cert-input-field" id="certStudentNameInput" placeholder="Enter Full Legal Name" oninput="onStudentNameChange(this.value)" value="Student Name" />
+                        <button class="btn-sm btn-secondary" onclick="alert('Name updated on preview!')">
+                            <i class="fa-solid fa-arrows-rotate"></i> Update
+                        </button>
+                    </div>
+
+                    <!-- LUXURY OFFICIAL CERTIFICATE -->
+                    <div class="thrm-official-certificate" id="thrmCertificatePrintArea">
+                        <div class="thrm-cert-top-crest">
+                            <img src="assets/images/logo.png" alt="THRM Mascot Logo" class="cert-crest-logo" />
+                            <div class="thrm-cert-heading-wrap">
+                                <div class="thrm-cert-brand-heading">THRM DIGITAL MARKETING AGENCY &amp; EDUTECH</div>
+                                <div class="thrm-cert-subtitle">CERTIFICATE OF PROFESSIONAL CERTIFICATION</div>
+                            </div>
+                        </div>
+
+                        <div class="thrm-cert-presents">This certificate is proudly presented to</div>
+
+                        <div class="thrm-cert-recipient-name" id="certRecipientNameDisplay">
+                            Student Name
+                        </div>
+
+                        <div class="thrm-cert-for-clause">
+                            for successfully completing and passing the rigorous assessment with a score of &ge; 70% for
+                        </div>
+
+                        <div class="thrm-cert-award-title" id="certAwardTitleDisplay">
+                            THRM CERTIFIED PROFESSIONAL
+                        </div>
+
+                        <div class="thrm-cert-competencies-wrap">
+                            <div class="thrm-cert-skills-intro">
+                                The candidate has successfully demonstrated practical mastery in:
+                            </div>
+                            <div class="thrm-cert-skills-list" id="certSkillsListContainer">
+                                <!-- Populated dynamically from course topics -->
+                            </div>
+                        </div>
+
+                        <div class="thrm-cert-footer-grid">
+                            <div class="cert-sig-block">
+                                <div class="cert-signature-img">Sunny Sharma</div>
+                                <div class="cert-sig-title">
+                                    <strong>Mr. Sunny Sharma</strong><br />
+                                    <span>Co-Founder &amp; CEO</span><br />
+                                    <span class="cert-sig-org">THRM Digital Marketing Agency</span>
+                                </div>
+                            </div>
+
+                            <div class="cert-seal-center-block">
+                                <div class="cert-gold-seal">
+                                    <i class="fa-solid fa-award"></i>
+                                    <span>ISO 9001<br />CERTIFIED</span>
+                                </div>
+                                <div class="cert-meta-lines">
+                                    <div>Certificate ID: <strong id="certIdDisplay">THRM-2026-XXXX</strong></div>
+                                    <div>Date of Issue: <strong id="certDateDisplay">October 9, 2026</strong></div>
+                                </div>
+                            </div>
+
+                            <div class="cert-sig-block">
+                                <div class="cert-signature-img">Gunjan Shidame</div>
+                                <div class="cert-sig-title">
+                                    <strong>Ms. Gunjan Shidame</strong><br />
+                                    <span>Co-Founder &amp; CMO</span><br />
+                                    <span class="cert-sig-org">THRM Digital Marketing Agency</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CERTIFICATE ACTIONS: ON-SITE VIEW & PRINT -->
+                    <div class="cert-share-actions">
+                        <button class="btn-print-cert" id="btnPrintCert" onclick="printOnSiteCertificate()">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Print / Save Official Certificate</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="addCourseToLinkedIn()" style="padding:14px 24px;border-radius:12px;font-weight:700;">
+                            <i class="fa-brands fa-linkedin" style="color:#0A66C2;"></i> Add to LinkedIn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE SLIDE DECK MODAL -->
+    <div class="slide-modal-backdrop" id="slideModalBackdrop">
+        <div class="slide-viewer-modal">
+            <div class="slide-viewer-topbar">
+                <div class="slide-topbar-left">
+                    <span class="slide-topbar-pill" id="slideModalTag">Slide 1 of 1</span>
+                    <span class="slide-topbar-title" id="slideModalTitle">Module Presentation</span>
+                </div>
+                <div class="slide-topbar-right">
+                    <button class="slide-close-btn" onclick="closeSlideModal()" aria-label="Close Slide Deck">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="slide-canvas-area" id="slideCanvasPresentation">
+                <!-- Slide rendered dynamically -->
+            </div>
+
+            <div class="slide-viewer-footer">
+                <div class="slide-nav-group">
+                    <button class="btn-slide-nav" id="btnPrevSlide" onclick="prevModalSlide()" aria-label="Previous Slide">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <span class="slide-counter-badge" id="slideCounterBadge">1 / 1</span>
+                    <button class="btn-slide-nav" id="btnNextSlide" onclick="nextModalSlide()" aria-label="Next Slide">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="slide-progress-dots" id="slideProgressDots"></div>
+
+                <div>
+                    <button class="btn-sm btn-primary" onclick="markActiveModuleDoneAndClose()">
+                        <i class="fa-solid fa-check"></i> <span>Complete &amp; Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="margin-top:80px;padding:60px 0 30px;background:#0F172A;color:#fff;">
+        <div class="cert-hero-container">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,0.1);">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <img src="assets/images/logo.png" alt="THRM Mascot" style="height:48px;" />
+                    <span style="font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;">
+                        THRM<span style="color:#2563EB;">EduTech</span>
+                    </span>
+                </div>
+                <div style="display:flex;gap:20px;color:#94A3B8;font-size:0.95rem;">
+                    <a href="index.html#home">Home</a>
+                    <a href="certifications.html">Courses</a>
+                    <a href="index.html#contact-us">Admissions</a>
+                </div>
+            </div>
+            <div style="padding-top:24px;text-align:center;color:#64748B;font-size:0.85rem;">
+                &copy; 2026 THRM EduTech. "Learn. Get Assessed. Get Certified." All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="js/lenis.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/course-viewer.js?v=1"></script>
+</body>
+
+</html>

@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Admin Control Console — THRM EduTech</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+
+    <!-- Google Fonts: Lexend (Primary EduTech Font) + Plus Jakarta Sans + Outfit + Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        /* ========================================================
+           THRM EduTech ATS Console Theme System
+           Matches style.css & certifications.css (Light Aesthetic)
+           ======================================================== */
+        :root {
+            --sidebar-width: 270px;
+            --sidebar-bg: #FFFFFF; /* Pure White matching EduTech surface containers */
+            --sidebar-border: #E2E8F0;
+            --sidebar-text: #64748B;
+            --sidebar-text-active: #2563EB;
+            --sidebar-active-bg: rgba(37, 99, 235, 0.08);
+            --sidebar-active-border: #2563EB;
+
+            --app-bg: #EEF2F6; /* Signature THRM EduTech Light Slate / Off-White (--bg-main) */
+            --card-bg: #FFFFFF;
+            --card-border: #E2E8F0;
+            --card-border-subtle: #E2E8F0;
+            --text-main: #0F172A; /* Main Text: Dark Navy */
+            --text-muted: #64748B; /* Secondary Text: Slate */
+            --text-dim: #94A3B8;
+            --primary: #2563EB; /* Deep Royal Blue */
+            --primary-hover: #1D4ED8;
+            --brand-violet: #7C3AED; /* Purple */
+            --cyan-accent: #06B6D4; /* Cyan */
+            --green-accent: #10B981; /* Green */
+            --gold-accent: #F59E0B; /* Gold */
+            --accent-red: #EF4444;
+
+            --grad-purple: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+            --grad-cyan: linear-gradient(135deg, #2563EB 0%, #06B6D4 100%);
+            --grad-banner: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+
+            --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.06), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
+            --card-shadow-hover: 0 20px 40px -15px rgba(37, 99, 235, 0.12), 0 8px 16px -4px rgba(37, 99, 235, 0.06);
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--app-bg);
+            color: var(--text-main);
+            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        .ats-brand-text,
+        .ats-panel-title,
+        .ats-card-title,
+        .ats-kpi-value,
+        .ats-modal-title {
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+            letter-spacing: -0.02em;
+        }
+
+        /* Ambient Background Mesh matching EduTech */
+        .ats-bg-mesh {
+            position: fixed;
+            top: 0;
+            left: var(--sidebar-width);
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ats-mesh-glow {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.12;
+            will-change: transform;
+        }
+
+        .ats-mesh-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.28) 0%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
+            top: -120px;
+            right: -100px;
+        }
+
+        .ats-mesh-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.22) 0%, rgba(124, 58, 237, 0.04) 50%, transparent 70%);
+            bottom: 40px;
+            left: 20%;
+        }
+
+        /* ==========================================
+           ATS SIDEBAR (THRM EduTech Crisp Light Palette)
+           ========================================== */
+        .ats-sidebar {
+            width: var(--sidebar-width);
+            background: #FFFFFF;
+            border-right: 1px solid var(--sidebar-border);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(15, 23, 42, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .ats-sidebar-top {
+            padding: 24px 20px;
+        }
+
+        .ats-brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #E2E8F0;
+            text-decoration: none;
+        }
+
+        .ats-brand-logo {
+            height: 40px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .ats-brand-text {
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0F172A;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .ats-brand-accent {
+            color: #2563EB;
+            font-weight: 800;
+        }
+
+        .ats-brand-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #2563EB;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            padding: 2px 7px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-top: 3px;
+        }
+
+        .ats-nav-group-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #94A3B8;
+            margin: 30px 14px 12px 14px;
+        }
+
+        .ats-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ats-nav-item a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 12px;
+            color: #64748B;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .ats-nav-item a:hover {
+            background: rgba(37, 99, 235, 0.05);
+            color: #2563EB;
+        }
+
+        .ats-nav-item.active a {
+            background: rgba(37, 99, 235, 0.08);
+            color: #2563EB;
+            border-left: 3px solid #2563EB;
+            padding-left: 11px;
+            font-weight: 700;
+        }
+
+        .ats-nav-icon-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ats-nav-item i {
+            font-size: 1rem;
+            width: 18px;
+            text-align: center;
+            color: #64748B;
+            transition: color 0.2s ease;
+        }
+
+        .ats-nav-item a:hover i,
+        .ats-nav-item.active i {
+            color: #2563EB;
+        }
+
+        .ats-nav-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: #EEF2F6;
+            color: #2563EB;
+            padding: 2px 8px;
+            border-radius: 9999px;
+        }
+
+        /* Sidebar Bottom Profile */
+        .ats-sidebar-bottom {
+            padding: 18px;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .ats-user-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 10px 12px;
+        }
+
+        .ats-user-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .ats-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--grad-purple);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .ats-user-details {
+            min-width: 0;
+        }
+
+        .ats-user-name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #0F172A;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .ats-user-role {
+            font-size: 0.7rem;
+            color: #059669;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ats-btn-logout-icon {
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .ats-btn-logout-icon:hover {
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        /* ==========================================
+           ATS MAIN CONTENT AREA
+           ========================================== */
+        .ats-main-area {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--app-bg);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sticky ATS Header Bar with Glassmorphic Blur */
+        .ats-top-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E2E8F0;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .ats-header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .ats-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .ats-breadcrumb span.current {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .ats-search-input-wrap {
+            position: relative;
+            width: 360px;
+        }
+
+        .ats-search-input-wrap i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+            font-size: 0.85rem;
+        }
+
+        .ats-search-input {
+            width: 100%;
+            padding: 9px 14px 9px 36px;
+            border-radius: 9999px;
+            border: 1px solid #CBD5E1;
+            background: #FFFFFF;
+            font-size: 0.82rem;
+            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .ats-search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .ats-header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .ats-chip-health {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .ats-chip-health .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+        }
+
+        .ats-btn-primary {
+            background: var(--grad-purple);
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+            transition: all 0.25s ease;
+        }
+
+        .ats-btn-primary:hover {
+            background: linear-gradient(135deg, #1D4ED8 0%, #6D28D9 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.38);
+        }
+
+        /* ATS Dashboard Container */
+        .ats-content-container {
+            padding: 44px 48px 120px;
+            max-width: 1440px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ==========================================
+           ATS BENTO KPI METRICS ROW
+           ========================================== */
+        .ats-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 88px;
+        }
+
+        .ats-kpi-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ats-kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: rgba(37, 99, 235, 0.25);
+        }
+
+        .ats-kpi-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ats-kpi-label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .ats-kpi-value {
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+
+        .ats-kpi-subtext {
+            font-size: 0.72rem;
+            color: #64748B;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 4px;
+        }
+
+        .ats-kpi-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .kpi-blue { background: rgba(37, 99, 235, 0.08); color: #2563EB; }
+        .kpi-purple { background: rgba(124, 58, 237, 0.08); color: #7C3AED; }
+        .kpi-green { background: rgba(16, 185, 129, 0.08); color: #059669; }
+        .kpi-amber { background: rgba(245, 158, 11, 0.08); color: #D97706; }
+
+        /* ==========================================
+           ATS SECTION HEADER & FILTER BAR
+           ========================================== */
+        .ats-section {
+            margin-bottom: 92px;
+        }
+
+        .ats-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 34px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .ats-panel-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ats-panel-title {
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ats-count-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: #E2E8F0;
+            color: #1E293B;
+            padding: 3px 9px;
+            border-radius: 9999px;
+        }
+
+        .ats-panel-subtitle {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .ats-filter-pills {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #E2E8F0;
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .ats-pill-btn {
+            background: transparent;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ats-pill-btn.active {
+            background: #FFFFFF;
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ==========================================
+           ATS COURSE CARDS GRID
+           ========================================== */
+        .ats-courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+            margin-bottom: 0;
+        }
+
+        .ats-course-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ats-course-card:hover {
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .ats-card-banner {
+            padding: 24px;
+            background: var(--grad-banner);
+            color: #FFFFFF;
+            position: relative;
+        }
+
+        .ats-banner-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .ats-track-chip {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 3px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #FFFFFF;
+        }
+
+        .ats-status-chip {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: rgba(16, 185, 129, 0.25);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #A7F3D0;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ats-card-title {
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #FFFFFF !important;
+            margin: 0;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+        }
+
+        .ats-card-body {
+            padding: 22px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .ats-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 18px;
+        }
+
+        .ats-card-metrics-pill-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding-bottom: 18px;
+            border-bottom: 1px dashed #E2E8F0;
+        }
+
+        .ats-meta-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-mod { background: rgba(37, 99, 235, 0.08); color: #2563EB; }
+        .badge-q { background: rgba(124, 58, 237, 0.08); color: #7C3AED; }
+        .badge-pass { background: rgba(16, 185, 129, 0.08); color: #059669; }
+
+        .ats-card-footer {
+            padding-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ats-btn-action {
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .ats-btn-edit {
+            background: rgba(37, 99, 235, 0.08);
+            color: #2563EB;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        .ats-btn-edit:hover {
+            background: #2563EB;
+            color: #FFFFFF;
+            border-color: #2563EB;
+        }
+
+        .ats-btn-delete {
+            background: rgba(239, 68, 68, 0.06);
+            color: #DC2626;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .ats-btn-delete:hover {
+            background: #DC2626;
+            color: #FFFFFF;
+            border-color: #DC2626;
+        }
+
+        /* ==========================================
+           ATS CANDIDATES / STUDENTS TABLE
+           ========================================== */
+        .ats-table-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .ats-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.86rem;
+        }
+
+        .ats-data-table th {
+            background: #F8FAFC;
+            padding: 14px 20px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .ats-data-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #F1F5F9;
+            vertical-align: middle;
+        }
+
+        .ats-empty-state-box {
+            padding: 48px 24px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .ats-empty-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #F1F5F9;
+            color: #94A3B8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 14px;
+        }
+
+        .ats-empty-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .ats-empty-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            max-width: 420px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+           ATS MODAL / DRAWER
+           ========================================== */
+        .ats-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .ats-modal-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .ats-modal-box {
+            background: #FFFFFF;
+            border-radius: var(--radius-xl);
+            max-width: 880px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px -15px rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--card-border);
+            padding: 32px;
+            position: relative;
+        }
+
+        .ats-modal-header {
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .ats-modal-title {
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
+        .ats-modal-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .ats-form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .ats-form-group {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ats-form-group label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #334155;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .ats-input, .ats-select, .ats-textarea {
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1.5px solid #CBD5E1;
+            background: #FFFFFF;
+            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 0.88rem;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .ats-input:focus, .ats-select:focus, .ats-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .builder-repeater-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .builder-remove-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: transparent;
+            border: none;
+            color: #EF4444;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-add-repeater {
+            background: #FFFFFF;
+            border: 1.5px dashed #CBD5E1;
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add-repeater:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.04);
+        }
+
+        /* ATS LOGIN SCREEN (THRM EduTech Light Theme) */
+        .ats-login-wrapper {
+            position: fixed;
+            inset: 0;
+            background: #EEF2F6;
+            background-image: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .ats-login-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 24px;
+            padding: 44px 38px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+        }
+
+        @media (max-width: 900px) {
+            .ats-sidebar {
+                transform: translateX(-100%);
+            }
+            .ats-main-area {
+                margin-left: 0;
+            }
+            .ats-kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================
+         1. ATS SIDEBAR NAVIGATION (EduTech Palette)
+         ========================================== -->
+    <aside class="ats-sidebar" id="atsSidebar">
+        <div class="ats-sidebar-top">
+            <!-- Brand -->
+            <a href="index.html" class="ats-brand-lockup">
+                <img src="assets/images/logo.png" alt="THRM Mascot" class="ats-brand-logo" />
+                <div>
+                    <div class="ats-brand-text">THRM<span class="ats-brand-accent">EduTech</span></div>
+                    <span class="ats-brand-badge"><i class="fa-solid fa-shield-halved"></i> Admin Portal</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="ats-nav-group-label">Core Management</div>
+            <ul class="ats-nav-list">
+                <li class="ats-nav-item active">
+                    <a href="#tracks-section">
+                        <span class="ats-nav-icon-label">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <span>Courses &amp; Tracks</span>
+                        </span>
+                        <span class="ats-nav-badge" id="navTracksBadge">1</span>
+                    </a>
+                </li>
+                <li class="ats-nav-item">
+                    <a href="#candidates-section">
+                        <span class="ats-nav-icon-label">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Candidates &amp; Students</span>
+                        </span>
+                        <span class="ats-nav-badge" id="navStudentsBadge">0</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="ats-nav-group-label">Actions</div>
+            <ul class="ats-nav-list">
+                <li class="ats-nav-item">
+                    <a href="javascript:void(0)" onclick="openAddCourseModal()">
+                        <span class="ats-nav-icon-label">
+                            <i class="fa-solid fa-plus-circle" style="color:#38BDF8;"></i>
+                            <span>+ Create Track</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sidebar Bottom Admin User Card -->
+        <div class="ats-sidebar-bottom">
+            <div class="ats-user-card">
+                <div class="ats-user-left">
+                    <div class="ats-user-avatar">AD</div>
+                    <div class="ats-user-details">
+                        <span class="ats-user-name">THRM Administrator</span>
+                        <span class="ats-user-role"><i class="fa-solid fa-circle" style="font-size:0.5rem;"></i> Super Admin</span>
+                    </div>
+                </div>
+                <button class="ats-btn-logout-icon" onclick="adminLogout()" title="Sign Out">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==========================================
+         2. MAIN APPLICATION WORKSPACE
+         ========================================== -->
+    <div class="ats-main-area">
+        <!-- Ambient Mesh Glow matching EduTech website -->
+        <div class="ats-bg-mesh">
+            <div class="ats-mesh-glow ats-mesh-1"></div>
+            <div class="ats-mesh-glow ats-mesh-2"></div>
+        </div>
+
+        <!-- ATS Top Header Bar -->
+        <header class="ats-top-header">
+            <div class="ats-header-left">
+                <div class="ats-search-input-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" class="ats-search-input" id="atsSearchInput" placeholder="Quick search tracks, modules, candidates..." oninput="filterAdminCourses(this.value)" />
+                </div>
+            </div>
+
+            <div class="ats-header-right">
+                <button class="ats-btn-primary" onclick="openAddCourseModal()">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Create New Course</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ATS Main Content -->
+        <main class="ats-content-container" id="adminDashboard">
+            <!-- Bento KPI Metrics -->
+            <div class="ats-kpi-grid">
+                <div class="ats-kpi-card">
+                    <div class="ats-kpi-info">
+                        <span class="ats-kpi-label">Active Tracks</span>
+                        <div class="ats-kpi-value" id="statTotalCourses">1</div>
+                        <span class="ats-kpi-subtext"><i class="fa-solid fa-check text-green"></i> Live on website</span>
+                    </div>
+                    <div class="ats-kpi-icon kpi-blue">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                </div>
+
+                <div class="ats-kpi-card">
+                    <div class="ats-kpi-info">
+                        <span class="ats-kpi-label">Candidates Enrolled</span>
+                        <div class="ats-kpi-value" id="statTotalStudents">0</div>
+                        <span class="ats-kpi-subtext"><i class="fa-solid fa-bolt text-blue"></i> Real-time DB sync</span>
+                    </div>
+                    <div class="ats-kpi-icon kpi-purple">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+
+                <div class="ats-kpi-card">
+                    <div class="ats-kpi-info">
+                        <span class="ats-kpi-label">Verified Certifications</span>
+                        <div class="ats-kpi-value" id="statCertificatesIssued">0</div>
+                        <span class="ats-kpi-subtext"><i class="fa-solid fa-shield-halved text-green"></i> 70%+ score benchmark</span>
+                    </div>
+                    <div class="ats-kpi-icon kpi-green">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                </div>
+
+                <div class="ats-kpi-card">
+                    <div class="ats-kpi-info">
+                        <span class="ats-kpi-label">Curriculum Modules</span>
+                        <div class="ats-kpi-value" id="statTotalModules">12</div>
+                        <span class="ats-kpi-subtext"><i class="fa-solid fa-book-open text-amber"></i> Fully indexed slides</span>
+                    </div>
+                    <div class="ats-kpi-icon kpi-amber">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COURSES & CERTIFICATIONS PANEL -->
+            <section id="tracks-section" class="ats-section">
+                <div class="ats-panel-header">
+                    <div>
+                        <div class="ats-panel-title">
+                            <i class="fa-solid fa-layer-group" style="color:#2563EB;"></i>
+                            <span>Certification Courses</span>
+                            <span class="ats-count-pill" id="tracksCountPill">1</span>
+                        </div>
+                        <p class="ats-panel-subtitle">Manage curriculum modules and 70% passing threshold assessments in SQLite database.</p>
+                    </div>
+
+                    <div class="ats-filter-pills">
+                        <button class="ats-pill-btn active" onclick="filterByTab('all', this)">All Courses</button>
+                        <button class="ats-pill-btn" onclick="filterByTab('Marketing', this)">Marketing</button>
+                        <button class="ats-pill-btn" onclick="filterByTab('Development', this)">Development</button>
+                    </div>
+                </div>
+
+                <!-- Course Cards Grid -->
+                <div class="ats-courses-grid" id="adminCoursesGrid">
+                    <!-- Loaded dynamically via loadAdminCourses() -->
+                </div>
+            </section>
+
+            <!-- CANDIDATES & STUDENTS PANEL -->
+            <section id="candidates-section" class="ats-section">
+                <div class="ats-panel-header">
+                    <div>
+                        <div class="ats-panel-title">
+                            <i class="fa-solid fa-users" style="color:#2563EB;"></i>
+                            <span>Registered Candidates &amp; Students</span>
+                            <span class="ats-count-pill" id="candidatesCountPill">0</span>
+                        </div>
+                        <p class="ats-panel-subtitle">Live candidates enrolled in certification tracks and assessment completion status.</p>
+                    </div>
+                </div>
+
+                <!-- Candidate Roster Table -->
+                <div class="ats-table-card">
+                    <table class="ats-data-table">
+                        <thead>
+                            <tr>
+                                <th>Candidate Name</th>
+                                <th>Email</th>
+                                <th>Program Enrolled</th>
+                                <th>Certification Status (70%+ Score)</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminStudentsTableBody">
+                            <!-- Populated dynamically via loadAdminStudents() -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ==========================================
+         3. ATS COURSE BUILDER & EDITOR MODAL
+         ========================================== -->
+    <div class="ats-modal-backdrop" id="addCourseModal">
+        <div class="ats-modal-box">
+            <button onclick="closeAddCourseModal()" style="position:absolute; top:24px; right:24px; background:transparent; border:none; font-size:1.3rem; color:#64748B; cursor:pointer;" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="ats-modal-header">
+                <h3 class="ats-modal-title" id="adminModalTitle">
+                    <i class="fa-solid fa-plus-circle text-primary"></i>
+                    <span>Create Dynamic Certification Track</span>
+                </h3>
+                <p class="ats-modal-desc" id="adminModalDesc">
+                    Configure curriculum modules and assessment questions. Standardized workflow: <strong>Modules &rarr; Final Assessment &rarr; Certificate (Strict 70%+ score)</strong>.
+                </p>
+            </div>
+
+            <form onsubmit="handleCreateCourse(event)">
+                <!-- 1. COURSE DETAILS -->
+                <h4 style="font-family:'Outfit',sans-serif; margin-bottom:12px; color:#0F172A;">1. Track Information</h4>
+                <div class="ats-form-grid-2">
+                    <div class="ats-form-group">
+                        <label>Course Title *</label>
+                        <input type="text" class="ats-input" id="newCourseTitle" placeholder="e.g. AI & Prompt Engineering Mastery" required oninput="autoGenerateSlug(this.value)" />
+                    </div>
+                    <div class="ats-form-group">
+                        <label>URL Slug (Unique ID) *</label>
+                        <input type="text" class="ats-input" id="newCourseSlug" placeholder="e.g. ai-prompt-engineering" required />
+                    </div>
+                </div>
+
+                <div class="ats-form-grid-2">
+                    <div class="ats-form-group">
+                        <label>Category</label>
+                        <select class="ats-select" id="newCourseCategory">
+                            <option value="Marketing">Marketing</option>
+                            <option value="Development">Development</option>
+                            <option value="Strategy">Strategy</option>
+                            <option value="AI & Automation">AI & Automation</option>
+                            <option value="Analytics">Analytics</option>
+                        </select>
+                    </div>
+                    <div class="ats-form-group">
+                        <label>Duration / Badge</label>
+                        <input type="text" class="ats-input" id="newCourseDuration" placeholder="e.g. Self-Paced (12 Modules)" value="Self-Paced (12 Modules)" />
+                    </div>
+                </div>
+
+                <div class="ats-form-group">
+                    <label>Short Subtitle</label>
+                    <input type="text" class="ats-input" id="newCourseSubtitle" placeholder="Brief 1-sentence value proposition for course card" required />
+                </div>
+
+                <div class="ats-form-group">
+                    <label>Full Description</label>
+                    <textarea class="ats-textarea" id="newCourseDesc" rows="3" placeholder="Detailed syllabus overview and industry applications"></textarea>
+                </div>
+
+                <div class="ats-form-group">
+                    <label>Official Certificate Award Title</label>
+                    <input type="text" class="ats-input" id="newCourseCertTitle" placeholder="e.g. THRM CERTIFIED SOCIAL MEDIA MARKETING PROFESSIONAL (CSMMP)" />
+                </div>
+
+                <hr style="border:none; border-top:1px solid #E2E8F0; margin:24px 0;" />
+
+                <!-- 2. MODULES BUILDER -->
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                    <div>
+                        <h4 style="font-family:'Outfit',sans-serif; margin:0; color:#0F172A;">2. Curriculum Modules</h4>
+                        <span style="font-size:0.8rem; color:#64748B;">Add curriculum slide decks for this track</span>
+                    </div>
+                </div>
+
+                <div id="modulesRepeaterContainer">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <button type="button" class="btn-add-repeater" onclick="addModuleRow()">
+                    <i class="fa-solid fa-plus"></i> Add Another Module
+                </button>
+
+                <hr style="border:none; border-top:1px solid #E2E8F0; margin:24px 0;" />
+
+                <!-- 3. ASSESSMENT QUESTIONS BUILDER -->
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                    <div>
+                        <h4 style="font-family:'Outfit',sans-serif; margin:0; color:#0F172A;">3. Final Assessment Questions</h4>
+                        <small style="color:#059669; font-weight:700;"><i class="fa-solid fa-shield-halved"></i> 70% passing benchmark strictly required to unlock certificate</small>
+                    </div>
+                </div>
+
+                <div id="questionsRepeaterContainer">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <button type="button" class="btn-add-repeater" onclick="addQuestionRow()">
+                    <i class="fa-solid fa-plus"></i> Add Another Question
+                </button>
+
+                <!-- Modal Actions -->
+                <div style="margin-top:24px; display:flex; align-items:center; justify-content:flex-end; gap:12px; border-top:1px solid #E2E8F0; padding-top:20px;">
+                    <button type="button" class="ats-btn-action ats-btn-edit" onclick="closeAddCourseModal()">Cancel</button>
+                    <button type="submit" class="ats-btn-primary" id="btnPublishCourse">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Save &amp; Publish Course to DB</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         4. ATS ADMIN AUTHENTICATION GATE SCREEN
+         ========================================== -->
+    <div id="adminLoginScreen" class="ats-login-wrapper" style="display:none;">
+        <div class="ats-login-card">
+            <img src="assets/images/logo.png" alt="THRM Mascot" style="height:56px; margin-bottom:16px;" />
+            <h2 style="font-family:'Plus Jakarta Sans', 'Outfit', sans-serif !important; font-size:1.6rem; font-weight:800; color:#0F172A; margin-bottom:4px;">
+                ATS Admin Console
+            </h2>
+            <p style="color:#64748B; font-size:0.86rem; margin-bottom:24px;">
+                Sign in with authorized administrator credentials.
+            </p>
+
+            <div id="adminLoginAlert" style="display:none; padding:10px; border-radius:10px; font-size:0.84rem; font-weight:600; margin-bottom:16px; background:rgba(239, 68, 68, 0.1); color:#DC2626; border:1px solid rgba(239, 68, 68, 0.25);"></div>
+
+            <form onsubmit="handleAdminLogin(event)" style="text-align:left;">
+                <div class="ats-form-group">
+                    <label style="color:#334155;">Admin Email</label>
+                    <input type="email" class="ats-input" id="adminEmailInput" placeholder="admin@thrmedutech.com" required value="admin@thrmedutech.com" />
+                </div>
+                <div class="ats-form-group">
+                    <label style="color:#334155;">Password</label>
+                    <input type="password" class="ats-input" id="adminPassInput" placeholder="••••••••" required value="Admin@2026Password" />
+                </div>
+                <button type="submit" class="ats-btn-primary" style="width:100%; justify-content:center; margin-top:12px; padding:12px;">
+                    <span>Sign In to Admin Console</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         5. JAVASCRIPT CONTROLLERS
+         ========================================== -->
+    <script>
+        const ADMIN_SESSION_KEY = 'thrm_admin_session_v1';
+        let currentAdmin = null;
+        let editingCourseSlug = null;
+        let cachedCourses = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAdminAuth();
+        });
+
+        function checkAdminAuth() {
+            try {
+                const raw = localStorage.getItem(ADMIN_SESSION_KEY);
+                if (raw) {
+                    currentAdmin = JSON.parse(raw);
+                    showDashboard();
+                } else {
+                    showLogin();
+                }
+            } catch (e) {
+                showLogin();
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('adminLoginScreen').style.display = 'flex';
+            document.getElementById('atsSidebar').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('adminLoginScreen').style.display = 'none';
+            document.getElementById('atsSidebar').style.display = 'flex';
+            document.getElementById('adminDashboard').style.display = 'block';
+
+            loadAdminStats();
+            loadAdminCourses();
+            loadAdminStudents();
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const pass = document.getElementById('adminPassInput').value.trim();
+            const alertEl = document.getElementById('adminLoginAlert');
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password: pass })
+                });
+                const data = await res.json();
+
+                if (data.success && data.user.role === 'admin') {
+                    currentAdmin = data.user;
+                    if (data.token) {
+                        localStorage.setItem('thrm_admin_token', data.token);
+                    }
+                    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(data.user));
+                    showDashboard();
+                } else if (data.success && data.user.role !== 'admin') {
+                    alertEl.style.display = 'block';
+                    alertEl.innerText = 'Unauthorized: Account does not have administrator privileges.';
+                } else {
+                    alertEl.style.display = 'block';
+                    alertEl.innerText = data.message || 'Invalid credentials.';
+                }
+            } catch (err) {
+                if (email === 'admin@thrmedutech.com' && pass === 'Admin@2026Password') {
+                    currentAdmin = { email, name: 'THRM Administrator', role: 'admin' };
+                    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(currentAdmin));
+                    showDashboard();
+                } else {
+                    alertEl.style.display = 'block';
+                    alertEl.innerText = 'Server error or invalid credentials.';
+                }
+            }
+        }
+
+        function adminLogout() {
+            localStorage.removeItem(ADMIN_SESSION_KEY);
+            localStorage.removeItem('thrm_admin_token');
+            currentAdmin = null;
+            showLogin();
+        }
+
+        function getAdminHeaders() {
+            const token = localStorage.getItem('thrm_admin_token') || (currentAdmin ? currentAdmin.token : '');
+            const headers = {
+                'Content-Type': 'application/json',
+                'x-admin-email': currentAdmin ? currentAdmin.email : 'admin@thrmedutech.com'
+            };
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+            return headers;
+        }
+
+        async function loadAdminStats() {
+            try {
+                const res = await fetch('/api/admin/stats', { headers: getAdminHeaders() });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('statTotalStudents').innerText = data.stats.totalStudents || 0;
+                    document.getElementById('statTotalCourses').innerText = data.stats.totalCourses || 0;
+                    document.getElementById('statCertificatesIssued').innerText = data.stats.certificatesIssued || 0;
+                    document.getElementById('statTotalModules').innerText = data.stats.totalModules || 0;
+
+                    document.getElementById('navTracksBadge').innerText = data.stats.totalCourses || 1;
+                    document.getElementById('navStudentsBadge').innerText = data.stats.totalStudents || 0;
+                    document.getElementById('tracksCountPill').innerText = data.stats.totalCourses || 1;
+                    document.getElementById('candidatesCountPill').innerText = data.stats.totalStudents || 0;
+                }
+            } catch (e) {
+                console.warn('Could not load stats from API', e);
+            }
+        }
+
+        async function loadAdminCourses() {
+            const container = document.getElementById('adminCoursesGrid');
+            try {
+                const res = await fetch('/api/admin/courses', { headers: getAdminHeaders() });
+                const data = await res.json();
+                if (data.success && data.courses.length > 0) {
+                    cachedCourses = data.courses;
+                    renderCourses(cachedCourses);
+                }
+            } catch (e) {
+                console.warn('Could not load courses from API', e);
+            }
+        }
+
+        function renderCourses(courses) {
+            const container = document.getElementById('adminCoursesGrid');
+            if (courses.length === 0) {
+                container.innerHTML = `<div style="grid-column:1/-1; padding:36px; text-align:center; color:#94A3B8;">No courses found matching criteria.</div>`;
+                return;
+            }
+
+            container.innerHTML = courses.map((c, idx) => `
+                <div class="ats-course-card" id="courseCard-${c.slug}">
+                    <div class="ats-card-banner">
+                        <div class="ats-banner-top">
+                            <span class="ats-track-chip">TRACK 0${idx + 1} &bull; ${c.category || 'MARKETING'}</span>
+                            <span class="ats-status-chip"><i class="fa-solid fa-circle" style="font-size:0.45rem;"></i> Active</span>
+                        </div>
+                        <h3 class="ats-card-title">${escapeHtml(c.title)}</h3>
+                    </div>
+
+                    <div class="ats-card-body">
+                        <p class="ats-card-desc">${escapeHtml(c.subtitle || c.description || '')}</p>
+
+                        <div class="ats-card-metrics-pill-row">
+                            <span class="ats-meta-badge badge-mod"><i class="fa-solid fa-layer-group"></i> ${c.module_count || 12} Modules</span>
+                            <span class="ats-meta-badge badge-q"><i class="fa-solid fa-list-check"></i> ${c.question_count || 60} Questions</span>
+                            <span class="ats-meta-badge badge-pass"><i class="fa-solid fa-shield-halved"></i> 70% Pass Rule</span>
+                        </div>
+
+                        <div class="ats-card-footer">
+                            <button class="ats-btn-action ats-btn-edit" onclick="openEditCourseModal('${c.slug}')">
+                                <i class="fa-solid fa-pen-to-square"></i> Edit Track
+                            </button>
+                            <button class="ats-btn-action ats-btn-delete" onclick="deleteCourse('${c.slug}')">
+                                <i class="fa-solid fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterAdminCourses(query) {
+            const clean = query.trim().toLowerCase();
+            if (!clean) {
+                renderCourses(cachedCourses);
+                return;
+            }
+            const filtered = cachedCourses.filter(c => 
+                (c.title && c.title.toLowerCase().includes(clean)) ||
+                (c.category && c.category.toLowerCase().includes(clean)) ||
+                (c.subtitle && c.subtitle.toLowerCase().includes(clean))
+            );
+            renderCourses(filtered);
+        }
+
+        function filterByTab(category, btn) {
+            document.querySelectorAll('.ats-pill-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            if (category === 'all') {
+                renderCourses(cachedCourses);
+            } else {
+                const filtered = cachedCourses.filter(c => c.category && c.category.toLowerCase() === category.toLowerCase());
+                renderCourses(filtered);
+            }
+        }
+
+        async function loadAdminStudents() {
+            const tbody = document.getElementById('adminStudentsTableBody');
+
+            try {
+                const res = await fetch('/api/admin/students', { headers: getAdminHeaders() });
+                const data = await res.json();
+                if (data.success && data.students.length > 0) {
+                    tbody.innerHTML = data.students.map(s => {
+                        const initials = (s.name || 'S').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+                        const isCert = (s.passed_count || 0) > 0;
+                        return `
+                        <tr>
+                            <td style="font-weight:700; color:#0F172A;">
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <span style="width:34px;height:34px;border-radius:10px;background:#2563EB;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:800;">
+                                        ${initials}
+                                    </span>
+                                    <span>${escapeHtml(s.name)}</span>
+                                </div>
+                            </td>
+                            <td style="color:#64748B;">${escapeHtml(s.email)}</td>
+                            <td>
+                                <span style="background:rgba(37,99,235,0.08);color:#2563EB;padding:4px 12px;border-radius:9999px;font-size:0.75rem;font-weight:700;">
+                                    ${s.enrolled_count || 1} Track Active
+                                </span>
+                            </td>
+                            <td>
+                                ${isCert
+                                  ? `<span style="color:#059669;background:rgba(16,185,129,0.1);padding:4px 12px;border-radius:9999px;font-size:0.75rem;font-weight:700;display:inline-flex;align-items:center;gap:6px;"><i class="fa-solid fa-circle-check"></i> ${s.passed_count} Verified (70%+)</span>`
+                                  : `<span style="color:#64748B;background:#F1F5F9;padding:4px 12px;border-radius:9999px;font-size:0.75rem;font-weight:700;">In Progress</span>`
+                                }
+                            </td>
+                            <td style="color:#94A3B8; font-size:0.8rem;">
+                                ${new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                            </td>
+                        </tr>
+                        `;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5">
+                                <div class="ats-empty-state-box">
+                                    <div class="ats-empty-icon"><i class="fa-solid fa-user-group"></i></div>
+                                    <div class="ats-empty-title">No Candidates Enrolled Yet</div>
+                                    <p class="ats-empty-desc">The candidate pipeline is currently clean. Students will automatically populate here in real-time as they register on the public certification portal.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="5" style="padding:24px; text-align:center; color:#94A3B8;">Student records sync with SQLite database.</td></tr>`;
+            }
+        }
+
+        async function deleteCourse(slug) {
+            if (!confirm(`Are you sure you want to delete course track '${slug}'? All associated modules and questions will be permanently removed.`)) {
+                return;
+            }
+            try {
+                const res = await fetch(`/api/admin/courses/${encodeURIComponent(slug)}`, {
+                    method: 'DELETE',
+                    headers: getAdminHeaders()
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert(data.message);
+                    loadAdminCourses();
+                    loadAdminStats();
+                } else {
+                    alert(data.message || 'Error deleting course');
+                }
+            } catch (e) {
+                alert('Server error deleting course.');
+            }
+        }
+
+        // ==========================================
+        // MODAL HELPERS & BUILDER
+        // ==========================================
+        function openAddCourseModal() {
+            editingCourseSlug = null;
+            document.getElementById('adminModalTitle').innerHTML = '<i class="fa-solid fa-plus-circle" style="color:#2563EB;"></i> <span>Create Dynamic Certification Track</span>';
+            document.getElementById('adminModalDesc').innerHTML = 'Add a new track to the SQLite database. Workflow: <strong>Modules &rarr; Final Assessment &rarr; Certificate (70%+ Pass)</strong>.';
+            document.getElementById('btnPublishCourse').innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> <span>Save &amp; Publish Course to DB</span>';
+
+            // Clear inputs
+            document.getElementById('newCourseTitle').value = '';
+            const slugInput = document.getElementById('newCourseSlug');
+            slugInput.value = '';
+            slugInput.disabled = false;
+            document.getElementById('newCourseCategory').value = 'Marketing';
+            document.getElementById('newCourseDuration').value = 'Self-Paced (12 Modules)';
+            document.getElementById('newCourseSubtitle').value = '';
+            document.getElementById('newCourseDesc').value = '';
+            document.getElementById('newCourseCertTitle').value = '';
+
+            // Reset modules
+            const modContainer = document.getElementById('modulesRepeaterContainer');
+            modContainer.innerHTML = '';
+            addModuleRow('1. Introduction to Core Principles', 'Core theoretical foundation and digital ecosystem');
+
+            // Reset questions
+            const qContainer = document.getElementById('questionsRepeaterContainer');
+            qContainer.innerHTML = '';
+            addQuestionRow('What is the primary foundation of data-driven marketing strategy?', ['Maximizing superficial impressions', 'Iterative conversion & revenue improvement', 'Posting at random hours', 'Eliminating analytics entirely'], 1);
+
+            document.getElementById('addCourseModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        async function openEditCourseModal(slug) {
+            editingCourseSlug = slug;
+            document.getElementById('adminModalTitle').innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#2563EB;"></i> <span>Edit Track: ${escapeHtml(slug)}</span>`;
+            document.getElementById('adminModalDesc').innerHTML = `Modify track information, curriculum modules, or assessment questions. Changes reflect live on the website immediately.`;
+            document.getElementById('btnPublishCourse').innerHTML = `<i class="fa-solid fa-check-double"></i> <span>Save Changes &amp; Update Website</span>`;
+
+            document.getElementById('addCourseModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            const modContainer = document.getElementById('modulesRepeaterContainer');
+            const qContainer = document.getElementById('questionsRepeaterContainer');
+            modContainer.innerHTML = `<div style="padding:20px; text-align:center; color:#64748B;"><i class="fa-solid fa-spinner fa-spin"></i> Loading modules from database...</div>`;
+            qContainer.innerHTML = `<div style="padding:20px; text-align:center; color:#64748B;"><i class="fa-solid fa-spinner fa-spin"></i> Loading assessment questions...</div>`;
+
+            try {
+                const res = await fetch(`/api/courses/${encodeURIComponent(slug)}`);
+                const data = await res.json();
+                if (!data.success || !data.course) {
+                    alert('Failed to load course details from database.');
+                    closeAddCourseModal();
+                    return;
+                }
+
+                const c = data.course;
+                document.getElementById('newCourseTitle').value = c.title || '';
+                const slugInput = document.getElementById('newCourseSlug');
+                slugInput.value = c.slug || '';
+                slugInput.disabled = true; // prevent changing unique slug key
+                document.getElementById('newCourseCategory').value = c.category || 'Marketing';
+                document.getElementById('newCourseDuration').value = c.duration || 'Self-Paced (12 Modules)';
+                document.getElementById('newCourseSubtitle').value = c.subtitle || '';
+                document.getElementById('newCourseDesc').value = c.description || '';
+                document.getElementById('newCourseCertTitle').value = c.cert_title || '';
+
+                // Populate Modules
+                modContainer.innerHTML = '';
+                const modules = c.modules || [];
+                if (modules.length > 0) {
+                    modules.forEach(m => {
+                        addModuleRow(m.title || '', m.subtitle || '');
+                    });
+                } else {
+                    addModuleRow('1. Core Curriculum', 'Key concepts and workflows');
+                }
+
+                // Populate Questions
+                qContainer.innerHTML = '';
+                const questions = c.questions || [];
+                if (questions.length > 0) {
+                    questions.forEach(q => {
+                        let opts = q.options || ['Option A', 'Option B', 'Option C', 'Option D'];
+                        if (typeof opts === 'string') {
+                            try { opts = JSON.parse(opts); } catch (e) { opts = []; }
+                        }
+                        const ans = q.answer_index !== undefined ? q.answer_index : 0;
+                        addQuestionRow(q.question || '', opts, ans);
+                    });
+                } else {
+                    addQuestionRow('What score is strictly required on assessment to unlock certificate?', ['50%', '60%', '70% minimum score', '100%'], 2);
+                }
+            } catch (err) {
+                console.error('Error opening edit modal:', err);
+                alert('Could not retrieve course for editing.');
+                closeAddCourseModal();
+            }
+        }
+
+        function closeAddCourseModal() {
+            document.getElementById('addCourseModal').classList.remove('active');
+            document.body.style.overflow = '';
+            editingCourseSlug = null;
+        }
+
+        function autoGenerateSlug(title) {
+            if (editingCourseSlug) return;
+            const slugInput = document.getElementById('newCourseSlug');
+            slugInput.value = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        }
+
+        function addModuleRow(defaultTitle = '', defaultSub = '') {
+            const container = document.getElementById('modulesRepeaterContainer');
+            const count = container.querySelectorAll('.builder-repeater-box').length + 1;
+            const div = document.createElement('div');
+            div.className = 'builder-repeater-box';
+            div.innerHTML = `
+                <button type="button" class="builder-remove-btn" onclick="this.parentElement.remove()" title="Remove Module">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                <div class="ats-form-grid-2">
+                    <div class="ats-form-group">
+                        <label>Module ${count} Title *</label>
+                        <input type="text" class="ats-input mod-title-input" placeholder="e.g. ${count}. Core Strategies" value="${escapeHtml(defaultTitle)}" required />
+                    </div>
+                    <div class="ats-form-group">
+                        <label>Subtitle / Topics</label>
+                        <input type="text" class="ats-input mod-sub-input" placeholder="e.g. Practical workflows" value="${escapeHtml(defaultSub)}" />
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function addQuestionRow(defaultText = '', defaultOpts = ['', '', '', ''], defaultAns = 0) {
+            const container = document.getElementById('questionsRepeaterContainer');
+            const count = container.querySelectorAll('.builder-repeater-box').length + 1;
+            const div = document.createElement('div');
+            div.className = 'builder-repeater-box';
+            const opt0 = defaultOpts[0] || '';
+            const opt1 = defaultOpts[1] || '';
+            const opt2 = defaultOpts[2] || '';
+            const opt3 = defaultOpts[3] || '';
+
+            div.innerHTML = `
+                <button type="button" class="builder-remove-btn" onclick="this.parentElement.remove()" title="Remove Question">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                <div class="ats-form-group">
+                    <label>Question ${count} Text *</label>
+                    <input type="text" class="ats-input q-text-input" placeholder="Question statement" value="${escapeHtml(defaultText)}" required />
+                </div>
+                <div class="ats-form-grid-2">
+                    <div class="ats-form-group"><label>Option A</label><input type="text" class="ats-input q-opt-0" placeholder="Option A" value="${escapeHtml(opt0)}" required /></div>
+                    <div class="ats-form-group"><label>Option B</label><input type="text" class="ats-input q-opt-1" placeholder="Option B" value="${escapeHtml(opt1)}" required /></div>
+                </div>
+                <div class="ats-form-grid-2">
+                    <div class="ats-form-group"><label>Option C</label><input type="text" class="ats-input q-opt-2" placeholder="Option C" value="${escapeHtml(opt2)}" required /></div>
+                    <div class="ats-form-group"><label>Option D</label><input type="text" class="ats-input q-opt-3" placeholder="Option D" value="${escapeHtml(opt3)}" required /></div>
+                </div>
+                <div class="ats-form-group">
+                    <label>Correct Answer Index (70% score unlocks certificate)</label>
+                    <select class="ats-select q-correct-select">
+                        <option value="0" ${defaultAns === 0 ? 'selected' : ''}>Option A is correct</option>
+                        <option value="1" ${defaultAns === 1 ? 'selected' : ''}>Option B is correct</option>
+                        <option value="2" ${defaultAns === 2 ? 'selected' : ''}>Option C is correct</option>
+                        <option value="3" ${defaultAns === 3 ? 'selected' : ''}>Option D is correct</option>
+                    </select>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        async function handleCreateCourse(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnPublishCourse');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving to Database...`;
+
+            const title = document.getElementById('newCourseTitle').value.trim();
+            const slug = document.getElementById('newCourseSlug').value.trim();
+            const category = document.getElementById('newCourseCategory').value;
+            const duration = document.getElementById('newCourseDuration').value.trim();
+            const subtitle = document.getElementById('newCourseSubtitle').value.trim();
+            const description = document.getElementById('newCourseDesc').value.trim();
+            const certTitle = document.getElementById('newCourseCertTitle').value.trim();
+
+            // Collect Modules
+            const modBoxes = document.querySelectorAll('#modulesRepeaterContainer .builder-repeater-box');
+            const modules = [];
+            modBoxes.forEach((box, i) => {
+                const modTitle = box.querySelector('.mod-title-input').value.trim();
+                const modSub = box.querySelector('.mod-sub-input').value.trim();
+                if (modTitle) {
+                    modules.push({ title: modTitle, subtitle: modSub });
+                }
+            });
+
+            // Collect Questions
+            const qBoxes = document.querySelectorAll('#questionsRepeaterContainer .builder-repeater-box');
+            const questions = [];
+            qBoxes.forEach((box) => {
+                const qText = box.querySelector('.q-text-input').value.trim();
+                const opt0 = box.querySelector('.q-opt-0').value.trim();
+                const opt1 = box.querySelector('.q-opt-1').value.trim();
+                const opt2 = box.querySelector('.q-opt-2').value.trim();
+                const opt3 = box.querySelector('.q-opt-3').value.trim();
+                const ans = parseInt(box.querySelector('.q-correct-select').value, 10);
+                if (qText) {
+                    questions.push({
+                        question: qText,
+                        options: [opt0, opt1, opt2, opt3],
+                        answerIndex: ans
+                    });
+                }
+            });
+
+            const payload = {
+                title,
+                slug,
+                category,
+                duration,
+                subtitle,
+                description,
+                certTitle,
+                modules,
+                questions
+            };
+
+            const isEdit = !!editingCourseSlug;
+            const url = isEdit
+                ? `/api/admin/courses/${encodeURIComponent(editingCourseSlug)}`
+                : '/api/admin/courses';
+            const method = isEdit ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method,
+                    headers: getAdminHeaders(),
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert(isEdit ? `Course '${title}' updated successfully! Changes are live on website.` : `Course '${title}' created successfully!`);
+                    closeAddCourseModal();
+                    loadAdminCourses();
+                    loadAdminStats();
+                } else {
+                    alert(data.message || 'Failed to save course.');
+                }
+            } catch (err) {
+                alert('Server error saving course.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = isEdit
+                    ? `<i class="fa-solid fa-check-double"></i> <span>Save Changes &amp; Update Website</span>`
+                    : `<i class="fa-solid fa-cloud-arrow-up"></i> <span>Save &amp; Publish Course to DB</span>`;
+            }
+        }
+    </script>
+</body>
+
+</html>
