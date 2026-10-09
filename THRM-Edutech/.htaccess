@@ -1,0 +1,39 @@
+# ========================================================
+# THRM EduTech - Production Clean URLs (.htaccess)
+# For Hostinger LiteSpeed / Apache Web Server
+# ========================================================
+
+RewriteEngine On
+RewriteBase /
+
+# 1. Redirect index.html to root /
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/index\.html [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# 2. Redirect all external requests with .html to clean URL (301 Permanent Redirect)
+# Example: /admin.html -> /admin
+# Example: /certifications.html -> /certifications
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/([^.]+)\.html [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# 3. Explicit rewrites for top-level pages
+RewriteRule ^admin/?$ admin.html [L,QSA]
+RewriteRule ^certifications/?$ certifications.html [L,QSA]
+RewriteRule ^course/?$ course.html [L,QSA]
+RewriteRule ^certifications/social-media-marketing/?$ certifications/social-media-marketing.html [L,QSA]
+
+# 4. General clean URL rewrite: if requested file exists as .html, serve it silently
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*?)/?$ $1.html [L,QSA]
+
+# 5. Security: Deny access to sensitive files
+<FilesMatch "^(\.env|\.git|thrm_edutech\.db|package\.json|package-lock\.json)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 6. Enable Gzip compression for faster loading
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>

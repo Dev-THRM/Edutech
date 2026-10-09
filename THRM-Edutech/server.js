@@ -50,8 +50,35 @@ function authRateLimiter(req, res, next) {
   next();
 }
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname)));
+// ==========================================
+// CLEAN URLS (REMOVING .HTML EVERYWHERE)
+// ==========================================
+
+// 301 Redirect any direct .html request to clean URL
+app.use((req, res, next) => {
+  if (req.path.endsWith('.html')) {
+    const cleanPath = req.path.replace(/\.html$/, '');
+    const query = req.url.slice(req.path.length);
+    if (cleanPath === '/index') {
+      return res.redirect(301, '/' + query);
+    }
+    return res.redirect(301, cleanPath + query);
+  }
+  next();
+});
+
+// Explicit Clean Page Routes
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.get('/certifications', (req, res) => res.sendFile(path.join(__dirname, 'certifications.html')));
+app.get('/certifications/social-media-marketing', (req, res) => {
+  const p1 = path.join(__dirname, 'certifications', 'social-media-marketing.html');
+  if (fs.existsSync(p1)) return res.sendFile(p1);
+  return res.sendFile(path.join(__dirname, 'social-media-marketing.html'));
+});
+app.get('/course', (req, res) => res.sendFile(path.join(__dirname, 'course.html')));
+
+// Serve frontend static files with html extension fallback
+app.use(express.static(path.join(__dirname), { extensions: ['html'] }));
 
 // ==========================================
 // 1. PUBLIC COURSES API
@@ -831,8 +858,8 @@ initDatabase().then(() => {
     console.log(`===============================================`);
     console.log(`THRM EduTech Server running on http://localhost:${PORT}`);
     console.log(`Database connected: SQLite (thrm_edutech.db)`);
-    console.log(`Admin Portal: http://localhost:${PORT}/admin.html`);
-    console.log(`Certifications: http://localhost:${PORT}/certifications.html`);
+    console.log(`Admin Portal: http://localhost:${PORT}/admin`);
+    console.log(`Certifications: http://localhost:${PORT}/certifications`);
     console.log(`===============================================`);
   });
 }).catch(err => {
