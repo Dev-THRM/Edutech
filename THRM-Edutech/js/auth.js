@@ -233,9 +233,22 @@ const AuthManager = (() => {
   function injectAuthModal() {
     if (document.getElementById('thrmAuthModalBackdrop')) return;
 
+    // Ensure standalone auth stylesheet is attached to head
+    if (!document.getElementById('thrmAuthCssLink')) {
+      const link = document.createElement('link');
+      link.id = 'thrmAuthCssLink';
+      link.rel = 'stylesheet';
+      link.href = _resolveAssetPath('css/auth.css?v=800');
+      document.head.appendChild(link);
+    }
+
     const modal = document.createElement('div');
     modal.id = 'thrmAuthModalBackdrop';
     modal.className = 'auth-modal-backdrop';
+    modal.style.display = 'none'; // CRITICAL: Hidden until openModal is explicitly called
+    modal.style.position = 'fixed';
+    modal.style.inset = '0';
+    modal.style.zIndex = '10000';
     modal.innerHTML = `
       <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
         <!-- Accent Top Bar -->
@@ -414,7 +427,10 @@ const AuthManager = (() => {
     const modal = document.getElementById('thrmAuthModalBackdrop');
     if (!modal) return;
 
-    modal.classList.add('active');
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => {
+      modal.classList.add('active');
+    });
     switchTab(mode);
     _clearAlert();
 
@@ -431,7 +447,14 @@ const AuthManager = (() => {
 
   function closeModal() {
     const modal = document.getElementById('thrmAuthModalBackdrop');
-    if (modal) modal.classList.remove('active');
+    if (modal) {
+      modal.classList.remove('active');
+      setTimeout(() => {
+        if (!modal.classList.contains('active')) {
+          modal.style.display = 'none';
+        }
+      }, 300);
+    }
     _clearAlert();
   }
 
