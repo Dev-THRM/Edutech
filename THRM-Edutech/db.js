@@ -133,6 +133,38 @@ async function initDatabase() {
     console.log('Upgraded Admin password to bcrypt hash.');
   }
 
+  // Seed or upgrade primary admin & student account: Sahil Bijlani (bijlanisahil511@gmail.com)
+  const existingSahil = await get(`SELECT * FROM users WHERE email = ?`, ['bijlanisahil511@gmail.com']);
+  const hashedSahilPass = await bcrypt.hash('Abcd@123', 10);
+  if (!existingSahil) {
+    await run(
+      `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`,
+      ['Sahil Bijlani', 'bijlanisahil511@gmail.com', hashedSahilPass, 'admin']
+    );
+    console.log('Seeded primary user/admin: Sahil Bijlani (bijlanisahil511@gmail.com)');
+  } else {
+    await run(`UPDATE users SET name = ?, password = ?, role = 'admin' WHERE id = ?`, ['Sahil Bijlani', hashedSahilPass, existingSahil.id]);
+  }
+
+  // Seed candidate progress for Sahil Bijlani (CSMMP certified)
+  const existingSahilProgress = await get(`SELECT id FROM user_progress WHERE user_email = ? AND course_slug = ?`, ['bijlanisahil511@gmail.com', 'social-media-marketing']);
+  if (!existingSahilProgress) {
+    await run(
+      `INSERT INTO user_progress (user_email, course_slug, completed_modules, exam_score, exam_passed, cert_id, cert_issue_date)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [
+        'bijlanisahil511@gmail.com',
+        'social-media-marketing',
+        JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+        88,
+        1,
+        'THRM-CSMMP-2026-8841',
+        new Date().toISOString().split('T')[0]
+      ]
+    );
+    console.log('Seeded verified candidate certificate for Sahil Bijlani.');
+  }
+
   // Auto-upgrade any unhashed student passwords to bcrypt
   const unhashedUsers = await all(`SELECT id, password FROM users WHERE password NOT LIKE '$2a$%' AND password NOT LIKE '$2b$%'`);
   for (const u of unhashedUsers) {

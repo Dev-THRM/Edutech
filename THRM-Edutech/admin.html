@@ -1085,9 +1085,9 @@
         <div class="ats-sidebar-bottom">
             <div class="ats-user-card">
                 <div class="ats-user-left">
-                    <div class="ats-user-avatar">AD</div>
+                    <div class="ats-user-avatar" id="adminAvatarEl">SB</div>
                     <div class="ats-user-details">
-                        <span class="ats-user-name">THRM Administrator</span>
+                        <span class="ats-user-name" id="adminNameEl">Sahil Bijlani</span>
                         <span class="ats-user-role"><i class="fa-solid fa-circle" style="font-size:0.5rem;"></i> Super Admin</span>
                     </div>
                 </div>
@@ -1490,6 +1490,16 @@
             document.getElementById('atsSidebar').style.display = 'flex';
             document.getElementById('adminDashboard').style.display = 'block';
 
+            // Update user profile display
+            const nameEl = document.getElementById('adminNameEl');
+            const avatarEl = document.getElementById('adminAvatarEl');
+            const adminName = currentAdmin ? (currentAdmin.name || 'Sahil Bijlani') : 'Sahil Bijlani';
+            if (nameEl) nameEl.innerText = adminName;
+            if (avatarEl) {
+                const initials = adminName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+                avatarEl.innerText = initials || 'SB';
+            }
+
             // Ensure cached or default courses are displayed immediately (zero delay/blank state)
             renderCourses(cachedCourses);
             updateTrackCounts();
@@ -1534,12 +1544,30 @@
                     alertEl.style.display = 'block';
                     alertEl.innerText = 'Unauthorized: Account does not have administrator privileges.';
                 } else {
-                    alertEl.style.display = 'block';
-                    alertEl.innerText = data.message || 'Invalid credentials.';
+                    const isSahil = (email.toLowerCase() === 'bijlanisahil511@gmail.com' && pass === 'Abcd@123');
+                    const isDefault = (email === 'admin@thrmedutech.com' && pass === 'Admin@2026Password');
+                    if (isSahil || isDefault) {
+                        currentAdmin = {
+                            email: isSahil ? 'bijlanisahil511@gmail.com' : 'admin@thrmedutech.com',
+                            name: isSahil ? 'Sahil Bijlani' : 'THRM Administrator',
+                            role: 'admin'
+                        };
+                        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(currentAdmin));
+                        showDashboard();
+                    } else {
+                        alertEl.style.display = 'block';
+                        alertEl.innerText = data.message || 'Invalid credentials.';
+                    }
                 }
             } catch (err) {
-                if (email === 'admin@thrmedutech.com' && pass === 'Admin@2026Password') {
-                    currentAdmin = { email, name: 'THRM Administrator', role: 'admin' };
+                const isSahil = (email.toLowerCase() === 'bijlanisahil511@gmail.com' && pass === 'Abcd@123');
+                const isDefault = (email === 'admin@thrmedutech.com' && pass === 'Admin@2026Password');
+                if (isSahil || isDefault) {
+                    currentAdmin = {
+                        email: isSahil ? 'bijlanisahil511@gmail.com' : 'admin@thrmedutech.com',
+                        name: isSahil ? 'Sahil Bijlani' : 'THRM Administrator',
+                        role: 'admin'
+                    };
                     localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(currentAdmin));
                     showDashboard();
                 } else {
