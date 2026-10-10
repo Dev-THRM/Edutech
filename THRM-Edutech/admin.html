@@ -383,36 +383,9 @@
             font-weight: 700;
         }
 
-        .ats-search-input-wrap {
-            position: relative;
-            width: 360px;
-        }
-
-        .ats-search-input-wrap i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94A3B8;
-            font-size: 0.85rem;
-        }
-
-        .ats-search-input {
-            width: 100%;
-            padding: 9px 14px 9px 36px;
-            border-radius: 9999px;
-            border: 1px solid #CBD5E1;
-            background: #FFFFFF;
-            font-size: 0.82rem;
-            font-family: 'Lexend', 'Plus Jakarta Sans', sans-serif !important;
-            color: var(--text-main);
-            transition: all 0.2s ease;
-        }
-
-        .ats-search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        .ats-header-brand-wrap {
+            display: flex;
+            align-items: center;
         }
 
         .ats-header-right {
@@ -481,7 +454,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 24px;
-            margin-bottom: 88px;
+            margin-bottom: 64px;
         }
 
         .ats-kpi-card {
@@ -553,14 +526,20 @@
            ATS SECTION HEADER & FILTER BAR
            ========================================== */
         .ats-section {
-            margin-bottom: 92px;
+            margin-bottom: 72px;
+            scroll-margin-top: 90px;
+        }
+
+        .ats-section + .ats-section {
+            border-top: 1px solid #E2E8F0;
+            padding-top: 64px;
         }
 
         .ats-panel-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 34px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 16px;
         }
@@ -1364,20 +1343,9 @@
             .ats-header-left {
                 display: flex;
                 align-items: center;
-                gap: 8px;
+                gap: 12px;
                 flex: 1;
                 min-width: 0;
-            }
-            .ats-search-input-wrap {
-                flex: 1;
-                min-width: 0;
-                max-width: 100%;
-            }
-            .ats-search-input {
-                height: 38px;
-                padding: 8px 10px 8px 34px;
-                font-size: 0.8rem;
-                border-radius: 10px;
             }
             .ats-header-right {
                 flex-shrink: 0;
@@ -1392,12 +1360,12 @@
                 width: auto;
             }
             .ats-content-container {
-                padding: 14px 12px;
+                padding: 24px 16px 80px;
             }
             .ats-kpi-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                margin-bottom: 24px;
+                gap: 12px;
+                margin-bottom: 52px;
             }
             .ats-kpi-card {
                 padding: 14px 12px;
@@ -1455,13 +1423,18 @@
                 font-size: 0.8rem !important;
             }
             .ats-section {
-                margin-bottom: 32px;
+                margin-bottom: 60px;
+                scroll-margin-top: 72px;
+            }
+            .ats-section + .ats-section {
+                border-top: 1px solid #E2E8F0;
+                padding-top: 52px;
             }
             .ats-panel-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
-                margin-bottom: 16px;
+                gap: 12px;
+                margin-bottom: 24px;
             }
             .ats-panel-title {
                 font-size: 1.15rem;
@@ -1496,13 +1469,34 @@
 
         @media (max-width: 600px) {
             .ats-content-container {
-                padding: 12px 10px;
+                padding: 20px 14px 70px;
+            }
+            .ats-kpi-grid {
+                margin-bottom: 44px;
+            }
+            .ats-section {
+                margin-bottom: 52px;
+            }
+            .ats-section + .ats-section {
+                border-top: 1px solid #E2E8F0;
+                padding-top: 44px;
+            }
+            .ats-panel-header {
+                margin-bottom: 20px;
+            }
+            .ats-breadcrumb span:first-child,
+            .ats-breadcrumb i {
+                display: none;
+            }
+            .ats-breadcrumb span.current {
+                font-size: 0.88rem;
+                font-weight: 700;
             }
             .ats-kpi-subtext {
                 display: none;
             }
             .ats-top-header {
-                padding: 8px 10px;
+                padding: 10px 12px;
             }
             .ats-header-right .ats-btn-primary span {
                 display: none;
@@ -1651,9 +1645,12 @@
                 <button class="ats-mobile-sidebar-toggle" id="atsMobileSidebarToggle" onclick="toggleAdminSidebar()" aria-label="Open Navigation Menu">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <div class="ats-search-input-wrap">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" class="ats-search-input" id="atsSearchInput" placeholder="Quick search tracks, modules, candidates..." oninput="filterAdminCourses(this.value)" />
+                <div class="ats-header-brand-wrap">
+                    <div class="ats-breadcrumb">
+                        <span>EduTech Console</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem; color: #94A3B8;"></i>
+                        <span class="current">Admin Dashboard</span>
+                    </div>
                 </div>
             </div>
 
