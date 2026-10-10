@@ -6533,7 +6533,9 @@ body.drawer-open {
   max-width: 470px;
   width: 100%;
   position: relative;
-  overflow: hidden;
+  max-height: 92vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 
     0 30px 80px -15px rgba(15, 23, 42, 0.3),
     0 0 0 1px rgba(37, 99, 235, 0.08),
@@ -6983,8 +6985,15 @@ body.drawer-open {
 
 /* Responsive */
 @media (max-width: 600px) {
+  .auth-modal-backdrop {
+    padding: 12px !important;
+  }
   .auth-modal-card {
     border-radius: 20px;
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: auto !important;
   }
   .auth-modal-header {
     padding: 24px 20px 0;

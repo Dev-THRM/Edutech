@@ -172,6 +172,29 @@ async function initDatabase() {
     console.log('Seeded verified candidate certificate for Sahil Bijlani.');
   }
 
+  // Seed active student candidates so Candidate Roster & Analytics have real candidate accounts
+  const candidateUsers = [
+    { name: 'Priya Sharma', email: 'priya.sharma@example.com', pass: 'Priya@123', completed: [1,2,3,4,5,6], active: 6, status: 'in_progress', score: null, passed: 0, certId: null, date: null },
+    { name: 'Rohit Verma', email: 'rohit.verma@example.com', pass: 'Rohit@123', completed: [1,2,3,4,5,6,7,8,9,10,11,12], active: 12, status: 'passed', score: 82, passed: 1, certId: 'THRM-CSMMP-2026-9102', date: '2026-10-08' },
+    { name: 'Ananya Patel', email: 'ananya.patel@example.com', pass: 'Ananya@123', completed: [1,2,3], active: 3, status: 'not_started', score: null, passed: 0, certId: null, date: null }
+  ];
+
+  for (const c of candidateUsers) {
+    const existing = await get(`SELECT id FROM users WHERE email = ?`, [c.email]);
+    if (!existing) {
+      const hashed = await bcrypt.hash(c.pass, 10);
+      await run(`INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'student')`, [c.name, c.email, hashed]);
+    }
+    const prog = await get(`SELECT id FROM user_progress WHERE user_email = ? AND course_slug = ?`, [c.email, 'social-media-marketing']);
+    if (!prog) {
+      await run(
+        `INSERT INTO user_progress (user_email, course_slug, completed_modules_json, active_module_id, exam_status, exam_score, exam_passed, cert_id, cert_issue_date)
+         VALUES (?, 'social-media-marketing', ?, ?, ?, ?, ?, ?, ?)`,
+        [c.email, JSON.stringify(c.completed), c.active, c.status, c.score, c.passed, c.certId, c.date]
+      );
+    }
+  }
+
   // Auto-upgrade any unhashed student passwords to bcrypt
   const unhashedUsers = await all(`SELECT id, password FROM users WHERE password NOT LIKE '$2a$%' AND password NOT LIKE '$2b$%'`);
   for (const u of unhashedUsers) {

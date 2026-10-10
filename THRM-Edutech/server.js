@@ -866,7 +866,7 @@ app.get('/api/admin/students', requireAdmin, async (req, res) => {
         SUM(CASE WHEN p.exam_passed = 1 THEN 1 ELSE 0 END) as passed_count
       FROM users u
       LEFT JOIN user_progress p ON u.email = p.user_email
-      WHERE u.role = 'student'
+      WHERE u.email != 'admin@thrmedutech.com'
       GROUP BY u.id
       ORDER BY u.id DESC
     `);

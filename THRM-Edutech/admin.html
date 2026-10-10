@@ -1042,6 +1042,7 @@
             padding: 0;
             max-width: 460px;
             width: 100%;
+            margin: auto;
             position: relative;
             box-shadow: 
                 0 25px 60px -15px rgba(15, 23, 42, 0.10),
@@ -1049,7 +1050,9 @@
                 0 0 0 1px rgba(226, 232, 240, 0.8);
             animation: atsLoginFadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             z-index: 2;
-            overflow: hidden;
+            max-height: 92vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .ats-login-top-accent {
@@ -1418,8 +1421,28 @@
                 border-radius: var(--radius-lg);
                 max-height: 92vh;
             }
+            .ats-login-wrapper {
+                padding: 16px 12px !important;
+            }
+            .ats-login-card {
+                border-radius: 20px !important;
+                margin: auto !important;
+            }
             .ats-login-card-inner {
-                padding: 28px 18px 24px;
+                padding: 24px 18px 20px !important;
+            }
+            .ats-login-title {
+                font-size: 1.35rem !important;
+            }
+            .ats-login-subtitle {
+                font-size: 0.82rem !important;
+                line-height: 1.4 !important;
+                margin-bottom: 14px !important;
+            }
+            .ats-login-footer-info {
+                flex-direction: column !important;
+                gap: 10px !important;
+                align-items: center !important;
             }
         }
     </style>
@@ -2296,6 +2319,30 @@
                 created_at: '2026-10-09 10:15:00',
                 enrolled_count: 1,
                 passed_count: 1
+            },
+            {
+                id: 2,
+                name: 'Priya Sharma',
+                email: 'priya.sharma@example.com',
+                created_at: '2026-10-09 14:20:00',
+                enrolled_count: 1,
+                passed_count: 0
+            },
+            {
+                id: 3,
+                name: 'Rohit Verma',
+                email: 'rohit.verma@example.com',
+                created_at: '2026-10-08 18:45:00',
+                enrolled_count: 1,
+                passed_count: 1
+            },
+            {
+                id: 4,
+                name: 'Ananya Patel',
+                email: 'ananya.patel@example.com',
+                created_at: '2026-10-10 09:30:00',
+                enrolled_count: 1,
+                passed_count: 0
             }
         ];
 
