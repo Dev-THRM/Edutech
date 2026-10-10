@@ -118,9 +118,6 @@ app.get('/certifications/social-media-marketing', (req, res) => {
 });
 app.get('/course', (req, res) => res.sendFile(path.join(__dirname, 'course.html')));
 
-// Serve frontend static files with html extension fallback
-app.use(express.static(path.join(__dirname), { extensions: ['html'] }));
-
 // ==========================================
 // 1. PUBLIC COURSES API
 // ==========================================
@@ -945,11 +942,14 @@ app.delete('/api/admin/students/:email', requireAdmin, async (req, res) => {
 
 
 // ==========================================
-// PRODUCTION ERROR HANDLING
+// PRODUCTION ERROR HANDLING & STATIC ASSETS
 // ==========================================
 app.use('/api', (req, res) => {
   res.status(404).json({ success: false, message: `Endpoint ${req.originalUrl} not found` });
 });
+
+// Serve frontend static files with html extension fallback
+app.use(express.static(path.join(__dirname), { extensions: ['html'] }));
 
 app.use((err, req, res, next) => {
   console.error('Unhandled Server Error:', err);
