@@ -1335,6 +1335,8 @@
             .ats-sidebar {
                 transform: translateX(-100%);
                 z-index: 1050;
+                width: 280px;
+                max-width: 85vw;
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             }
             .ats-sidebar.open {
@@ -1349,11 +1351,12 @@
             .ats-main-area {
                 margin-left: 0;
                 width: 100%;
-                max-width: 100vw;
+                max-width: 100%;
+                overflow-x: hidden;
             }
             .ats-top-header {
-                padding: 12px 16px;
-                gap: 12px;
+                padding: 10px 14px;
+                gap: 10px;
             }
             .ats-mobile-sidebar-toggle {
                 display: flex;
@@ -1361,83 +1364,190 @@
             .ats-header-left {
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 8px;
                 flex: 1;
                 min-width: 0;
             }
             .ats-search-input-wrap {
-                width: 100%;
+                flex: 1;
+                min-width: 0;
                 max-width: 100%;
+            }
+            .ats-search-input {
+                height: 38px;
+                padding: 8px 10px 8px 34px;
+                font-size: 0.8rem;
+                border-radius: 10px;
+            }
+            .ats-header-right {
+                flex-shrink: 0;
+                width: auto;
+            }
+            .ats-header-right .ats-btn-primary {
+                height: 38px;
+                padding: 8px 14px;
+                font-size: 0.82rem;
+                border-radius: 10px;
+                white-space: nowrap;
+                width: auto;
+            }
+            .ats-content-container {
+                padding: 14px 12px;
             }
             .ats-kpi-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 14px;
+                gap: 10px;
+                margin-bottom: 24px;
             }
-            .ats-content-container {
+            .ats-kpi-card {
+                padding: 14px 12px;
+                border-radius: 14px;
+            }
+            .ats-kpi-value {
+                font-size: 1.55rem;
+            }
+            .ats-kpi-label {
+                font-size: 0.72rem;
+            }
+            .ats-kpi-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+                border-radius: 10px;
+            }
+            .ats-kpi-subtext {
+                font-size: 0.65rem;
+            }
+            .ats-courses-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+            .ats-course-card {
+                border-radius: 16px;
+            }
+            .ats-card-banner {
+                padding: 18px 16px;
+            }
+            .ats-card-title {
+                font-size: 1.15rem;
+            }
+            .ats-card-body {
                 padding: 16px;
+            }
+            .ats-card-metrics-pill-row {
+                gap: 6px;
+                padding-bottom: 12px;
+            }
+            .ats-meta-badge {
+                padding: 4px 8px;
+                font-size: 0.72rem;
+            }
+            .ats-card-footer {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            .ats-card-footer .ats-btn-action {
+                width: 100% !important;
+                justify-content: center !important;
+                text-align: center !important;
+                padding: 9px 8px !important;
+                font-size: 0.8rem !important;
+            }
+            .ats-section {
+                margin-bottom: 32px;
+            }
+            .ats-panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+            .ats-panel-title {
+                font-size: 1.15rem;
+            }
+            .ats-panel-subtitle {
+                font-size: 0.78rem;
+            }
+            .ats-filter-pills {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .ats-pill-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+                white-space: nowrap;
             }
             .ats-table-card {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+                border-radius: 14px;
             }
             .ats-data-table {
-                min-width: 640px;
+                min-width: 580px;
+                font-size: 0.82rem;
+            }
+            .ats-data-table th,
+            .ats-data-table td {
+                padding: 10px 8px;
             }
         }
 
         @media (max-width: 600px) {
-            .ats-kpi-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
+            .ats-content-container {
+                padding: 12px 10px;
+            }
+            .ats-kpi-subtext {
+                display: none;
             }
             .ats-top-header {
-                flex-wrap: wrap;
-                gap: 10px;
+                padding: 8px 10px;
             }
-            .ats-header-right {
+            .ats-header-right .ats-btn-primary span {
+                display: none;
+            }
+            .ats-header-right .ats-btn-primary::after {
+                content: " Add Course";
+            }
+            .ats-modal-backdrop {
+                padding: 10px;
+            }
+            .ats-modal-box {
+                padding: 18px 14px;
+                border-radius: 16px;
+                max-height: 90vh;
                 width: 100%;
             }
-            .ats-btn-primary {
-                width: 100%;
-                justify-content: center;
-            }
-            .ats-card-header {
-                flex-direction: column;
-                align-items: flex-start !important;
-                gap: 12px;
-            }
-            .ats-header-filter-group {
-                width: 100%;
-                flex-wrap: wrap;
+            .ats-modal-title {
+                font-size: 1.15rem;
             }
             .ats-form-grid-2 {
                 grid-template-columns: 1fr;
+                gap: 12px;
             }
-            .ats-modal-backdrop {
-                padding: 12px;
-            }
-            .ats-modal-box {
-                padding: 20px 16px;
-                border-radius: var(--radius-lg);
-                max-height: 92vh;
+            .ats-input, .ats-select, .ats-textarea {
+                padding: 9px 12px;
+                font-size: 0.85rem;
             }
             .ats-login-wrapper {
-                padding: 16px 12px !important;
+                padding: 16px 10px !important;
             }
             .ats-login-card {
-                border-radius: 20px !important;
+                border-radius: 18px !important;
                 margin: auto !important;
+                max-width: 100% !important;
             }
             .ats-login-card-inner {
-                padding: 24px 18px 20px !important;
+                padding: 24px 16px 20px !important;
             }
             .ats-login-title {
-                font-size: 1.35rem !important;
+                font-size: 1.25rem !important;
             }
             .ats-login-subtitle {
-                font-size: 0.82rem !important;
+                font-size: 0.8rem !important;
                 line-height: 1.4 !important;
-                margin-bottom: 14px !important;
+                margin-bottom: 12px !important;
             }
             .ats-login-footer-info {
                 flex-direction: column !important;
@@ -1668,7 +1778,7 @@
                         <p class="ats-panel-subtitle">Manage candidates enrolled in certification tracks and assessment completion status.</p>
                     </div>
                     <div>
-                        <button class="ats-btn ats-btn-primary" onclick="openAddCandidateModal()">
+                        <button class="ats-btn-primary" onclick="openAddCandidateModal()" style="height:38px; padding:8px 14px; font-size:0.82rem; border-radius:10px; white-space:nowrap;">
                             <i class="fa-solid fa-user-plus"></i>
                             <span>Add Candidate</span>
                         </button>
