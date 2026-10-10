@@ -1923,7 +1923,8 @@ function updateTimerDisplay() {
   timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
 
-function renderExamQuestion(index) {
+function renderExamQuestion(index, skipScroll = false) {
+  const isQuestionChange = appState.examCurrentQ !== index;
   appState.examCurrentQ = index;
   const q = EXAM_QUESTIONS[index];
   if (!q) return;
@@ -1964,11 +1965,21 @@ function renderExamQuestion(index) {
   }
 
   renderQuestionPalette();
+
+  // Scroll question into view with top offset for fixed navbar on mobile
+  if (!skipScroll && isQuestionChange && window.innerWidth <= 768) {
+    const workspace = document.getElementById('examWorkspace');
+    if (workspace) {
+      const yOffset = -90;
+      const y = workspace.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    }
+  }
 }
 
 function selectExamOption(qIndex, optIndex) {
   appState.examAnswers[qIndex] = optIndex;
-  renderExamQuestion(qIndex);
+  renderExamQuestion(qIndex, true);
 }
 
 function toggleFlagCurrentQuestion() {

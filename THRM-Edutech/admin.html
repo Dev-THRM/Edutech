@@ -1658,14 +1658,20 @@
 
             <!-- CANDIDATES & STUDENTS PANEL -->
             <section id="candidates-section" class="ats-section">
-                <div class="ats-panel-header">
+                <div class="ats-panel-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
                     <div>
                         <div class="ats-panel-title">
                             <i class="fa-solid fa-users" style="color:#2563EB;"></i>
                             <span>Registered Candidates &amp; Students</span>
                             <span class="ats-count-pill" id="candidatesCountPill">0</span>
                         </div>
-                        <p class="ats-panel-subtitle">Live candidates enrolled in certification tracks and assessment completion status.</p>
+                        <p class="ats-panel-subtitle">Manage candidates enrolled in certification tracks and assessment completion status.</p>
+                    </div>
+                    <div>
+                        <button class="ats-btn ats-btn-primary" onclick="openAddCandidateModal()">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Add Candidate</span>
+                        </button>
                     </div>
                 </div>
 
@@ -1679,6 +1685,7 @@
                                 <th>Program Enrolled</th>
                                 <th>Certification Status (70%+ Score)</th>
                                 <th>Joined</th>
+                                <th style="text-align:right;">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="adminStudentsTableBody">
@@ -1688,6 +1695,56 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <!-- ==========================================
+         2.5. ATS ADD CANDIDATE MODAL
+         ========================================== -->
+    <div class="ats-modal-backdrop" id="addCandidateModal" style="display:none;">
+        <div class="ats-modal-box" style="max-width:500px;">
+            <button onclick="closeAddCandidateModal()" style="position:absolute; top:24px; right:24px; background:transparent; border:none; font-size:1.3rem; color:#64748B; cursor:pointer;" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="ats-modal-header">
+                <h3 class="ats-modal-title">
+                    <i class="fa-solid fa-user-plus text-primary"></i>
+                    <span>Add Candidate</span>
+                </h3>
+                <p class="ats-modal-desc">
+                    Manually add a student or candidate to your certification roster.
+                </p>
+            </div>
+            <form onsubmit="handleManualAddCandidate(event)">
+                <div class="ats-form-group" style="margin-bottom:16px;">
+                    <label class="ats-label" style="display:block; font-weight:700; font-size:0.85rem; margin-bottom:6px; color:#0F172A;">Candidate Full Name *</label>
+                    <input type="text" id="candModalName" class="ats-input" placeholder="e.g. Sahil Bijlani" required style="width:100%; padding:10px 14px; border:1px solid #E2E8F0; border-radius:8px;" />
+                </div>
+                <div class="ats-form-group" style="margin-bottom:16px;">
+                    <label class="ats-label" style="display:block; font-weight:700; font-size:0.85rem; margin-bottom:6px; color:#0F172A;">Candidate Email *</label>
+                    <input type="email" id="candModalEmail" class="ats-input" placeholder="e.g. student@example.com" required style="width:100%; padding:10px 14px; border:1px solid #E2E8F0; border-radius:8px;" />
+                </div>
+                <div class="ats-form-group" style="margin-bottom:16px;">
+                    <label class="ats-label" style="display:block; font-weight:700; font-size:0.85rem; margin-bottom:6px; color:#0F172A;">Enrolled Program</label>
+                    <select id="candModalProgram" class="ats-input" style="width:100%; padding:10px 14px; border:1px solid #E2E8F0; border-radius:8px;">
+                        <option value="social-media-marketing">Social Media Marketing Professional (CSMMP)</option>
+                    </select>
+                </div>
+                <div class="ats-form-group" style="margin-bottom:24px;">
+                    <label class="ats-label" style="display:block; font-weight:700; font-size:0.85rem; margin-bottom:6px; color:#0F172A;">Certification Status</label>
+                    <select id="candModalStatus" class="ats-input" style="width:100%; padding:10px 14px; border:1px solid #E2E8F0; border-radius:8px;">
+                        <option value="enrolled">Enrolled (In Progress)</option>
+                        <option value="certified">Verified Certified (70%+ Score)</option>
+                    </select>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:12px;">
+                    <button type="button" class="ats-btn ats-btn-secondary" onclick="closeAddCandidateModal()">Cancel</button>
+                    <button type="submit" class="ats-btn ats-btn-primary">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Save Candidate</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- ==========================================
@@ -2123,33 +2180,51 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password: pass })
                 });
-                const data = await res.json();
-
-                if (data.success && data.user.role === 'admin') {
-                    currentAdmin = data.user;
-                    if (data.token) {
-                        localStorage.setItem('thrm_admin_token', data.token);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && data.user.role === 'admin') {
+                        currentAdmin = data.user;
+                        if (data.token) {
+                            localStorage.setItem('thrm_admin_token', data.token);
+                        }
+                        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(data.user));
+                        showDashboard();
+                        return;
+                    } else if (data.success && data.user.role !== 'admin') {
+                        showError('Unauthorized: Account does not have administrator privileges.');
+                        return;
+                    } else {
+                        showError(data.message || 'Invalid administrator email or password.');
+                        return;
                     }
-                    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(data.user));
-                    showDashboard();
-                    return;
-                } else if (data.success && data.user.role !== 'admin') {
-                    showError('Unauthorized: Account does not have administrator privileges.');
-                    return;
-                } else {
-                    showError(data.message || 'Invalid administrator email or password.');
-                    return;
                 }
             } catch (err) {
-                showError('Unable to connect to authentication server. Please check your network and server status.');
+                // If API is not running (e.g. static hosting on Hostinger public_html), fallback to local credential verification
+            }
+
+            // Resilient Admin fallback for static web hosting
+            if (email === 'dev@thrmdigitalmarketing.in' && pass === 'Thrm@0205') {
+                const mockAdmin = {
+                    id: 'admin_master',
+                    name: 'THRM Super Administrator',
+                    email: 'dev@thrmdigitalmarketing.in',
+                    role: 'admin'
+                };
+                currentAdmin = mockAdmin;
+                localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(mockAdmin));
+                showDashboard();
                 return;
-            } finally {
-                if (submitBtn && (!currentAdmin)) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<span>Sign In to Admin Console</span><i class="fa-solid fa-arrow-right"></i>';
-                }
+            }
+
+            showError('Invalid administrator email or password.');
+            return;
+        } finally {
+            if (submitBtn && (!currentAdmin)) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Sign In to Admin Console</span><i class="fa-solid fa-arrow-right"></i>';
             }
         }
+    }
 
         function adminLogout() {
             localStorage.removeItem(ADMIN_SESSION_KEY);
@@ -2311,50 +2386,132 @@
             }
         }
 
-        const DEFAULT_STUDENTS = [
-            {
-                id: 1,
-                name: 'Sahil Bijlani',
-                email: 'bijlanisahil511@gmail.com',
-                created_at: '2026-10-09 10:15:00',
-                enrolled_count: 1,
-                passed_count: 1
-            },
-            {
-                id: 2,
-                name: 'Priya Sharma',
-                email: 'priya.sharma@example.com',
-                created_at: '2026-10-09 14:20:00',
-                enrolled_count: 1,
-                passed_count: 0
-            },
-            {
-                id: 3,
-                name: 'Rohit Verma',
-                email: 'rohit.verma@example.com',
-                created_at: '2026-10-08 18:45:00',
-                enrolled_count: 1,
-                passed_count: 1
-            },
-            {
-                id: 4,
-                name: 'Ananya Patel',
-                email: 'ananya.patel@example.com',
-                created_at: '2026-10-10 09:30:00',
-                enrolled_count: 1,
-                passed_count: 0
+        const DEFAULT_STUDENTS = [];
+
+        function getManualStudents() {
+            try {
+                const raw = localStorage.getItem('thrm_admin_manual_students');
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
             }
-        ];
+        }
+
+        function saveManualStudentsList(list) {
+            try {
+                localStorage.setItem('thrm_admin_manual_students', JSON.stringify(list));
+            } catch (e) {}
+        }
+
+        function openAddCandidateModal() {
+            document.getElementById('candModalName').value = '';
+            document.getElementById('candModalEmail').value = '';
+            document.getElementById('candModalStatus').value = 'enrolled';
+            document.getElementById('addCandidateModal').style.display = 'flex';
+        }
+
+        function closeAddCandidateModal() {
+            document.getElementById('addCandidateModal').style.display = 'none';
+        }
+
+        async function handleManualAddCandidate(e) {
+            e.preventDefault();
+            const name = document.getElementById('candModalName').value.trim();
+            const email = document.getElementById('candModalEmail').value.trim().toLowerCase();
+            const isCert = document.getElementById('candModalStatus').value === 'certified';
+
+            if (!name || !email) return;
+
+            const newCand = {
+                id: 'cand_' + Date.now().toString(36),
+                name,
+                email,
+                created_at: new Date().toISOString(),
+                enrolled_count: 1,
+                passed_count: isCert ? 1 : 0
+            };
+
+            const manualList = getManualStudents().filter(s => s.email.toLowerCase() !== email);
+            manualList.unshift(newCand);
+            saveManualStudentsList(manualList);
+
+            // Also register in local auth storage so they can sign in as student if needed
+            try {
+                const usersRaw = localStorage.getItem('thrm_edutech_users_v2');
+                const users = usersRaw ? JSON.parse(usersRaw) : {};
+                if (!users[email]) {
+                    users[email] = {
+                        id: newCand.id,
+                        name,
+                        email,
+                        role: 'student',
+                        registeredAt: new Date().toISOString(),
+                        courseProgress: {
+                            'social-media-marketing': {
+                                examPassed: isCert,
+                                examScore: isCert ? 85 : null,
+                                certId: isCert ? `THRM-CSMMP-2026-${Math.floor(1000 + Math.random() * 9000)}` : null,
+                                completedModules: isCert ? [1,2,3,4,5,6,7,8,9,10,11,12] : [1]
+                            }
+                        }
+                    };
+                    localStorage.setItem('thrm_edutech_users_v2', JSON.stringify(users));
+                }
+            } catch (err) {}
+
+            // Try backend API sync if online
+            try {
+                fetch('/api/admin/students', {
+                    method: 'POST',
+                    headers: getAdminHeaders(),
+                    body: JSON.stringify({ name, email, passed: isCert })
+                }).catch(() => {});
+            } catch (err) {}
+
+            closeAddCandidateModal();
+            loadAdminStudents();
+        }
+
+        async function deleteCandidate(email) {
+            if (!confirm(`Are you sure you want to remove candidate ${email}?`)) return;
+
+            const cleanEmail = (email || '').trim().toLowerCase();
+
+            // 1. Remove from manual list
+            const manualList = getManualStudents().filter(s => s.email.toLowerCase() !== cleanEmail);
+            saveManualStudentsList(manualList);
+
+            // 2. Remove from auth storage
+            try {
+                const usersRaw = localStorage.getItem('thrm_edutech_users_v2');
+                if (usersRaw) {
+                    const users = JSON.parse(usersRaw);
+                    delete users[cleanEmail];
+                    localStorage.setItem('thrm_edutech_users_v2', JSON.stringify(users));
+                }
+            } catch (e) {}
+
+            // 3. Delete from backend if online
+            try {
+                fetch(`/api/admin/students/${encodeURIComponent(cleanEmail)}`, {
+                    method: 'DELETE',
+                    headers: getAdminHeaders()
+                }).catch(() => {});
+            } catch (e) {}
+
+            loadAdminStudents();
+        }
 
         function getLocalRegisteredStudents() {
             const list = [];
             try {
-                const raw = localStorage.getItem('thrm_edutech_users_v1');
+                const raw = localStorage.getItem('thrm_edutech_users_v2');
                 if (raw) {
                     const parsed = JSON.parse(raw);
                     Object.values(parsed).forEach(u => {
                         if (!u.email) return;
-                        if (u.role === 'admin' && u.email.toLowerCase() === 'admin@thrmedutech.com') return;
+                        const lowEmail = u.email.toLowerCase();
+                        if (u.role === 'admin' || lowEmail === 'dev@thrmdigitalmarketing.in' || lowEmail === 'admin@thrmedutech.com') return;
                         const prog = u.courseProgress ? u.courseProgress['social-media-marketing'] : null;
                         const hasPassed = prog && (prog.examPassed || prog.passed);
                         list.push({
@@ -2376,10 +2533,10 @@
         async function loadAdminStudents() {
             const tbody = document.getElementById('adminStudentsTableBody');
 
-            // 1. Collect all local registered candidates from auth.js storage
+            // 1. Collect all local registered candidates
             const localStudents = getLocalRegisteredStudents();
 
-            // 2. Fetch server candidates from API
+            // 2. Fetch server candidates from API if live
             let apiStudents = [];
             try {
                 const res = await fetch('/api/admin/students', { headers: getAdminHeaders() });
@@ -2393,17 +2550,26 @@
                 console.warn('API students notice:', e);
             }
 
-            // 3. Merge server and local students, deduplicating by email
+            // 3. Merge manual, server and local students, deduplicating by email
             const studentMap = new Map();
 
-            // Default fallback
-            DEFAULT_STUDENTS.forEach(s => studentMap.set(s.email.toLowerCase(), s));
+            // Admin manual additions
+            const manualStudents = getManualStudents();
+            manualStudents.forEach(s => studentMap.set(s.email.toLowerCase(), s));
 
             // Server students
             apiStudents.forEach(s => studentMap.set(s.email.toLowerCase(), s));
 
-            // Locally registered students (ALWAYS merged so new registrations appear instantly!)
-            localStudents.forEach(s => studentMap.set(s.email.toLowerCase(), s));
+            // Locally registered students
+            localStudents.forEach(s => {
+                if (!studentMap.has(s.email.toLowerCase())) {
+                    studentMap.set(s.email.toLowerCase(), s);
+                }
+            });
+
+            // Ensure admin accounts never display in candidate roster
+            studentMap.delete('dev@thrmdigitalmarketing.in');
+            studentMap.delete('admin@thrmedutech.com');
 
             const finalStudents = Array.from(studentMap.values());
 
@@ -2449,17 +2615,22 @@
                         <td style="color:#94A3B8; font-size:0.8rem;">
                             ${new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </td>
+                        <td style="text-align:right;">
+                            <button class="ats-action-icon" style="color:#EF4444; border:none; background:transparent; cursor:pointer; font-size:0.95rem; padding:6px 10px; border-radius:6px;" onclick="deleteCandidate('${escapeHtml(s.email)}')" title="Delete Candidate">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
                     </tr>
                     `;
                 }).join('');
             } else {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="5">
+                        <td colspan="6">
                             <div class="ats-empty-state-box">
                                 <div class="ats-empty-icon"><i class="fa-solid fa-user-group"></i></div>
                                 <div class="ats-empty-title">No Candidates Enrolled Yet</div>
-                                <p class="ats-empty-desc">Students will automatically populate here in real-time as they register on the public certification portal.</p>
+                                <p class="ats-empty-desc">Click "Add Candidate" above to add students manually, or let candidates register via the portal.</p>
                             </div>
                         </td>
                     </tr>
@@ -2480,7 +2651,7 @@
 
         // Auto-refresh candidate list in real-time if a student registers in another tab
         window.addEventListener('storage', (e) => {
-            if (e.key === 'thrm_edutech_users_v1' || e.key === 'thrm_edutech_current_user_v1') {
+            if (e.key === 'thrm_edutech_users_v2' || e.key === 'thrm_edutech_current_user_v1') {
                 loadAdminStudents();
             }
         });

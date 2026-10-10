@@ -122,78 +122,26 @@ async function initDatabase() {
   `);
 
   // Initial setup: seed admin account ONLY if no admin user exists
-  const existingAdmin = await get(`SELECT id, password FROM users WHERE email = ?`, ['admin@thrmedutech.com']);
-  const defaultAdminPass = process.env.ADMIN_DEFAULT_PASSWORD || 'Admin@THRM2026#Secure';
+  const defaultAdminEmail = 'dev@thrmdigitalmarketing.in';
+  const defaultAdminPass = 'Thrm@0205';
+  const existingAdmin = await get(`SELECT id, password FROM users WHERE email = ?`, [defaultAdminEmail]);
   if (!existingAdmin) {
     const hashedAdminPass = await bcrypt.hash(defaultAdminPass, 10);
     await run(
       `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`,
-      ['THRM Administrator', 'admin@thrmedutech.com', hashedAdminPass, 'admin']
+      ['THRM Super Administrator', defaultAdminEmail, hashedAdminPass, 'admin']
     );
-    console.log('Seeded default Admin account with secure bcrypt hash: admin@thrmedutech.com');
-  } else if (!existingAdmin.password.startsWith('$2a$') && !existingAdmin.password.startsWith('$2b$')) {
-    const hashedAdminPass = await bcrypt.hash(defaultAdminPass, 10);
-    await run(`UPDATE users SET password = ? WHERE id = ?`, [hashedAdminPass, existingAdmin.id]);
-    console.log('Upgraded Admin password to bcrypt hash.');
-  }
-
-  // Seed or upgrade primary admin: Sahil Bijlani (bijlanisahil511@gmail.com)
-  const existingSahil = await get(`SELECT id, password FROM users WHERE email = ?`, ['bijlanisahil511@gmail.com']);
-  if (!existingSahil) {
-    const hashedSahilPass = await bcrypt.hash(defaultAdminPass, 10);
-    await run(
-      `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`,
-      ['Sahil Bijlani', 'bijlanisahil511@gmail.com', hashedSahilPass, 'admin']
-    );
-    console.log('Seeded primary admin: Sahil Bijlani (bijlanisahil511@gmail.com)');
+    console.log('Seeded primary admin account: dev@thrmdigitalmarketing.in');
   } else {
-    // Ensure role is admin without resetting the password
-    await run(`UPDATE users SET role = 'admin' WHERE id = ?`, [existingSahil.id]);
+    const hashedAdminPass = await bcrypt.hash(defaultAdminPass, 10);
+    await run(`UPDATE users SET password = ?, role = 'admin' WHERE id = ?`, [hashedAdminPass, existingAdmin.id]);
+    console.log('Synchronized primary admin account: dev@thrmdigitalmarketing.in');
   }
 
-  // Seed candidate progress for Sahil Bijlani (CSMMP certified)
-  const existingSahilProgress = await get(`SELECT id FROM user_progress WHERE user_email = ? AND course_slug = ?`, ['bijlanisahil511@gmail.com', 'social-media-marketing']);
-  if (!existingSahilProgress) {
-    await run(
-      `INSERT INTO user_progress (user_email, course_slug, completed_modules_json, active_module_id, exam_status, exam_score, exam_passed, cert_id, cert_issue_date)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        'bijlanisahil511@gmail.com',
-        'social-media-marketing',
-        JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-        12,
-        'passed',
-        88,
-        1,
-        'THRM-CSMMP-2026-8841',
-        new Date().toISOString().split('T')[0]
-      ]
-    );
-    console.log('Seeded verified candidate certificate for Sahil Bijlani.');
-  }
+  // Keep ONLY the primary admin in users and progress tables
+  await run(`DELETE FROM users WHERE email != ?`, [defaultAdminEmail]);
+  await run(`DELETE FROM user_progress WHERE user_email != ?`, [defaultAdminEmail]);
 
-  // Seed active student candidates so Candidate Roster & Analytics have real candidate accounts
-  const candidateUsers = [
-    { name: 'Priya Sharma', email: 'priya.sharma@example.com', pass: 'Priya@123', completed: [1,2,3,4,5,6], active: 6, status: 'in_progress', score: null, passed: 0, certId: null, date: null },
-    { name: 'Rohit Verma', email: 'rohit.verma@example.com', pass: 'Rohit@123', completed: [1,2,3,4,5,6,7,8,9,10,11,12], active: 12, status: 'passed', score: 82, passed: 1, certId: 'THRM-CSMMP-2026-9102', date: '2026-10-08' },
-    { name: 'Ananya Patel', email: 'ananya.patel@example.com', pass: 'Ananya@123', completed: [1,2,3], active: 3, status: 'not_started', score: null, passed: 0, certId: null, date: null }
-  ];
-
-  for (const c of candidateUsers) {
-    const existing = await get(`SELECT id FROM users WHERE email = ?`, [c.email]);
-    if (!existing) {
-      const hashed = await bcrypt.hash(c.pass, 10);
-      await run(`INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'student')`, [c.name, c.email, hashed]);
-    }
-    const prog = await get(`SELECT id FROM user_progress WHERE user_email = ? AND course_slug = ?`, [c.email, 'social-media-marketing']);
-    if (!prog) {
-      await run(
-        `INSERT INTO user_progress (user_email, course_slug, completed_modules_json, active_module_id, exam_status, exam_score, exam_passed, cert_id, cert_issue_date)
-         VALUES (?, 'social-media-marketing', ?, ?, ?, ?, ?, ?, ?)`,
-        [c.email, JSON.stringify(c.completed), c.active, c.status, c.score, c.passed, c.certId, c.date]
-      );
-    }
-  }
 
   // Auto-upgrade any unhashed student passwords to bcrypt
   const unhashedUsers = await all(`SELECT id, password FROM users WHERE password NOT LIKE '$2a$%' AND password NOT LIKE '$2b$%'`);

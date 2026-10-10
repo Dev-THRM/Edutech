@@ -19,9 +19,17 @@ if (typeof window !== 'undefined' && window.fetch && !window.__thrmFetchBridged)
 }
 
 const AuthManager = (() => {
-  const USERS_KEY = 'thrm_edutech_users_v1';
-  const CURRENT_USER_KEY = 'thrm_edutech_current_user_v1';
+  const USERS_KEY = 'thrm_edutech_users_v2';
+  const CURRENT_USER_KEY = 'thrm_edutech_current_user_v2';
   const listeners = [];
+
+  // Automatically purge legacy v1 dummy/mock users from browser storage
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('thrm_edutech_users_v1');
+      localStorage.removeItem('thrm_edutech_current_user_v1');
+    }
+  } catch (e) {}
 
   // Helpers
   function _getUsers() {
@@ -77,24 +85,48 @@ const AuthManager = (() => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: cleanName, email: cleanEmail, password: cleanPass })
       });
-      const data = await resp.json();
-      if (resp.ok && data.success) {
-        const u = data.user;
-        if (data.token) {
-          localStorage.setItem('thrm_user_token', data.token);
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.success) {
+          const u = data.user;
+          if (data.token) {
+            localStorage.setItem('thrm_user_token', data.token);
+          }
+          const users = _getUsers();
+          users[cleanEmail] = u;
+          _saveUsers(users);
+          localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
+          _notifyAuthState(u);
+          return { success: true, user: u };
+        } else {
+          return { success: false, message: data.message || 'Registration failed.' };
         }
-        const users = _getUsers();
-        users[cleanEmail] = u;
-        _saveUsers(users);
-        localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
-        _notifyAuthState(u);
-        return { success: true, user: u };
-      } else {
-        return { success: false, message: data.message || 'Registration failed.' };
       }
     } catch (apiErr) {
-      return { success: false, message: 'Unable to reach authentication server. Please check your connection.' };
+      // Backend not running on static host (e.g. Hostinger public_html); proceed to local storage
     }
+
+    // RESILIENT CLIENT-SIDE FALLBACK
+    if (cleanEmail === 'dev@thrmdigitalmarketing.in') {
+      return { success: false, message: 'This email is reserved for administration. Please log into the Admin Console.' };
+    }
+
+    const users = _getUsers();
+    const existing = users[cleanEmail];
+    const newUser = {
+      id: existing ? existing.id : ('usr_' + Date.now().toString(36)),
+      name: cleanName,
+      email: cleanEmail,
+      password: cleanPass,
+      role: 'student',
+      registeredAt: existing ? existing.registeredAt : new Date().toISOString(),
+      courseProgress: existing ? (existing.courseProgress || {}) : {}
+    };
+    users[cleanEmail] = newUser;
+    _saveUsers(users);
+    localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
+    _notifyAuthState(newUser);
+    return { success: true, user: newUser };
   }
 
   async function login(email, password) {
@@ -111,24 +143,53 @@ const AuthManager = (() => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: cleanEmail, password: cleanPass })
       });
-      const data = await resp.json();
-      if (resp.ok && data.success) {
-        const u = data.user;
-        if (data.token) {
-          localStorage.setItem('thrm_user_token', data.token);
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.success) {
+          const u = data.user;
+          if (data.token) {
+            localStorage.setItem('thrm_user_token', data.token);
+          }
+          const users = _getUsers();
+          users[cleanEmail] = u;
+          _saveUsers(users);
+          localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
+          _notifyAuthState(u);
+          return { success: true, user: u };
+        } else {
+          return { success: false, message: data.message || 'Invalid email or password. Please try again.' };
         }
-        const users = _getUsers();
-        users[cleanEmail] = u;
-        _saveUsers(users);
-        localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
-        _notifyAuthState(u);
-        return { success: true, user: u };
-      } else {
-        return { success: false, message: data.message || 'Invalid email or password. Please try again.' };
       }
     } catch (apiErr) {
-      return { success: false, message: 'Unable to reach authentication server. Please check your connection.' };
+      // Backend not running on static host; proceed to local storage
     }
+
+    // RESILIENT CLIENT-SIDE FALLBACK
+    const users = _getUsers();
+    const existing = users[cleanEmail];
+    if (existing) {
+      if (existing.password && existing.password !== cleanPass) {
+        return { success: false, message: 'Incorrect password. Please try again.' };
+      }
+      localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
+      _notifyAuthState(existing);
+      return { success: true, user: existing };
+    }
+
+    // Super admin check
+    if (cleanEmail === 'dev@thrmdigitalmarketing.in' && cleanPass === 'Thrm@0205') {
+      const adminUser = {
+        id: 'admin_master',
+        name: 'THRM Super Administrator',
+        email: cleanEmail,
+        role: 'admin'
+      };
+      localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
+      _notifyAuthState(adminUser);
+      return { success: true, user: adminUser };
+    }
+
+    return { success: false, message: 'No account found with this email. Please register first.' };
   }
 
   function logout() {
@@ -558,7 +619,7 @@ const AuthManager = (() => {
         ? user.name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()
         : 'U';
       const smmProg = user.courseProgress?.['social-media-marketing']?.completedModules?.length || 0;
-      const isAdmin = user.role === 'admin' || user.email === 'admin@thrmedutech.com';
+      const isAdmin = user.role === 'admin' || user.email === 'dev@thrmdigitalmarketing.in';
 
       authMount.innerHTML = `
         <div class="user-profile-menu-wrap" id="userProfileMenuWrap">

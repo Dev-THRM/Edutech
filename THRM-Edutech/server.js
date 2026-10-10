@@ -866,7 +866,7 @@ app.get('/api/admin/students', requireAdmin, async (req, res) => {
         SUM(CASE WHEN p.exam_passed = 1 THEN 1 ELSE 0 END) as passed_count
       FROM users u
       LEFT JOIN user_progress p ON u.email = p.user_email
-      WHERE u.email != 'admin@thrmedutech.com'
+      WHERE u.role != 'admin' AND u.email != 'dev@thrmdigitalmarketing.in'
       GROUP BY u.id
       ORDER BY u.id DESC
     `);
@@ -876,6 +876,73 @@ app.get('/api/admin/students', requireAdmin, async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch students' });
   }
 });
+
+// Admin manually add a candidate/student
+app.post('/api/admin/students', requireAdmin, async (req, res) => {
+  try {
+    const { name, email, passed } = req.body;
+    const cleanName = (name || '').trim();
+    const cleanEmail = (email || '').trim().toLowerCase();
+    if (!cleanName || !cleanEmail) {
+      return res.status(400).json({ success: false, message: 'Name and email are required.' });
+    }
+
+    const existing = await get('SELECT id FROM users WHERE email = ?', [cleanEmail]);
+    let studentId;
+    if (!existing) {
+      const defaultPass = await bcrypt.hash('Student@2026', 10);
+      const result = await run(
+        'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, "student")',
+        [cleanName, cleanEmail, defaultPass]
+      );
+      studentId = result.id;
+    } else {
+      studentId = existing.id;
+    }
+
+    const isPassed = !!passed;
+    const existingProg = await get('SELECT id FROM user_progress WHERE user_email = ? AND course_slug = ?', [cleanEmail, 'social-media-marketing']);
+    if (!existingProg) {
+      await run(
+        `INSERT INTO user_progress (user_email, course_slug, completed_modules_json, active_module_id, exam_status, exam_score, exam_passed, cert_id, cert_issue_date)
+         VALUES (?, 'social-media-marketing', ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          cleanEmail,
+          isPassed ? JSON.stringify([1,2,3,4,5,6,7,8,9,10,11,12]) : JSON.stringify([1]),
+          isPassed ? 12 : 1,
+          isPassed ? 'passed' : 'in_progress',
+          isPassed ? 85 : null,
+          isPassed ? 1 : 0,
+          isPassed ? `THRM-CSMMP-2026-${Math.floor(1000 + Math.random() * 9000)}` : null,
+          isPassed ? new Date().toISOString().split('T')[0] : null
+        ]
+      );
+    }
+
+    res.json({ success: true, message: 'Candidate added successfully', studentId });
+  } catch (err) {
+    console.error('Error adding candidate:', err);
+    res.status(500).json({ success: false, message: 'Failed to add candidate.' });
+  }
+});
+
+// Admin delete a candidate/student
+app.delete('/api/admin/students/:email', requireAdmin, async (req, res) => {
+  try {
+    const targetEmail = decodeURIComponent(req.params.email || '').trim().toLowerCase();
+    if (!targetEmail || targetEmail === 'dev@thrmdigitalmarketing.in') {
+      return res.status(400).json({ success: false, message: 'Cannot delete administrator account.' });
+    }
+
+    await run('DELETE FROM users WHERE email = ?', [targetEmail]);
+    await run('DELETE FROM user_progress WHERE user_email = ?', [targetEmail]);
+    res.json({ success: true, message: 'Candidate removed successfully' });
+  } catch (err) {
+    console.error('Error deleting candidate:', err);
+    res.status(500).json({ success: false, message: 'Failed to delete candidate.' });
+  }
+});
+
 
 // ==========================================
 // PRODUCTION ERROR HANDLING
