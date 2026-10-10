@@ -1275,15 +1275,151 @@
             color: #64748B;
         }
 
+        /* Mobile Sidebar Controls & Backdrop */
+        .ats-mobile-sidebar-toggle {
+            display: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            color: #0F172A;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .ats-mobile-sidebar-toggle:hover {
+            background: #EFF6FF;
+            color: #2563EB;
+        }
+
+        .ats-sidebar-close-btn {
+            display: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            color: #64748B;
+            font-size: 0.95rem;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .ats-sidebar-close-btn:hover {
+            background: #FEE2E2;
+            color: #EF4444;
+        }
+
+        .ats-sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 999;
+        }
+
         @media (max-width: 900px) {
             .ats-sidebar {
                 transform: translateX(-100%);
+                z-index: 1050;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            }
+            .ats-sidebar.open {
+                transform: translateX(0);
+            }
+            .ats-sidebar-backdrop.open {
+                display: block;
+            }
+            .ats-sidebar-close-btn {
+                display: flex;
             }
             .ats-main-area {
                 margin-left: 0;
+                width: 100%;
+                max-width: 100vw;
+            }
+            .ats-top-header {
+                padding: 12px 16px;
+                gap: 12px;
+            }
+            .ats-mobile-sidebar-toggle {
+                display: flex;
+            }
+            .ats-header-left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex: 1;
+                min-width: 0;
+            }
+            .ats-search-input-wrap {
+                width: 100%;
+                max-width: 100%;
             }
             .ats-kpi-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+            .ats-content-container {
+                padding: 16px;
+            }
+            .ats-table-card {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .ats-data-table {
+                min-width: 640px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .ats-kpi-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .ats-top-header {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .ats-header-right {
+                width: 100%;
+            }
+            .ats-btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+            .ats-card-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 12px;
+            }
+            .ats-header-filter-group {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .ats-form-grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .ats-modal-backdrop {
+                padding: 12px;
+            }
+            .ats-modal-box {
+                padding: 20px 16px;
+                border-radius: var(--radius-lg);
+                max-height: 92vh;
+            }
+            .ats-login-card-inner {
+                padding: 28px 18px 24px;
             }
         }
     </style>
@@ -1296,14 +1432,19 @@
          ========================================== -->
     <aside class="ats-sidebar" id="atsSidebar">
         <div class="ats-sidebar-top">
-            <!-- Brand -->
-            <a href="/" class="ats-brand-lockup">
-                <img src="assets/images/logo.png" alt="THRM Mascot" class="ats-brand-logo" />
-                <div>
-                    <div class="ats-brand-text">THRM<span class="ats-brand-accent">EduTech</span></div>
-                    <span class="ats-brand-badge"><i class="fa-solid fa-shield-halved"></i> Admin Portal</span>
-                </div>
-            </a>
+            <!-- Brand & Mobile Close -->
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                <a href="/" class="ats-brand-lockup" style="flex: 1;">
+                    <img src="assets/images/logo.png" alt="THRM Mascot" class="ats-brand-logo" />
+                    <div>
+                        <div class="ats-brand-text">THRM<span class="ats-brand-accent">EduTech</span></div>
+                        <span class="ats-brand-badge"><i class="fa-solid fa-shield-halved"></i> Admin Portal</span>
+                    </div>
+                </a>
+                <button class="ats-sidebar-close-btn" onclick="toggleAdminSidebar(false)" aria-label="Close Navigation">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
 
             <!-- Navigation Links -->
             <div class="ats-nav-group-label">Core Management</div>
@@ -1358,6 +1499,9 @@
         </div>
     </aside>
 
+    <!-- Sidebar Mobile Backdrop -->
+    <div class="ats-sidebar-backdrop" id="atsSidebarBackdrop" onclick="toggleAdminSidebar(false)"></div>
+
     <!-- ==========================================
          2. MAIN APPLICATION WORKSPACE
          ========================================== -->
@@ -1371,6 +1515,9 @@
         <!-- ATS Top Header Bar -->
         <header class="ats-top-header">
             <div class="ats-header-left">
+                <button class="ats-mobile-sidebar-toggle" id="atsMobileSidebarToggle" onclick="toggleAdminSidebar()" aria-label="Open Navigation Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <div class="ats-search-input-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" class="ats-search-input" id="atsSearchInput" placeholder="Quick search tracks, modules, candidates..." oninput="filterAdminCourses(this.value)" />
@@ -1826,6 +1973,34 @@
         }
 
         // ==========================================
+        // MOBILE SIDEBAR DRAWER TOGGLE
+        // ==========================================
+        function toggleAdminSidebar(force) {
+            const sidebar = document.getElementById('atsSidebar');
+            const backdrop = document.getElementById('atsSidebarBackdrop');
+            if (!sidebar) return;
+            const isCurrentlyOpen = sidebar.classList.contains('open');
+            const shouldOpen = (force !== undefined) ? !!force : !isCurrentlyOpen;
+
+            if (shouldOpen) {
+                sidebar.classList.add('open');
+                if (backdrop) backdrop.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.remove('open');
+                if (backdrop) backdrop.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close sidebar on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                toggleAdminSidebar(false);
+            }
+        });
+
+        // ==========================================
         // HASH-FREE NAVIGATION & URL CLEANER
         // ==========================================
         function removeHashFromUrl() {
@@ -1843,6 +2018,7 @@
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
+            toggleAdminSidebar(false);
             removeHashFromUrl();
         }
 

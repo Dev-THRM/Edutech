@@ -66,6 +66,37 @@
         </div>
     </nav>
 
+    <!-- Mobile Drawer & Backdrop -->
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+        <div class="drawer-header">
+            <a href="/" class="nav-brand-pill drawer-brand-pill">
+                <img src="assets/images/logo.png" alt="THRM EduTech Logo" class="brand-mascot-img" />
+                <div class="brand-text">
+                    <span class="brand-name">THRM<span class="brand-accent">EduTech</span></span>
+                </div>
+            </a>
+            <button class="drawer-close" id="drawerClose" aria-label="Close Menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="drawer-links">
+            <a href="/#home" class="drawer-link"><span>Home</span></a>
+            <a href="/#about-us" class="drawer-link"><span>About Us</span></a>
+            <a href="/#services" class="drawer-link"><span>Learnings</span></a>
+            <a href="/#courses" class="drawer-link"><span>Courses</span></a>
+            <a href="/#team" class="drawer-link"><span>Team</span></a>
+            <a href="/#testimonials" class="drawer-link"><span>Testimonials</span></a>
+            <a href="/certifications" class="drawer-link active"><span>Certifications</span></a>
+        </div>
+        <div class="drawer-footer">
+            <a href="/certifications" class="btn btn-primary w-100 text-center drawer-cta">
+                <span>Certifications Portal</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
     <!-- FLAGSHIP TRACK HUB: Social Media Marketing Professional -->
     <section class="cert-hero-container" id="featured-track" style="padding-top: 36px; padding-bottom: 60px;">
         <div class="track-showcase">
@@ -415,6 +446,7 @@
 
     <!-- Scripts -->
     <script src="js/lenis.min.js"></script>
+    <script src="script.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/certifications.js?v=2"></script>
 </body>

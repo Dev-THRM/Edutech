@@ -2536,7 +2536,7 @@ async function initDynamicCatalog() {
     // Wire flip handlers on dynamic cards
     grid.querySelectorAll('.track-card-flip-wrap').forEach(wrap => {
       wrap.addEventListener('click', (e) => {
-        if (!e.target.closest('a')) {
+        if (!e.target.closest('a') && !e.target.closest('button')) {
           wrap.classList.toggle('flipped');
         }
       });
@@ -2620,7 +2620,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const flipWrappers = document.querySelectorAll('.track-card-flip-wrap');
   flipWrappers.forEach(wrap => {
     wrap.addEventListener('click', (e) => {
-      if (!e.target.closest('a')) {
+      if (!e.target.closest('a') && !e.target.closest('button')) {
         wrap.classList.toggle('flipped');
       }
     });
