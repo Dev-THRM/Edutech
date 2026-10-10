@@ -359,7 +359,7 @@
             justify-content: space-between;
             position: sticky;
             top: 0;
-            z-index: 90;
+            z-index: 100;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
         }
 
@@ -386,6 +386,17 @@
         .ats-header-brand-wrap {
             display: flex;
             align-items: center;
+        }
+
+        .btn-text-mobile {
+            display: none;
+        }
+
+        .ats-panel-action-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-left: auto;
         }
 
         .ats-header-right {
@@ -840,19 +851,23 @@
             inset: 0;
             background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
             align-items: center;
             justify-content: center;
             padding: 24px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.25s ease;
+            pointer-events: none;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
         }
 
         .ats-modal-backdrop.active {
-            opacity: 1;
-            visibility: visible;
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
         }
 
         .ats-modal-box {
@@ -1436,6 +1451,12 @@
                 gap: 12px;
                 margin-bottom: 24px;
             }
+            .ats-panel-action-right {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin-left: auto;
+            }
             .ats-panel-title {
                 font-size: 1.15rem;
             }
@@ -1498,14 +1519,21 @@
             .ats-top-header {
                 padding: 10px 12px;
             }
-            .ats-header-right .ats-btn-primary span {
+            .btn-text-desktop {
                 display: none;
             }
-            .ats-header-right .ats-btn-primary::after {
-                content: " Add Course";
+            .btn-text-mobile {
+                display: inline;
+            }
+            .ats-panel-action-right {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin-left: auto;
             }
             .ats-modal-backdrop {
                 padding: 10px;
+                z-index: 9999 !important;
             }
             .ats-modal-box {
                 padding: 18px 14px;
@@ -1655,9 +1683,10 @@
             </div>
 
             <div class="ats-header-right">
-                <button class="ats-btn-primary" onclick="openAddCourseModal()">
+                <button type="button" class="ats-btn-primary" id="btnHeaderAddCourse" onclick="openAddCourseModal()" aria-label="Create New Course">
                     <i class="fa-solid fa-plus"></i>
-                    <span>Create New Course</span>
+                    <span class="btn-text-desktop">Create New Course</span>
+                    <span class="btn-text-mobile">Add Course</span>
                 </button>
             </div>
         </header>
@@ -1774,8 +1803,8 @@
                         </div>
                         <p class="ats-panel-subtitle">Manage candidates enrolled in certification tracks and assessment completion status.</p>
                     </div>
-                    <div>
-                        <button class="ats-btn-primary" onclick="openAddCandidateModal()" style="height:38px; padding:8px 14px; font-size:0.82rem; border-radius:10px; white-space:nowrap;">
+                    <div class="ats-panel-action-right">
+                        <button type="button" class="ats-btn-primary" onclick="openAddCandidateModal()" style="height:38px; padding:8px 14px; font-size:0.82rem; border-radius:10px; white-space:nowrap;">
                             <i class="fa-solid fa-user-plus"></i>
                             <span>Add Candidate</span>
                         </button>
@@ -1857,7 +1886,7 @@
     <!-- ==========================================
          3. ATS COURSE BUILDER & EDITOR MODAL
          ========================================== -->
-    <div class="ats-modal-backdrop" id="addCourseModal">
+    <div class="ats-modal-backdrop" id="addCourseModal" style="display:none;">
         <div class="ats-modal-box">
             <button onclick="closeAddCourseModal()" style="position:absolute; top:24px; right:24px; background:transparent; border:none; font-size:1.3rem; color:#64748B; cursor:pointer;" aria-label="Close">
                 <i class="fa-solid fa-xmark"></i>
@@ -2511,14 +2540,21 @@
         }
 
         function openAddCandidateModal() {
+            toggleAdminSidebar(false);
             document.getElementById('candModalName').value = '';
             document.getElementById('candModalEmail').value = '';
             document.getElementById('candModalStatus').value = 'enrolled';
-            document.getElementById('addCandidateModal').style.display = 'flex';
+            const modal = document.getElementById('addCandidateModal');
+            modal.style.display = 'flex';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeAddCandidateModal() {
-            document.getElementById('addCandidateModal').style.display = 'none';
+            const modal = document.getElementById('addCandidateModal');
+            modal.classList.remove('active');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
         }
 
         async function handleManualAddCandidate(e) {
@@ -2798,6 +2834,7 @@
         // MODAL HELPERS & BUILDER
         // ==========================================
         function openAddCourseModal() {
+            toggleAdminSidebar(false);
             editingCourseSlug = null;
             document.getElementById('adminModalTitle').innerHTML = '<i class="fa-solid fa-plus-circle" style="color:#2563EB;"></i> <span>Create Dynamic Certification Track</span>';
             document.getElementById('adminModalDesc').innerHTML = 'Add a new track to the SQLite database. Workflow: <strong>Modules &rarr; Final Assessment &rarr; Certificate (70%+ Pass)</strong>.';
@@ -2824,17 +2861,22 @@
             qContainer.innerHTML = '';
             addQuestionRow('What is the primary foundation of data-driven marketing strategy?', ['Maximizing superficial impressions', 'Iterative conversion & revenue improvement', 'Posting at random hours', 'Eliminating analytics entirely'], 1);
 
-            document.getElementById('addCourseModal').classList.add('active');
+            const modal = document.getElementById('addCourseModal');
+            modal.style.display = 'flex';
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         async function openEditCourseModal(slug) {
+            toggleAdminSidebar(false);
             editingCourseSlug = slug;
             document.getElementById('adminModalTitle').innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#2563EB;"></i> <span>Edit Track: ${escapeHtml(slug)}</span>`;
             document.getElementById('adminModalDesc').innerHTML = `Modify track information, curriculum modules, or assessment questions. Changes reflect live on the website immediately.`;
             document.getElementById('btnPublishCourse').innerHTML = `<i class="fa-solid fa-check-double"></i> <span>Save Changes &amp; Update Website</span>`;
 
-            document.getElementById('addCourseModal').classList.add('active');
+            const modal = document.getElementById('addCourseModal');
+            modal.style.display = 'flex';
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
 
             const modContainer = document.getElementById('modulesRepeaterContainer');
@@ -2896,7 +2938,9 @@
         }
 
         function closeAddCourseModal() {
-            document.getElementById('addCourseModal').classList.remove('active');
+            const modal = document.getElementById('addCourseModal');
+            modal.classList.remove('active');
+            modal.style.display = 'none';
             document.body.style.overflow = '';
             editingCourseSlug = null;
         }
