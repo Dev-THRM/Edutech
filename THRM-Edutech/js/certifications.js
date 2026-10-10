@@ -2469,6 +2469,10 @@ async function initDynamicCatalog() {
         .map(t => t.trim())
         .filter(Boolean);
 
+      // Clean up duration so it does not repeat modules count
+      const cleanDuration = (c.duration || 'Self-Paced').replace(/\s*\(\d+\s*Modules?\)/i, '').trim();
+      const cleanModules = c.module_count || (c.duration && c.duration.match(/(\d+)\s*Modules?/i) ? c.duration.match(/(\d+)\s*Modules?/i)[1] : 12);
+
       return `
         <div class="track-card-flip-wrap">
           <div class="track-card-inner">
@@ -2482,8 +2486,8 @@ async function initDynamicCatalog() {
                 <div class="cert-card-main-content">
                   <h3 class="track-title">${c.title}</h3>
                   <div class="cert-meta-tags">
-                    <span class="cert-meta-tag"><i class="fa-regular fa-clock"></i> ${c.duration || 'Self-Paced'}</span>
-                    <span class="cert-meta-tag"><i class="fa-solid fa-layer-group"></i> ${c.module_count || 8} Modules</span>
+                    <span class="cert-meta-tag"><i class="fa-regular fa-clock"></i> ${cleanDuration}</span>
+                    <span class="cert-meta-tag"><i class="fa-solid fa-layer-group"></i> ${cleanModules} Modules</span>
                     <span class="cert-meta-tag"><i class="fa-solid fa-signal"></i> ${c.level || 'All Levels'}</span>
                   </div>
                   <p class="track-desc">${c.description || c.subtitle || ''}</p>
@@ -2492,11 +2496,11 @@ async function initDynamicCatalog() {
                   </ul>
                 </div>
                 <div class="cert-card-bottom">
-                  <span style="font-size: 0.8rem; font-weight: 700; color: #10B981; background: rgba(16, 185, 129, 0.1); padding: 5px 12px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 6px;">
+                  <span class="iso-badge">
                     <i class="fa-solid fa-award"></i> ISO Certified
                   </span>
-                  <span class="flip-hint">
-                    <i class="fa-solid fa-arrows-rotate" style="color: #7C3AED;"></i> Hover for Syllabus
+                  <span class="flip-hint" title="Click to view syllabus">
+                    <span>View Syllabus</span> <i class="fa-solid fa-arrows-rotate"></i>
                   </span>
                 </div>
               </div>
