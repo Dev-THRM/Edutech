@@ -1862,6 +1862,20 @@
          5. JAVASCRIPT CONTROLLERS
          ========================================== -->
     <script>
+        // Auto-bridge API calls to port 5000 if frontend is launched on an alternate port (e.g. Live Server :5500)
+        if (typeof window !== 'undefined' && window.fetch && !window.__thrmFetchBridged) {
+            window.__thrmFetchBridged = true;
+            const _origFetch = window.fetch;
+            window.fetch = function(url, options) {
+                if (typeof url === 'string' && url.startsWith('/api/')) {
+                    if (window.location.protocol.startsWith('http') && window.location.port && window.location.port !== '5000' && window.location.port !== '80' && window.location.port !== '443') {
+                        url = `${window.location.protocol}//${window.location.hostname}:5000${url}`;
+                    }
+                }
+                return _origFetch.apply(this, [url, options]);
+            };
+        }
+
         const ADMIN_SESSION_KEY = 'thrm_admin_session_v1';
         let currentAdmin = null;
         let editingCourseSlug = null;

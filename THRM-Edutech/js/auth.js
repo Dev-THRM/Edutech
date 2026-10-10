@@ -4,6 +4,20 @@
  * and course progress syncing across sessions.
  */
 
+// Auto-bridge API calls to backend port 5000 if frontend is launched on an alternate port (e.g. Live Server :5500)
+if (typeof window !== 'undefined' && window.fetch && !window.__thrmFetchBridged) {
+  window.__thrmFetchBridged = true;
+  const _origFetch = window.fetch;
+  window.fetch = function(url, options) {
+    if (typeof url === 'string' && url.startsWith('/api/')) {
+      if (window.location.protocol.startsWith('http') && window.location.port && window.location.port !== '5000' && window.location.port !== '80' && window.location.port !== '443') {
+        url = `${window.location.protocol}//${window.location.hostname}:5000${url}`;
+      }
+    }
+    return _origFetch.apply(this, [url, options]);
+  };
+}
+
 const AuthManager = (() => {
   const USERS_KEY = 'thrm_edutech_users_v1';
   const CURRENT_USER_KEY = 'thrm_edutech_current_user_v1';

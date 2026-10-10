@@ -324,6 +324,16 @@ function switchCourseTab(tabName) {
   if (modulesSection) modulesSection.style.display = tabName === 'curriculum' ? 'block' : 'none';
   if (examSection) examSection.style.display = tabName === 'exam' ? 'block' : 'none';
   if (certSection) certSection.style.display = tabName === 'certificate' ? 'block' : 'none';
+
+  // Smoothly position tab content in viewport below the sticky navbar
+  const tabNav = document.querySelector('.track-tab-nav');
+  if (tabNav) {
+    const navRect = tabNav.getBoundingClientRect();
+    if (navRect.top < 60 || navRect.top > window.innerHeight * 0.4) {
+      const targetY = window.pageYOffset + navRect.top - 70;
+      window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+    }
+  }
 }
 
 // ==========================================
