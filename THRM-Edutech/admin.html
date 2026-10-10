@@ -2311,56 +2311,57 @@
             }
 
             try {
-                const res = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password: pass })
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success && data.user.role === 'admin') {
-                        currentAdmin = data.user;
-                        if (data.token) {
-                            localStorage.setItem('thrm_admin_token', data.token);
+                try {
+                    const res = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password: pass })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.success && data.user.role === 'admin') {
+                            currentAdmin = data.user;
+                            if (data.token) {
+                                localStorage.setItem('thrm_admin_token', data.token);
+                            }
+                            localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(data.user));
+                            showDashboard();
+                            return;
+                        } else if (data.success && data.user.role !== 'admin') {
+                            showError('Unauthorized: Account does not have administrator privileges.');
+                            return;
+                        } else {
+                            showError(data.message || 'Invalid administrator email or password.');
+                            return;
                         }
-                        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(data.user));
-                        showDashboard();
-                        return;
-                    } else if (data.success && data.user.role !== 'admin') {
-                        showError('Unauthorized: Account does not have administrator privileges.');
-                        return;
-                    } else {
-                        showError(data.message || 'Invalid administrator email or password.');
-                        return;
                     }
+                } catch (err) {
+                    // If API is not running (e.g. static hosting on Hostinger public_html), fallback to local credential verification
                 }
-            } catch (err) {
-                // If API is not running (e.g. static hosting on Hostinger public_html), fallback to local credential verification
-            }
 
-            // Resilient Admin fallback for static web hosting
-            if (email === 'dev@thrmdigitalmarketing.in' && pass === 'Thrm@0205') {
-                const mockAdmin = {
-                    id: 'admin_master',
-                    name: 'THRM Super Administrator',
-                    email: 'dev@thrmdigitalmarketing.in',
-                    role: 'admin'
-                };
-                currentAdmin = mockAdmin;
-                localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(mockAdmin));
-                showDashboard();
+                // Resilient Admin fallback for static web hosting
+                if (email === 'dev@thrmdigitalmarketing.in' && pass === 'Thrm@0205') {
+                    const mockAdmin = {
+                        id: 'admin_master',
+                        name: 'THRM Super Administrator',
+                        email: 'dev@thrmdigitalmarketing.in',
+                        role: 'admin'
+                    };
+                    currentAdmin = mockAdmin;
+                    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(mockAdmin));
+                    showDashboard();
+                    return;
+                }
+
+                showError('Invalid administrator email or password.');
                 return;
-            }
-
-            showError('Invalid administrator email or password.');
-            return;
-        } finally {
-            if (submitBtn && (!currentAdmin)) {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>Sign In to Admin Console</span><i class="fa-solid fa-arrow-right"></i>';
+            } finally {
+                if (submitBtn && (!currentAdmin)) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Sign In to Admin Console</span><i class="fa-solid fa-arrow-right"></i>';
+                }
             }
         }
-    }
 
         function adminLogout() {
             localStorage.removeItem(ADMIN_SESSION_KEY);
