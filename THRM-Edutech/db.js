@@ -10,6 +10,8 @@ const db = new sqlite3.Database(DB_PATH, (err) => {
   } else {
     console.log('Connected to SQLite database at:', DB_PATH);
     db.run('PRAGMA foreign_keys = ON;');
+    db.run('PRAGMA journal_mode = WAL;');
+    db.run('PRAGMA busy_timeout = 5000;');
   }
 });
 
@@ -119,31 +121,34 @@ async function initDatabase() {
     )
   `);
 
-  // Seed or upgrade default admin account with bcrypt hash
-  const existingAdmin = await get(`SELECT * FROM users WHERE email = ?`, ['admin@thrmedutech.com']);
-  const hashedAdminPass = await bcrypt.hash('Admin@2026Password', 10);
+  // Initial setup: seed admin account ONLY if no admin user exists
+  const existingAdmin = await get(`SELECT id, password FROM users WHERE email = ?`, ['admin@thrmedutech.com']);
+  const defaultAdminPass = process.env.ADMIN_DEFAULT_PASSWORD || 'Admin@THRM2026#Secure';
   if (!existingAdmin) {
+    const hashedAdminPass = await bcrypt.hash(defaultAdminPass, 10);
     await run(
       `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`,
       ['THRM Administrator', 'admin@thrmedutech.com', hashedAdminPass, 'admin']
     );
     console.log('Seeded default Admin account with secure bcrypt hash: admin@thrmedutech.com');
   } else if (!existingAdmin.password.startsWith('$2a$') && !existingAdmin.password.startsWith('$2b$')) {
+    const hashedAdminPass = await bcrypt.hash(defaultAdminPass, 10);
     await run(`UPDATE users SET password = ? WHERE id = ?`, [hashedAdminPass, existingAdmin.id]);
     console.log('Upgraded Admin password to bcrypt hash.');
   }
 
-  // Seed or upgrade primary admin & student account: Sahil Bijlani (bijlanisahil511@gmail.com)
-  const existingSahil = await get(`SELECT * FROM users WHERE email = ?`, ['bijlanisahil511@gmail.com']);
-  const hashedSahilPass = await bcrypt.hash('Abcd@123', 10);
+  // Seed or upgrade primary admin: Sahil Bijlani (bijlanisahil511@gmail.com)
+  const existingSahil = await get(`SELECT id, password FROM users WHERE email = ?`, ['bijlanisahil511@gmail.com']);
   if (!existingSahil) {
+    const hashedSahilPass = await bcrypt.hash(defaultAdminPass, 10);
     await run(
       `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`,
       ['Sahil Bijlani', 'bijlanisahil511@gmail.com', hashedSahilPass, 'admin']
     );
-    console.log('Seeded primary user/admin: Sahil Bijlani (bijlanisahil511@gmail.com)');
+    console.log('Seeded primary admin: Sahil Bijlani (bijlanisahil511@gmail.com)');
   } else {
-    await run(`UPDATE users SET name = ?, password = ?, role = 'admin' WHERE id = ?`, ['Sahil Bijlani', hashedSahilPass, existingSahil.id]);
+    // Ensure role is admin without resetting the password
+    await run(`UPDATE users SET role = 'admin' WHERE id = ?`, [existingSahil.id]);
   }
 
   // Seed candidate progress for Sahil Bijlani (CSMMP certified)

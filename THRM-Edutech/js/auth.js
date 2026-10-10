@@ -52,8 +52,8 @@ const AuthManager = (() => {
     if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
       return { success: false, message: 'Please enter a valid email address.' };
     }
-    if (!cleanPass || cleanPass.length < 4) {
-      return { success: false, message: 'Password must be at least 4 characters.' };
+    if (!cleanPass || cleanPass.length < 6) {
+      return { success: false, message: 'Password must be at least 6 characters.' };
     }
 
     // Attempt registration against backend API
@@ -75,44 +75,12 @@ const AuthManager = (() => {
         localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
         _notifyAuthState(u);
         return { success: true, user: u };
-      } else if (!resp.ok && data.error) {
-        return { success: false, message: data.error };
+      } else {
+        return { success: false, message: data.message || 'Registration failed.' };
       }
     } catch (apiErr) {
-      // Backend offline / static mode fallback
+      return { success: false, message: 'Unable to reach authentication server. Please check your connection.' };
     }
-
-    const users = _getUsers();
-    if (users[cleanEmail]) {
-      return { success: false, message: 'An account with this email already exists. Please log in.' };
-    }
-
-    const newUser = {
-      id: 'usr_' + Date.now(),
-      name: cleanName,
-      email: cleanEmail,
-      password: cleanPass,
-      role: 'student',
-      createdAt: new Date().toISOString(),
-      courseProgress: {
-        'social-media-marketing': {
-          completedModules: [],
-          activeModuleId: 1,
-          examStatus: 'not_started',
-          examScore: null,
-          examPassed: false,
-          certId: 'THRM-CSMMP-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000),
-          certIssueDate: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-        }
-      }
-    };
-
-    users[cleanEmail] = newUser;
-    _saveUsers(users);
-    localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
-
-    _notifyAuthState(newUser);
-    return { success: true, user: newUser };
   }
 
   async function login(email, password) {
@@ -141,23 +109,12 @@ const AuthManager = (() => {
         localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
         _notifyAuthState(u);
         return { success: true, user: u };
-      } else if (!resp.ok && data.error) {
-        return { success: false, message: data.error };
+      } else {
+        return { success: false, message: data.message || 'Invalid email or password. Please try again.' };
       }
     } catch (apiErr) {
-      // Backend offline / static mode fallback
+      return { success: false, message: 'Unable to reach authentication server. Please check your connection.' };
     }
-
-    const users = _getUsers();
-    const user = users[cleanEmail];
-
-    if (!user || user.password !== cleanPass) {
-      return { success: false, message: 'Invalid email or password. Please try again.' };
-    }
-
-    localStorage.setItem(CURRENT_USER_KEY, cleanEmail);
-    _notifyAuthState(user);
-    return { success: true, user };
   }
 
   function logout() {

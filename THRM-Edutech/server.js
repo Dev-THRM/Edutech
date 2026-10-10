@@ -1,15 +1,33 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 const { run, get, all, initDatabase } = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'thrm-edutech-jwt-production-secret-2026';
 
-app.use(cors());
+// Configurable CORS protection
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim())
+  : ['http://localhost:5000', 'http://127.0.0.1:5000'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS blocked: Domain not authorized.'));
+  },
+  credentials: true
+}));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -24,31 +42,43 @@ app.use((req, res, next) => {
   next();
 });
 
-// In-Memory Rate Limiter for Auth Routes (Prevents Brute Force)
-const authRateLimitMap = new Map();
-function authRateLimiter(req, res, next) {
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown-ip';
-  const now = Date.now();
-  const windowMs = 60 * 1000; // 1 minute
-  const maxAttempts = 20;
+// ==========================================
+// SENSITIVE FILE PROTECTION (BLOCK .DB, .ENV, SOURCE LEAKS)
+// ==========================================
+const BLOCKED_EXTENSIONS = ['.db', '.db-wal', '.db-shm', '.env', '.sql', '.git'];
+const BLOCKED_FILES = ['server.js', 'db.js', 'package.json', 'package-lock.json', 'ecosystem.config.js'];
 
-  const record = authRateLimitMap.get(ip) || { count: 0, resetTime: now + windowMs };
-  if (now > record.resetTime) {
-    record.count = 1;
-    record.resetTime = now + windowMs;
-  } else {
-    record.count++;
-  }
-  authRateLimitMap.set(ip, record);
+app.use((req, res, next) => {
+  const lowerPath = req.path.toLowerCase();
+  const filename = path.basename(lowerPath);
 
-  if (record.count > maxAttempts) {
-    return res.status(429).json({
-      success: false,
-      message: 'Too many authentication attempts. Please try again in 1 minute.'
-    });
+  if (BLOCKED_FILES.includes(filename) || BLOCKED_EXTENSIONS.some(ext => lowerPath.endsWith(ext)) || lowerPath.includes('/.env')) {
+    return res.status(403).json({ success: false, message: 'Access forbidden: Restricted file.' });
   }
   next();
-}
+});
+
+// Production Rate Limiter for Authentication Routes
+const authRateLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 20, // max 20 requests per IP per minute
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'Too many authentication attempts. Please try again in 1 minute.'
+  }
+});
+
+// Healthcheck endpoint for cloud infrastructure & load balancers
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    uptime: Math.round(process.uptime()),
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'production'
+  });
+});
 
 // ==========================================
 // CLEAN URLS (REMOVING .HTML EVERYWHERE)
@@ -447,7 +477,7 @@ app.post('/api/courses/:slug/submit-exam', async (req, res) => {
 // 4. ADMIN PORTAL API
 // ==========================================
 
-// Middleware helper to check admin role (supports JWT tokens with fallback to session email)
+// Secure Middleware helper to check admin role (Strict JWT verification)
 async function requireAdmin(req, res, next) {
   try {
     const authHeader = req.headers['authorization'] || '';
@@ -458,31 +488,30 @@ async function requireAdmin(req, res, next) {
       token = req.headers['x-admin-token'];
     }
 
-    if (token) {
-      try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        if (decoded && decoded.role === 'admin') {
-          req.admin = decoded;
-          return next();
-        }
-      } catch (jwtErr) {
-        // Token invalid/expired, check email fallback
-      }
+    if (!token) {
+      return res.status(401).json({ success: false, message: 'Unauthorized: Admin authentication token required.' });
     }
 
-    // Secondary fallback for existing admin session
-    const adminEmail = (req.headers['x-admin-email'] || req.query.adminEmail || '').trim().toLowerCase();
-    if (adminEmail) {
-      const user = await get(`SELECT id, name, email, role FROM users WHERE email = ? AND role = 'admin'`, [adminEmail]);
-      if (user) {
-        req.admin = user;
-        return next();
-      }
+    let decoded;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET);
+    } catch (jwtErr) {
+      return res.status(401).json({ success: false, message: 'Invalid or expired admin session token.' });
     }
 
-    return res.status(403).json({ success: false, message: 'Unauthorized: Valid Admin session required.' });
+    if (!decoded || decoded.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Forbidden: Admin privileges required.' });
+    }
+
+    const user = await get(`SELECT id, name, email, role FROM users WHERE id = ? AND role = 'admin'`, [decoded.id]);
+    if (!user) {
+      return res.status(403).json({ success: false, message: 'Forbidden: Active admin account not found.' });
+    }
+
+    req.admin = user;
+    return next();
   } catch (err) {
-    return res.status(403).json({ success: false, message: 'Admin authentication failed.' });
+    return res.status(401).json({ success: false, message: 'Admin authentication verification failed.' });
   }
 }
 
@@ -853,15 +882,44 @@ app.use((err, req, res, next) => {
 });
 
 // Initialize database and start server
+let server;
 initDatabase().then(() => {
-  app.listen(PORT, () => {
+  server = app.listen(PORT, () => {
     console.log(`===============================================`);
     console.log(`THRM EduTech Server running on http://localhost:${PORT}`);
-    console.log(`Database connected: SQLite (thrm_edutech.db)`);
+    console.log(`Database connected: SQLite (thrm_edutech.db) with WAL enabled`);
     console.log(`Admin Portal: http://localhost:${PORT}/admin`);
     console.log(`Certifications: http://localhost:${PORT}/certifications`);
+    console.log(`Healthcheck: http://localhost:${PORT}/api/health`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'production'}`);
     console.log(`===============================================`);
   });
 }).catch(err => {
   console.error('Failed to initialize database:', err);
+  process.exit(1);
+});
+
+// Graceful process termination
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received. Closing HTTP server gracefully...');
+  if (server) {
+    server.close(() => {
+      console.log('HTTP server closed.');
+      process.exit(0);
+    });
+  }
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT signal received. Closing HTTP server gracefully...');
+  if (server) {
+    server.close(() => {
+      console.log('HTTP server closed.');
+      process.exit(0);
+    });
+  }
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Promise Rejection at:', promise, 'reason:', reason);
 });

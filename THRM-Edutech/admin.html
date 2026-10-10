@@ -1924,38 +1924,12 @@
                     showError('Unauthorized: Account does not have administrator privileges.');
                     return;
                 } else {
-                    const isSahil = (email.toLowerCase() === 'bijlanisahil511@gmail.com' && pass === 'Abcd@123');
-                    const isDefault = (email === 'admin@thrmedutech.com' && pass === 'Admin@2026Password');
-                    if (isSahil || isDefault) {
-                        currentAdmin = {
-                            email: isSahil ? 'bijlanisahil511@gmail.com' : 'admin@thrmedutech.com',
-                            name: isSahil ? 'Sahil Bijlani' : 'THRM Administrator',
-                            role: 'admin'
-                        };
-                        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(currentAdmin));
-                        showDashboard();
-                        return;
-                    } else {
-                        showError(data.message || 'Invalid administrator email or password.');
-                        return;
-                    }
+                    showError(data.message || 'Invalid administrator email or password.');
+                    return;
                 }
             } catch (err) {
-                const isSahil = (email.toLowerCase() === 'bijlanisahil511@gmail.com' && pass === 'Abcd@123');
-                const isDefault = (email === 'admin@thrmedutech.com' && pass === 'Admin@2026Password');
-                if (isSahil || isDefault) {
-                    currentAdmin = {
-                        email: isSahil ? 'bijlanisahil511@gmail.com' : 'admin@thrmedutech.com',
-                        name: isSahil ? 'Sahil Bijlani' : 'THRM Administrator',
-                        role: 'admin'
-                    };
-                    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(currentAdmin));
-                    showDashboard();
-                    return;
-                } else {
-                    showError('Unable to connect to authentication server. Please check credentials.');
-                    return;
-                }
+                showError('Unable to connect to authentication server. Please check your network and server status.');
+                return;
             } finally {
                 if (submitBtn && (!currentAdmin)) {
                     submitBtn.disabled = false;
@@ -1974,8 +1948,7 @@
         function getAdminHeaders() {
             const token = localStorage.getItem('thrm_admin_token') || (currentAdmin ? currentAdmin.token : '');
             const headers = {
-                'Content-Type': 'application/json',
-                'x-admin-email': currentAdmin ? currentAdmin.email : 'admin@thrmedutech.com'
+                'Content-Type': 'application/json'
             };
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
