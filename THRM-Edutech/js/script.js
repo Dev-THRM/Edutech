@@ -535,11 +535,15 @@ document.addEventListener('DOMContentLoaded', () => {
     animateParticles();
   }
 
-  // Mobile 3D Flip Card Click Handler
+  // 3D Flip Card Click Handler (Desktop / Web View Only, disabled in mobile view)
   const flipWrappers = document.querySelectorAll('.track-card-flip-wrap');
   flipWrappers.forEach(wrap => {
     wrap.addEventListener('click', (e) => {
-      if (!e.target.closest('a')) {
+      // In mobile view (<= 992px), cards are simple normal cards with no flip
+      if (window.innerWidth <= 992 || window.matchMedia('(max-width: 992px)').matches) {
+        return;
+      }
+      if (!e.target.closest('a') && !e.target.closest('button')) {
         wrap.classList.toggle('flipped');
       }
     });

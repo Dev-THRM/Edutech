@@ -2523,6 +2523,9 @@ async function initDynamicCatalog() {
                   <span class="flip-hint" title="Click to view syllabus">
                     <span>View Syllabus</span> <i class="fa-solid fa-arrows-rotate"></i>
                   </span>
+                  <a href="${targetUrl}" class="btn btn-primary cert-card-mobile-cta">
+                    <span>View Course</span> <i class="fa-solid fa-arrow-right"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -2554,9 +2557,10 @@ async function initDynamicCatalog() {
       `;
     }).join('');
 
-    // Wire flip handlers on dynamic cards
+    // Wire flip handlers on dynamic cards (Desktop / Web View Only)
     grid.querySelectorAll('.track-card-flip-wrap').forEach(wrap => {
       wrap.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992 || window.matchMedia('(max-width: 992px)').matches) return;
         if (!e.target.closest('a') && !e.target.closest('button')) {
           wrap.classList.toggle('flipped');
         }
@@ -2637,10 +2641,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Mobile & Touch 3D Flip Card Click Handler
+  // 3D Flip Card Click Handler (Desktop / Web View Only, disabled on mobile)
   const flipWrappers = document.querySelectorAll('.track-card-flip-wrap');
   flipWrappers.forEach(wrap => {
     wrap.addEventListener('click', (e) => {
+      if (window.innerWidth <= 992 || window.matchMedia('(max-width: 992px)').matches) return;
       if (!e.target.closest('a') && !e.target.closest('button')) {
         wrap.classList.toggle('flipped');
       }
